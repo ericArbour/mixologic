@@ -1,0 +1,24 @@
+### Create a new glass
+POST http://localhost:3333/api/glasses
+content-type: application/json
+
+{
+  "name": "Highball"
+}
+
+### Find all glasses
+GET http://localhost:3333/api/glasses
+
+### Find one glass by id
+GET http://localhost:3333/glasses/2
+
+### Update a glass
+PATCH http://localhost:3333/glasses/2
+content-type: application/json
+
+{
+  "name": "Martini"
+}
+
+### Delete a glass
+DELETE http://localhost:3333/glasses/1

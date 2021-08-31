@@ -19,16 +19,19 @@ export class Ingredient {
   @Column({ unique: true })
   name!: string;
 
+  @Column()
+  ingredientTypeId!: number;
+
   @ManyToOne(
     () => IngredientType,
     (ingredientType) => ingredientType.ingredients,
-    { nullable: false },
+    { nullable: false }
   )
-  type!: IngredientType;
+  ingredientType!: IngredientType;
 
   @OneToMany(
     () => CocktailIngredient,
-    (cocktailIngredient) => cocktailIngredient.ingredient,
+    (cocktailIngredient) => cocktailIngredient.ingredient
   )
   cocktailIngredients!: CocktailIngredient[];
 

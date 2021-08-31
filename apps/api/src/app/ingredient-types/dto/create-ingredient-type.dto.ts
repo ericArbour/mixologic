@@ -1,1 +1,3 @@
-export class CreateIngredientTypeDto {}
+export class CreateIngredientTypeDto {
+  name!: string;
+}

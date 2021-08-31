@@ -17,7 +17,7 @@ export class IngredientType {
   @Column({ unique: true })
   name!: string;
 
-  @OneToMany(() => Ingredient, (ingredient) => ingredient.type)
+  @OneToMany(() => Ingredient, (ingredient) => ingredient.ingredientType)
   ingredients!: Ingredient[];
 
   @CreateDateColumn()

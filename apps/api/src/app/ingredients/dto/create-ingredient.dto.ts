@@ -1,1 +1,4 @@
-export class CreateIngredientDto {}
+export class CreateIngredientDto {
+  name!: string;
+  ingredientTypeId!: number;
+}

@@ -27,10 +27,10 @@ export class CocktailsService {
   }
 
   async update(id: number, updateCocktailDto: UpdateCocktailDto) {
-    const glass = await this.findOne(id);
-    if (!glass) throw new NotFoundException('Glass not found');
+    const cocktail = await this.findOne(id);
+    if (!cocktail) throw new NotFoundException('Cocktail not found');
 
-    return this.repository.save({ ...glass, ...updateCocktailDto });
+    return this.repository.save({ ...cocktail, ...updateCocktailDto });
   }
 
   remove(id: number) {

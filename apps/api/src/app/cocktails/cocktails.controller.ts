@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+
 import { CocktailsService } from './cocktails.service';
 import { CreateCocktailDto } from './dto/create-cocktail.dto';
 import { UpdateCocktailDto } from './dto/update-cocktail.dto';
@@ -33,7 +34,7 @@ export class CocktailsController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateCocktailDto: UpdateCocktailDto,
+    @Body() updateCocktailDto: UpdateCocktailDto
   ) {
     return this.cocktailsService.update(+id, updateCocktailDto);
   }

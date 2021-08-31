@@ -1,26 +1,39 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import { CreateCocktailDto } from './dto/create-cocktail.dto';
 import { UpdateCocktailDto } from './dto/update-cocktail.dto';
+import { Cocktail } from './entities/cocktail.entity';
 
 @Injectable()
 export class CocktailsService {
+  constructor(
+    @InjectRepository(Cocktail)
+    private repository: Repository<Cocktail>
+  ) {}
+
   create(createCocktailDto: CreateCocktailDto) {
-    return 'This action adds a new cocktail';
+    const cocktail = this.repository.create(createCocktailDto);
+    return this.repository.save(cocktail);
   }
 
   findAll() {
-    return `This action returns all cocktails`;
+    return this.repository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} cocktail`;
+    return this.repository.findOne(id);
   }
 
-  update(id: number, updateCocktailDto: UpdateCocktailDto) {
-    return `This action updates a #${id} cocktail`;
+  async update(id: number, updateCocktailDto: UpdateCocktailDto) {
+    const glass = await this.findOne(id);
+    if (!glass) throw new NotFoundException('Glass not found');
+
+    return this.repository.save({ ...glass, ...updateCocktailDto });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} cocktail`;
+    return this.repository.softDelete(id);
   }
 }

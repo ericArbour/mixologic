@@ -11,38 +11,33 @@ import {
 import { GlassesService } from './glasses.service';
 import { CreateGlassDto } from './dto/create-glass.dto';
 import { UpdateGlassDto } from './dto/update-glass.dto';
-import { Glass } from './entities/glass.entity';
-import { UpdateResult } from 'typeorm';
 
 @Controller('glasses')
 export class GlassesController {
   constructor(private readonly glassesService: GlassesService) {}
 
   @Post()
-  create(@Body() createGlassDto: CreateGlassDto): Promise<Glass> {
+  create(@Body() createGlassDto: CreateGlassDto) {
     return this.glassesService.create(createGlassDto);
   }
 
   @Get()
-  findAll(): Promise<Glass[]> {
+  findAll() {
     return this.glassesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Glass | undefined> {
+  findOne(@Param('id') id: string) {
     return this.glassesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateGlassDto: UpdateGlassDto,
-  ): Promise<Glass> {
+  update(@Param('id') id: string, @Body() updateGlassDto: UpdateGlassDto) {
     return this.glassesService.update(+id, updateGlassDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<UpdateResult> {
+  remove(@Param('id') id: string) {
     return this.glassesService.remove(+id);
   }
 }

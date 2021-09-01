@@ -7,6 +7,7 @@ import { CocktailsModule } from './cocktails/cocktails.module';
 import { GlassesModule } from './glasses/glasses.module';
 import { IngredientTypesModule } from './ingredient-types/ingredient-types.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
+import { UnitsModule } from './units/units.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { IngredientsModule } from './ingredients/ingredients.module';
     GlassesModule,
     IngredientsModule,
     IngredientTypesModule,
+    UnitsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -2,8 +2,8 @@ import { Entity, Column, ManyToOne, Unique } from 'typeorm';
 
 import { Base } from '../../base.entity';
 import { Ingredient } from '../../ingredients/entities/ingredient.entity';
+import { Unit } from '../../units/entities/unit.entity';
 import { Cocktail } from './cocktail.entity';
-import { Unit } from './unit.entity';
 
 @Entity()
 @Unique(['cocktailId', 'ingredientId'])

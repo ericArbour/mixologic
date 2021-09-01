@@ -9,10 +9,10 @@ content-type: application/json
 ### Find all ingredient types
 GET http://localhost:3333/api/ingredient-types
 
-### Find one glass by id
+### Find one ingredient type by id
 GET http://localhost:3333/api/ingredient-types/1
 
-### Update a glass
+### Update an ingredient type
 PATCH http://localhost:3333/api/ingredient-types/1
 content-type: application/json
 
@@ -20,5 +20,5 @@ content-type: application/json
   "name": "Liqueur"
 }
 
-### Delete a glass
+### Delete an ingredient type
 DELETE http://localhost:3333/api/ingredient-types/1

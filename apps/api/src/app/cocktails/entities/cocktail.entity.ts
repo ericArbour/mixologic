@@ -13,7 +13,7 @@ export class Cocktail extends Base {
   url!: string;
 
   @Column()
-  glassId!: number;
+  glassId!: Glass['id'];
 
   @ManyToOne(() => Glass, (glass) => glass.cocktails, { nullable: false })
   glass?: Glass;

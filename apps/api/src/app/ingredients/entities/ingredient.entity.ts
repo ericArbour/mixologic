@@ -10,7 +10,7 @@ export class Ingredient extends Base {
   name!: string;
 
   @Column()
-  ingredientTypeId!: number;
+  ingredientTypeId!: IngredientType['id'];
 
   @ManyToOne(
     () => IngredientType,

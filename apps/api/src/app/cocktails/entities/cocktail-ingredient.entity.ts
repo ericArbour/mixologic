@@ -12,13 +12,13 @@ export class CocktailIngredient extends Base {
   amount!: number;
 
   @Column()
-  cocktailId!: number;
+  cocktailId!: Cocktail['id'];
 
   @Column()
-  ingredientId!: number;
+  ingredientId!: Ingredient['id'];
 
   @Column()
-  unitId!: number;
+  unitId!: Unit['id'];
 
   @ManyToOne(() => Cocktail, (cocktail) => cocktail.cocktailIngredients)
   cocktail?: Cocktail;

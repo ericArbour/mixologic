@@ -1,21 +1,11 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
+
+import { Base } from '../../base.entity';
 import { Glass } from '../../glasses/entities/glass.entity';
 import { CocktailIngredient } from './cocktail-ingredient.entity';
 
 @Entity()
-export class Cocktail {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+export class Cocktail extends Base {
   @Column({ unique: true })
   name!: string;
 
@@ -27,16 +17,7 @@ export class Cocktail {
 
   @OneToMany(
     () => CocktailIngredient,
-    (cocktailIngredient) => cocktailIngredient.cocktail,
+    (cocktailIngredient) => cocktailIngredient.cocktail
   )
   cocktailIngredients!: CocktailIngredient[];
-
-  @CreateDateColumn()
-  createdDate!: Date;
-
-  @UpdateDateColumn()
-  updatedDate!: Date;
-
-  @DeleteDateColumn()
-  deletedDate?: Date;
 }

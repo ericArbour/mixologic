@@ -1,23 +1,13 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  Unique,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, Unique } from 'typeorm';
+
+import { Base } from '../../base.entity';
 import { Ingredient } from '../../ingredients/entities/ingredient.entity';
 import { Cocktail } from './cocktail.entity';
 import { Unit } from './unit.entity';
 
 @Entity()
 @Unique(['cocktailId', 'ingredientId'])
-export class CocktailIngredient {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+export class CocktailIngredient extends Base {
   @Column()
   cocktailId!: number;
 
@@ -35,13 +25,4 @@ export class CocktailIngredient {
 
   @ManyToOne(() => Ingredient, (ingredient) => ingredient.cocktailIngredients)
   ingredient!: Ingredient;
-
-  @CreateDateColumn()
-  createdDate!: Date;
-
-  @UpdateDateColumn()
-  updatedDate!: Date;
-
-  @DeleteDateColumn()
-  deletedDate?: Date;
 }

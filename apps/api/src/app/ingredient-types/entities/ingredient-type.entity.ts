@@ -1,31 +1,13 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
+
+import { Base } from '../../base.entity';
 import { Ingredient } from '../../ingredients/entities/ingredient.entity';
 
 @Entity()
-export class IngredientType {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+export class IngredientType extends Base {
   @Column({ unique: true })
   name!: string;
 
   @OneToMany(() => Ingredient, (ingredient) => ingredient.ingredientType)
   ingredients!: Ingredient[];
-
-  @CreateDateColumn()
-  createdDate!: Date;
-
-  @UpdateDateColumn()
-  updatedDate!: Date;
-
-  @DeleteDateColumn()
-  deletedDate?: Date;
 }

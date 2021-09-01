@@ -1,26 +1,9 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
+
+import { Base } from '../../base.entity';
 
 @Entity()
-export class Unit {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+export class Unit extends Base {
   @Column({ unique: true })
   name!: string;
-
-  @CreateDateColumn()
-  createdDate!: Date;
-
-  @UpdateDateColumn()
-  updatedDate!: Date;
-
-  @DeleteDateColumn()
-  deletedDate?: Date;
 }

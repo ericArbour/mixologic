@@ -17,11 +17,11 @@ export class Ingredient extends Base {
     (ingredientType) => ingredientType.ingredients,
     { nullable: false }
   )
-  ingredientType!: IngredientType;
+  ingredientType?: IngredientType;
 
   @OneToMany(
     () => CocktailIngredient,
     (cocktailIngredient) => cocktailIngredient.ingredient
   )
-  cocktailIngredients!: CocktailIngredient[];
+  cocktailIngredients?: CocktailIngredient[];
 }

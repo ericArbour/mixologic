@@ -9,5 +9,5 @@ export class Glass extends Base {
   name!: string;
 
   @OneToMany(() => Cocktail, (cocktail) => cocktail.glass)
-  cocktails!: Cocktail[];
+  cocktails?: Cocktail[];
 }

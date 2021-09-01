@@ -9,5 +9,5 @@ export class IngredientType extends Base {
   name!: string;
 
   @OneToMany(() => Ingredient, (ingredient) => ingredient.ingredientType)
-  ingredients!: Ingredient[];
+  ingredients?: Ingredient[];
 }

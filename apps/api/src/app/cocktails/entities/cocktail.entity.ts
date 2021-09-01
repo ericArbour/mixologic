@@ -12,12 +12,15 @@ export class Cocktail extends Base {
   @Column({ unique: true })
   url!: string;
 
+  @Column()
+  glassId!: number;
+
   @ManyToOne(() => Glass, (glass) => glass.cocktails, { nullable: false })
-  glass!: Glass;
+  glass?: Glass;
 
   @OneToMany(
     () => CocktailIngredient,
     (cocktailIngredient) => cocktailIngredient.cocktail
   )
-  cocktailIngredients!: CocktailIngredient[];
+  cocktailIngredients?: CocktailIngredient[];
 }

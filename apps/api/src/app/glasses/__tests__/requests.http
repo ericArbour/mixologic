@@ -3,7 +3,7 @@ POST http://localhost:3333/api/glasses
 content-type: application/json
 
 {
-  "name": "Highball"
+  "name": "Coup"
 }
 
 ### Find all glasses

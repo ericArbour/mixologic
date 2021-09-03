@@ -3,8 +3,8 @@ POST http://localhost:3333/api/ingredients
 content-type: application/json
 
 {
-  "name": "Gin",
-  "ingredientTypeId": 2
+  "name": "Olive",
+  "ingredientTypeId": 5
 }
 
 ### Find all ingredients

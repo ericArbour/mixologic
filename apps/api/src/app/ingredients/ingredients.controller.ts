@@ -6,10 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
+
 import { IngredientsService } from './ingredients.service';
 import { CreateIngredientDto } from './dto/create-ingredient.dto';
 import { UpdateIngredientDto } from './dto/update-ingredient.dto';
+import { Ingredient } from './entities/ingredient.entity';
 
 @Controller('ingredients')
 export class IngredientsController {
@@ -26,20 +29,20 @@ export class IngredientsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ingredientsService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: Ingredient['id']) {
+    return this.ingredientsService.findOne(id);
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
-    @Body() updateIngredientDto: UpdateIngredientDto,
+    @Param('id', ParseIntPipe) id: Ingredient['id'],
+    @Body() updateIngredientDto: UpdateIngredientDto
   ) {
-    return this.ingredientsService.update(+id, updateIngredientDto);
+    return this.ingredientsService.update(id, updateIngredientDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ingredientsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: Ingredient['id']) {
+    return this.ingredientsService.remove(id);
   }
 }

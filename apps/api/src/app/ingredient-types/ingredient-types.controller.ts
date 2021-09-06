@@ -6,15 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
+
 import { IngredientTypesService } from './ingredient-types.service';
 import { CreateIngredientTypeDto } from './dto/create-ingredient-type.dto';
 import { UpdateIngredientTypeDto } from './dto/update-ingredient-type.dto';
+import { IngredientType } from './entities/ingredient-type.entity';
 
 @Controller('ingredient-types')
 export class IngredientTypesController {
   constructor(
-    private readonly ingredientTypesService: IngredientTypesService,
+    private readonly ingredientTypesService: IngredientTypesService
   ) {}
 
   @Post()
@@ -28,20 +31,20 @@ export class IngredientTypesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ingredientTypesService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: IngredientType['id']) {
+    return this.ingredientTypesService.findOne(id);
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
-    @Body() updateIngredientTypeDto: UpdateIngredientTypeDto,
+    @Param('id', ParseIntPipe) id: IngredientType['id'],
+    @Body() updateIngredientTypeDto: UpdateIngredientTypeDto
   ) {
-    return this.ingredientTypesService.update(+id, updateIngredientTypeDto);
+    return this.ingredientTypesService.update(id, updateIngredientTypeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ingredientTypesService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: IngredientType['id']) {
+    return this.ingredientTypesService.remove(id);
   }
 }

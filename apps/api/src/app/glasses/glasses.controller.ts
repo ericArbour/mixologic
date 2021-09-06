@@ -6,11 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 
 import { GlassesService } from './glasses.service';
 import { CreateGlassDto } from './dto/create-glass.dto';
 import { UpdateGlassDto } from './dto/update-glass.dto';
+import { Glass } from './entities/glass.entity';
 
 @Controller('glasses')
 export class GlassesController {
@@ -27,17 +29,20 @@ export class GlassesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.glassesService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: Glass['id']) {
+    return this.glassesService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGlassDto: UpdateGlassDto) {
-    return this.glassesService.update(+id, updateGlassDto);
+  update(
+    @Param('id', ParseIntPipe) id: Glass['id'],
+    @Body() updateGlassDto: UpdateGlassDto
+  ) {
+    return this.glassesService.update(id, updateGlassDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.glassesService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: Glass['id']) {
+    return this.glassesService.remove(id);
   }
 }

@@ -4,7 +4,7 @@ content-type: application/json
 
 {
   "name": "Olive",
-  "ingredientTypeId": 5
+  "ingredientTypeId": 1
 }
 
 ### Find all ingredients

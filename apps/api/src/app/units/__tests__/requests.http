@@ -3,7 +3,7 @@ POST http://localhost:3333/api/units
 content-type: application/json
 
 {
-  "name": "garnish"
+  "name": "tsp"
 }
 
 ### Find all units

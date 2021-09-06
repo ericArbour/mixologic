@@ -22,11 +22,14 @@ export class IngredientTypesService {
     return this.repository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: IngredientType['id']) {
     return this.repository.findOne(id);
   }
 
-  async update(id: number, updateIngredientTypeDto: UpdateIngredientTypeDto) {
+  async update(
+    id: IngredientType['id'],
+    updateIngredientTypeDto: UpdateIngredientTypeDto
+  ) {
     const ingredientType = await this.findOne(id);
     if (!ingredientType)
       throw new NotFoundException('Ingredient Type not found');
@@ -37,7 +40,7 @@ export class IngredientTypesService {
     });
   }
 
-  remove(id: number) {
+  remove(id: IngredientType['id']) {
     return this.repository.softDelete(id);
   }
 }

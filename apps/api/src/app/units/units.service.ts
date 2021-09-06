@@ -22,18 +22,18 @@ export class UnitsService {
     return this.repository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: Unit['id']) {
     return this.repository.findOne(id);
   }
 
-  async update(id: number, updateUnitDto: UpdateUnitDto) {
+  async update(id: Unit['id'], updateUnitDto: UpdateUnitDto) {
     const unit = await this.findOne(id);
     if (!unit) throw new NotFoundException('Unit not found');
 
     return this.repository.save({ ...unit, ...updateUnitDto });
   }
 
-  remove(id: number) {
+  remove(id: Unit['id']) {
     return this.repository.softDelete(id);
   }
 }

@@ -40,18 +40,18 @@ export class CocktailsService {
     return this.cocktailRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: Cocktail['id']) {
     return this.cocktailRepository.findOne(id);
   }
 
-  async update(id: number, updateCocktailDto: UpdateCocktailDto) {
+  async update(id: Cocktail['id'], updateCocktailDto: UpdateCocktailDto) {
     const cocktail = await this.findOne(id);
     if (!cocktail) throw new NotFoundException('Cocktail not found');
 
     return this.cocktailRepository.save({ ...cocktail, ...updateCocktailDto });
   }
 
-  remove(id: number) {
+  remove(id: Cocktail['id']) {
     return this.cocktailRepository.softDelete(id);
   }
 }

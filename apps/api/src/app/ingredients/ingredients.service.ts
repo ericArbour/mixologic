@@ -22,18 +22,18 @@ export class IngredientsService {
     return this.repository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: Ingredient['id']) {
     return this.repository.findOne(id);
   }
 
-  async update(id: number, updateIngredientDto: UpdateIngredientDto) {
+  async update(id: Ingredient['id'], updateIngredientDto: UpdateIngredientDto) {
     const ingredient = await this.findOne(id);
     if (!ingredient) throw new NotFoundException('Ingredient not found');
 
     return this.repository.save({ ...ingredient, ...updateIngredientDto });
   }
 
-  remove(id: number) {
+  remove(id: Ingredient['id']) {
     return this.repository.softDelete(id);
   }
 }

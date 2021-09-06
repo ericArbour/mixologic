@@ -22,18 +22,18 @@ export class GlassesService {
     return this.repository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: Glass['id']) {
     return this.repository.findOne(id);
   }
 
-  async update(id: number, updateGlassDto: UpdateGlassDto) {
+  async update(id: Glass['id'], updateGlassDto: UpdateGlassDto) {
     const glass = await this.findOne(id);
     if (!glass) throw new NotFoundException('Glass not found');
 
     return this.repository.save({ ...glass, ...updateGlassDto });
   }
 
-  remove(id: number) {
+  remove(id: Glass['id']) {
     return this.repository.softDelete(id);
   }
 }

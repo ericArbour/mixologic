@@ -8,7 +8,9 @@ import {
   IsNumber,
   IsPositive,
   ArrayMinSize,
+  IsOptional,
 } from 'class-validator';
+import { IsGreaterThan } from '../../utils/is-greater-than';
 
 export class CreateCocktailDto {
   @IsDefined()
@@ -41,6 +43,14 @@ export class CreateCocktailIngredientDto {
   @IsNumber()
   @IsPositive()
   amount!: number;
+
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
+  @IsGreaterThan('amount', {
+    message: 'upperRangeAmount must be larger than amount',
+  })
+  upperRangeAmount?: string;
 
   @IsDefined()
   @IsInt()

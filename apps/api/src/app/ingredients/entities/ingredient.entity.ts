@@ -1,6 +1,6 @@
 import { Entity, Column, OneToMany, ManyToOne } from 'typeorm';
 
-import { Base } from '../../base.entity';
+import { Base } from '../../utils/base.entity';
 import { CocktailIngredient } from '../../cocktails/entities/cocktail-ingredient.entity';
 import { IngredientType } from '../../ingredient-types/entities/ingredient-type.entity';
 

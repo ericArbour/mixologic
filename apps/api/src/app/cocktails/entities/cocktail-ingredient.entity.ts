@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, Unique } from 'typeorm';
 
-import { Base } from '../../base.entity';
+import { Base } from '../../utils/base.entity';
 import { Ingredient } from '../../ingredients/entities/ingredient.entity';
 import { Unit } from '../../units/entities/unit.entity';
 import { Cocktail } from './cocktail.entity';
@@ -10,6 +10,9 @@ import { Cocktail } from './cocktail.entity';
 export class CocktailIngredient extends Base {
   @Column({ type: 'real' })
   amount!: number;
+
+  @Column({ type: 'real', nullable: true })
+  upperRangeAmount?: number;
 
   @Column()
   cocktailId!: Cocktail['id'];

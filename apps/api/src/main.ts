@@ -2,7 +2,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
-import { DbQueryFailedFilter } from './app/db-query-failed-filter';
+import { DbQueryFailedFilter } from './app/utils/db-query-failed-filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

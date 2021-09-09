@@ -9,7 +9,9 @@ import {
   IsPositive,
   ArrayMinSize,
   IsOptional,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { IsGreaterThan } from '../../utils/is-greater-than';
 
 export class CreateCocktailDto {
@@ -30,6 +32,8 @@ export class CreateCocktailDto {
   glassId!: number;
 
   @ArrayMinSize(2)
+  @ValidateNested({ each: true })
+  @Type(() => CreateCocktailIngredientDto)
   cocktailIngredients!: CreateCocktailIngredientDto[];
 }
 
@@ -47,10 +51,8 @@ export class CreateCocktailIngredientDto {
   @IsOptional()
   @IsNumber()
   @IsPositive()
-  @IsGreaterThan('amount', {
-    message: 'upperRangeAmount must be larger than amount',
-  })
-  upperRangeAmount?: string;
+  @IsGreaterThan('amount')
+  upperRangeAmount?: number;
 
   @IsDefined()
   @IsInt()

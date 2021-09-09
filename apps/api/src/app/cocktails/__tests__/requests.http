@@ -3,8 +3,8 @@ POST http://localhost:3333/api/cocktails
 content-type: application/json
 
 {
-  "name": "Dirty Martini",
-  "url": "https://www.liquor.com/recipes/dirty-martini/",
+  "name": "Dirty Martini 11",
+  "url": "https://www.liquor.com/recipes/dirty-martini/11",
   "glassId": 6,
   "cocktailIngredients": [
     {

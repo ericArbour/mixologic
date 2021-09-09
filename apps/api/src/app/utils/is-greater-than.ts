@@ -1,3 +1,5 @@
+// Source: https://stackoverflow.com/questions/59980341/can-i-compare-number-variables-with-class-validator
+
 import {
   registerDecorator,
   ValidationOptions,
@@ -15,7 +17,10 @@ export function IsGreaterThan(
       target: dto.constructor,
       propertyName: propertyName,
       constraints: [relatedPropertyName],
-      options: validationOptions,
+      options: {
+        message: `${propertyName} must be larger than ${relatedPropertyName}`,
+        ...validationOptions,
+      },
       validator: {
         validate(value: unknown, args: ValidationArguments) {
           const relatedPropertyName = args

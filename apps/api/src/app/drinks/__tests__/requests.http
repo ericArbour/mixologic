@@ -3,30 +3,24 @@ POST http://localhost:3333/api/drinks
 content-type: application/json
 
 {
-  "name": "Dirty Martini 11",
-  "url": "https://www.liquor.com/recipes/dirty-martini/11",
-  "glassId": 6,
+  "name": "Dirty Martini",
+  "url": "https://www.liquor.com/recipes/dirty-martini/",
+  "glassId": 1,
   "drinkIngredients": [
     {
-      "ingredientId": 7,
+      "ingredientId": 1,
       "amount": 2.5,
-      "unitId": 2
+      "unitId": 1
     },
     {
-      "ingredientId": 8,
-      "amount": 0.5,
-      "unitId": 2
-    },
+      "ingredientId": 2,
+      "amount": 4,
+      "unitId": 1
+    }
+  ],
+  "drinkTags": [
     {
-      "ingredientId": 9,
-      "amount": 0.5,
-      "unitId": 2
-    },
-    {
-      "ingredientId": 10,
-      "amount": 2.0,
-      "upperRangeAmount": 4.0,
-      "unitId": 3
+      "name": "Sweet"
     }
   ]
 }

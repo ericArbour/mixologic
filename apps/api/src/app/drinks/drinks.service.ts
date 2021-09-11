@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { DrinkTag } from '../drink-tags/entities/drink-tag.entity';
 
 import { CreateDrinkDto } from './dto/create-drink.dto';
@@ -13,46 +13,45 @@ export class DrinksService {
   constructor(
     @InjectRepository(Drink)
     private drinkRepository: Repository<Drink>,
-    @InjectRepository(DrinkIngredient)
-    private drinkIngredientRepository: Repository<DrinkIngredient>,
-    @InjectRepository(DrinkTag)
-    private drinkTagRepository: Repository<DrinkTag>
+    private connection: Connection
   ) {}
 
   async create(createDrinkDto: CreateDrinkDto) {
-    const drink = this.drinkRepository.create(createDrinkDto);
+    return await this.connection.transaction(async (manager) => {
+      const drink = manager.create(Drink, createDrinkDto);
 
-    const drinkTagOps = createDrinkDto.drinkTags.map(async (drinkTagDto) => {
-      const existingDrinkTag = await this.drinkTagRepository.findOne({
-        name: drinkTagDto.name,
-      });
-
-      if (existingDrinkTag) return existingDrinkTag;
-
-      const drinkTag = this.drinkTagRepository.create(drinkTagDto);
-      return await this.drinkTagRepository.save(drinkTag);
-    });
-
-    const savedDrinkTags = await Promise.all(drinkTagOps);
-    drink.drinkTags = savedDrinkTags;
-
-    const savedDrink = await this.drinkRepository.save(drink);
-
-    const drinkIngredientOps = createDrinkDto.drinkIngredients.map(
-      (drinkIngredientDto) => {
-        const drinkIngredient = this.drinkIngredientRepository.create({
-          ...drinkIngredientDto,
-          drinkId: savedDrink.id,
+      const drinkTagOps = createDrinkDto.drinkTags.map(async (drinkTagDto) => {
+        const existingDrinkTag = await manager.findOne(DrinkTag, {
+          name: drinkTagDto.name,
         });
 
-        return this.drinkIngredientRepository.save(drinkIngredient);
-      }
-    );
+        if (existingDrinkTag) return existingDrinkTag;
 
-    const savedDrinkIngredients = await Promise.all(drinkIngredientOps);
-    savedDrink.drinkIngredients = savedDrinkIngredients;
+        const drinkTag = manager.create(DrinkTag, drinkTagDto);
+        return await manager.save(drinkTag);
+      });
 
-    return savedDrink;
+      const savedDrinkTags = await Promise.all(drinkTagOps);
+      drink.drinkTags = savedDrinkTags;
+
+      const savedDrink = await manager.save(drink);
+
+      const drinkIngredientOps = createDrinkDto.drinkIngredients.map(
+        (drinkIngredientDto) => {
+          const drinkIngredient = manager.create(DrinkIngredient, {
+            ...drinkIngredientDto,
+            drinkId: savedDrink.id,
+          });
+
+          return manager.save(drinkIngredient);
+        }
+      );
+
+      const savedDrinkIngredients = await Promise.all(drinkIngredientOps);
+      savedDrink.drinkIngredients = savedDrinkIngredients;
+
+      return savedDrink;
+    });
   }
 
   findAll() {

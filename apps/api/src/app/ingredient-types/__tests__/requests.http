@@ -3,7 +3,7 @@ POST http://localhost:3333/api/ingredient-types
 content-type: application/json
 
 {
-  "name": "Other"
+  "name": "Liquor"
 }
 
 ### Find all ingredient types

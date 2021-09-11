@@ -3,7 +3,7 @@ POST http://localhost:3333/api/units
 content-type: application/json
 
 {
-  "name": "tsp"
+  "name": "fl oz"
 }
 
 ### Find all units

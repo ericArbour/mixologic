@@ -1,13 +1,13 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, ManyToMany } from 'typeorm';
 
 import { Base } from '../../utils/base.entity';
 import { Drink } from '../../drinks/entities/drink.entity';
 
 @Entity()
-export class Glass extends Base {
+export class DrinkTag extends Base {
   @Column({ type: 'citext', unique: true })
   name!: string;
 
-  @OneToMany(() => Drink, (drink) => drink.glass)
+  @ManyToMany(() => Drink)
   drinks?: Drink[];
 }

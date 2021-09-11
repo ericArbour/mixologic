@@ -10,9 +10,14 @@ import {
   ArrayMinSize,
   IsOptional,
   ValidateNested,
+  ArrayNotEmpty,
+  ArrayMaxSize,
+  ArrayUnique,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+
 import { IsGreaterThan } from '../../utils/is-greater-than';
+import { CreateDrinkTagDto } from '../../drink-tags/dto/create-drink-tag.dto';
 
 export class CreateDrinkDto {
   @IsDefined()
@@ -31,10 +36,20 @@ export class CreateDrinkDto {
   @IsPositive()
   glassId!: number;
 
+  @IsDefined()
   @ArrayMinSize(2)
+  @ArrayMaxSize(10)
   @ValidateNested({ each: true })
   @Type(() => CreateDrinkIngredientDto)
   drinkIngredients!: CreateDrinkIngredientDto[];
+
+  @IsDefined()
+  @ArrayNotEmpty()
+  @ArrayMaxSize(5)
+  @ArrayUnique((createDrinkTagDto: CreateDrinkTagDto) => createDrinkTagDto.name)
+  @ValidateNested({ each: true })
+  @Type(() => CreateDrinkTagDto)
+  drinkTags!: CreateDrinkTagDto[];
 }
 
 export class CreateDrinkIngredientDto {

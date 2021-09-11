@@ -4,6 +4,6 @@ import { Base } from '../../utils/base.entity';
 
 @Entity()
 export class Unit extends Base {
-  @Column({ unique: true })
+  @Column({ type: 'citext', unique: true })
   name!: string;
 }

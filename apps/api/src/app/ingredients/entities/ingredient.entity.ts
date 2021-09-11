@@ -6,7 +6,7 @@ import { IngredientType } from '../../ingredient-types/entities/ingredient-type.
 
 @Entity()
 export class Ingredient extends Base {
-  @Column({ unique: true })
+  @Column({ type: 'citext', unique: true })
   name!: string;
 
   @Column()

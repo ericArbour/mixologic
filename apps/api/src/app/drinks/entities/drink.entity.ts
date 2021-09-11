@@ -2,10 +2,10 @@ import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 
 import { Base } from '../../utils/base.entity';
 import { Glass } from '../../glasses/entities/glass.entity';
-import { CocktailIngredient } from './cocktail-ingredient.entity';
+import { DrinkIngredient } from './drink-ingredient.entity';
 
 @Entity()
-export class Cocktail extends Base {
+export class Drink extends Base {
   @Column({ unique: true })
   name!: string;
 
@@ -15,12 +15,9 @@ export class Cocktail extends Base {
   @Column()
   glassId!: Glass['id'];
 
-  @ManyToOne(() => Glass, (glass) => glass.cocktails, { nullable: false })
+  @ManyToOne(() => Glass, (glass) => glass.drinks, { nullable: false })
   glass?: Glass;
 
-  @OneToMany(
-    () => CocktailIngredient,
-    (cocktailIngredient) => cocktailIngredient.cocktail
-  )
-  cocktailIngredients?: CocktailIngredient[];
+  @OneToMany(() => DrinkIngredient, (drinkIngredient) => drinkIngredient.drink)
+  drinkIngredients?: DrinkIngredient[];
 }

@@ -3,11 +3,11 @@ import { Entity, Column, ManyToOne, Unique } from 'typeorm';
 import { Base } from '../../utils/base.entity';
 import { Ingredient } from '../../ingredients/entities/ingredient.entity';
 import { Unit } from '../../units/entities/unit.entity';
-import { Cocktail } from './cocktail.entity';
+import { Drink } from './drink.entity';
 
 @Entity()
-@Unique(['cocktailId', 'ingredientId'])
-export class CocktailIngredient extends Base {
+@Unique(['drinkId', 'ingredientId'])
+export class DrinkIngredient extends Base {
   @Column({ type: 'real' })
   amount!: number;
 
@@ -15,7 +15,7 @@ export class CocktailIngredient extends Base {
   upperRangeAmount?: number;
 
   @Column()
-  cocktailId!: Cocktail['id'];
+  drinkId!: Drink['id'];
 
   @Column()
   ingredientId!: Ingredient['id'];
@@ -23,10 +23,10 @@ export class CocktailIngredient extends Base {
   @Column()
   unitId!: Unit['id'];
 
-  @ManyToOne(() => Cocktail, (cocktail) => cocktail.cocktailIngredients)
-  cocktail?: Cocktail;
+  @ManyToOne(() => Drink, (drink) => drink.drinkIngredients)
+  drink?: Drink;
 
-  @ManyToOne(() => Ingredient, (ingredient) => ingredient.cocktailIngredients)
+  @ManyToOne(() => Ingredient, (ingredient) => ingredient.drinkIngredients)
   ingredient?: Ingredient;
 
   @ManyToOne(() => Unit, { nullable: false })

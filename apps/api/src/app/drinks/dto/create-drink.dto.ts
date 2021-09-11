@@ -14,7 +14,7 @@ import {
 import { Type } from 'class-transformer';
 import { IsGreaterThan } from '../../utils/is-greater-than';
 
-export class CreateCocktailDto {
+export class CreateDrinkDto {
   @IsDefined()
   @IsString()
   @MinLength(2)
@@ -33,11 +33,11 @@ export class CreateCocktailDto {
 
   @ArrayMinSize(2)
   @ValidateNested({ each: true })
-  @Type(() => CreateCocktailIngredientDto)
-  cocktailIngredients!: CreateCocktailIngredientDto[];
+  @Type(() => CreateDrinkIngredientDto)
+  drinkIngredients!: CreateDrinkIngredientDto[];
 }
 
-export class CreateCocktailIngredientDto {
+export class CreateDrinkIngredientDto {
   @IsDefined()
   @IsInt()
   @IsPositive()

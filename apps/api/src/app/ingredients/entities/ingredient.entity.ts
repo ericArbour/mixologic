@@ -1,7 +1,7 @@
 import { Entity, Column, OneToMany, ManyToOne } from 'typeorm';
 
 import { Base } from '../../utils/base.entity';
-import { CocktailIngredient } from '../../cocktails/entities/cocktail-ingredient.entity';
+import { DrinkIngredient } from '../../drinks/entities/drink-ingredient.entity';
 import { IngredientType } from '../../ingredient-types/entities/ingredient-type.entity';
 
 @Entity()
@@ -20,8 +20,8 @@ export class Ingredient extends Base {
   ingredientType?: IngredientType;
 
   @OneToMany(
-    () => CocktailIngredient,
-    (cocktailIngredient) => cocktailIngredient.ingredient
+    () => DrinkIngredient,
+    (drinkIngredient) => drinkIngredient.ingredient
   )
-  cocktailIngredients?: CocktailIngredient[];
+  drinkIngredients?: DrinkIngredient[];
 }

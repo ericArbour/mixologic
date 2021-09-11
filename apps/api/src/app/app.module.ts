@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CocktailsModule } from './cocktails/cocktails.module';
+import { DrinksModule } from './drinks/drinks.module';
 import { GlassesModule } from './glasses/glasses.module';
 import { IngredientTypesModule } from './ingredient-types/ingredient-types.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
@@ -21,7 +21,7 @@ import { UnitsModule } from './units/units.module';
       synchronize: true,
       autoLoadEntities: true,
     }),
-    CocktailsModule,
+    DrinksModule,
     GlassesModule,
     IngredientsModule,
     IngredientTypesModule,

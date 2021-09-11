@@ -1,12 +1,12 @@
-### Create a new cocktail
-POST http://localhost:3333/api/cocktails
+### Create a new drink
+POST http://localhost:3333/api/drinks
 content-type: application/json
 
 {
   "name": "Dirty Martini 11",
   "url": "https://www.liquor.com/recipes/dirty-martini/11",
   "glassId": 6,
-  "cocktailIngredients": [
+  "drinkIngredients": [
     {
       "ingredientId": 7,
       "amount": 2.5,
@@ -31,19 +31,19 @@ content-type: application/json
   ]
 }
 
-### Find all cocktails
-GET http://localhost:3333/api/cocktails
+### Find all drinks
+GET http://localhost:3333/api/drinks
 
-### Find one cocktail by id
-GET http://localhost:3333/api/cocktails/1
+### Find one drink by id
+GET http://localhost:3333/api/drinks/1
 
-### Update a cocktail
-PATCH http://localhost:3333/api/cocktails/1
+### Update a drink
+PATCH http://localhost:3333/api/drinks/1
 content-type: application/json
 
 {
   "name": "Dirty Martini"
 }
 
-### Delete a cocktail
-DELETE http://localhost:3333/api/cocktails/1
+### Delete a drink
+DELETE http://localhost:3333/api/drinks/1

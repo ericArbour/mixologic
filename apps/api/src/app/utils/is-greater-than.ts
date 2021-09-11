@@ -5,13 +5,13 @@ import {
   ValidationOptions,
   ValidationArguments,
 } from 'class-validator';
-import { CreateCocktailIngredientDto } from '../cocktails/dto/create-cocktail.dto';
+import { CreateDrinkIngredientDto } from '../drinks/dto/create-drink.dto';
 
 export function IsGreaterThan(
-  relatedPropertyName: keyof CreateCocktailIngredientDto,
+  relatedPropertyName: keyof CreateDrinkIngredientDto,
   validationOptions?: ValidationOptions
 ) {
-  return function (dto: CreateCocktailIngredientDto, propertyName: string) {
+  return function (dto: CreateDrinkIngredientDto, propertyName: string) {
     registerDecorator({
       name: 'isGreaterThan',
       target: dto.constructor,
@@ -24,8 +24,8 @@ export function IsGreaterThan(
       validator: {
         validate(value: unknown, args: ValidationArguments) {
           const relatedPropertyName = args
-            .constraints[0] as keyof CreateCocktailIngredientDto;
-          const dto = args.object as CreateCocktailIngredientDto;
+            .constraints[0] as keyof CreateDrinkIngredientDto;
+          const dto = args.object as CreateDrinkIngredientDto;
           const relatedValue = dto[relatedPropertyName];
 
           return (

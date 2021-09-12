@@ -19,11 +19,11 @@ export class IngredientsService {
   }
 
   findAll() {
-    return this.repository.find();
+    return this.repository.find({ relations: ['categories'] });
   }
 
   findOne(id: Ingredient['id']) {
-    return this.repository.findOne(id);
+    return this.repository.findOne(id, { relations: ['categories'] });
   }
 
   async update(id: Ingredient['id'], updateIngredientDto: UpdateIngredientDto) {

@@ -1,6 +1,5 @@
 import {
   IsDefined,
-  IsOptional,
   IsString,
   IsInt,
   MinLength,
@@ -24,17 +23,12 @@ export class CreateIngredientDto {
   @ArrayMaxSize(3)
   @ValidateNested({ each: true })
   @Type(() => CreateIngredientCategoryDto)
-  ingredientCategories!: CreateIngredientCategoryDto[];
+  categories!: CreateIngredientCategoryDto[];
 }
 
 class CreateIngredientCategoryDto {
-  @IsOptional()
-  @IsInt()
-  @IsPositive()
-  id?: number;
-
   @IsDefined()
   @IsInt()
   @IsPositive()
-  categoryId!: number;
+  id!: number;
 }

@@ -9,7 +9,7 @@ export class Ingredient extends Base {
   @Column({ type: 'citext', unique: true })
   name!: string;
 
-  @ManyToMany(() => Category, { cascade: true })
+  @ManyToMany(() => Category)
   @JoinTable()
   categories?: Category[];
 

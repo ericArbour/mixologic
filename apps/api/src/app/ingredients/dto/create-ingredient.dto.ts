@@ -1,12 +1,16 @@
 import {
   IsDefined,
+  IsOptional,
   IsString,
   IsInt,
   MinLength,
   MaxLength,
   IsPositive,
+  ArrayMinSize,
+  ArrayMaxSize,
+  ValidateNested,
 } from 'class-validator';
-import { CreateCategoryDto } from '../../categories/dto/create-category.dto';
+import { Type } from 'class-transformer';
 
 export class CreateIngredientDto {
   @IsDefined()
@@ -16,7 +20,21 @@ export class CreateIngredientDto {
   name!: string;
 
   @IsDefined()
+  @ArrayMinSize(1)
+  @ArrayMaxSize(3)
+  @ValidateNested({ each: true })
+  @Type(() => CreateIngredientCategoryDto)
+  ingredientCategories!: CreateIngredientCategoryDto[];
+}
+
+class CreateIngredientCategoryDto {
+  @IsOptional()
   @IsInt()
   @IsPositive()
-  categories!: CreateCategoryDto[];
+  id?: number;
+
+  @IsDefined()
+  @IsInt()
+  @IsPositive()
+  categoryId!: number;
 }

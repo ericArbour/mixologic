@@ -12,7 +12,7 @@ import {
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { Categories } from './entities/category.entity';
+import { Category } from './entities/category.entity';
 
 @Controller('categories')
 export class CategoriesController {
@@ -29,20 +29,20 @@ export class CategoriesController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: Categories['id']) {
+  findOne(@Param('id', ParseIntPipe) id: Category['id']) {
     return this.categoriesService.findOne(id);
   }
 
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: Categories['id'],
+    @Param('id', ParseIntPipe) id: Category['id'],
     @Body() updateCategoryDto: UpdateCategoryDto
   ) {
     return this.categoriesService.update(id, updateCategoryDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: Categories['id']) {
+  remove(@Param('id', ParseIntPipe) id: Category['id']) {
     return this.categoriesService.remove(id);
   }
 }

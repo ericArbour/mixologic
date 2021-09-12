@@ -4,13 +4,13 @@ import { Repository } from 'typeorm';
 
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { Categories } from './entities/category.entity';
+import { Category } from './entities/category.entity';
 
 @Injectable()
 export class CategoriesService {
   constructor(
-    @InjectRepository(Categories)
-    private repository: Repository<Categories>
+    @InjectRepository(Category)
+    private repository: Repository<Category>
   ) {}
 
   create(createCategoryDto: CreateCategoryDto) {
@@ -22,11 +22,11 @@ export class CategoriesService {
     return this.repository.find();
   }
 
-  findOne(id: Categories['id']) {
+  findOne(id: Category['id']) {
     return this.repository.findOne(id);
   }
 
-  async update(id: Categories['id'], updateCategoryDto: UpdateCategoryDto) {
+  async update(id: Category['id'], updateCategoryDto: UpdateCategoryDto) {
     const categories = await this.findOne(id);
     if (!categories) throw new NotFoundException('Category not found');
 
@@ -36,7 +36,7 @@ export class CategoriesService {
     });
   }
 
-  remove(id: Categories['id']) {
+  remove(id: Category['id']) {
     return this.repository.softDelete(id);
   }
 }

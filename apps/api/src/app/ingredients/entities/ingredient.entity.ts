@@ -2,16 +2,16 @@ import { Entity, Column, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 
 import { Base } from '../../utils/base.entity';
 import { DrinkIngredient } from '../../drinks/entities/drink-ingredient.entity';
-import { Categories } from '../../categories/entities/category.entity';
+import { Category } from '../../categories/entities/category.entity';
 
 @Entity()
 export class Ingredient extends Base {
   @Column({ type: 'citext', unique: true })
   name!: string;
 
-  @ManyToMany(() => Categories)
+  @ManyToMany(() => Category, { cascade: true })
   @JoinTable()
-  categories?: Categories[];
+  categories?: Category[];
 
   @OneToMany(
     () => DrinkIngredient,

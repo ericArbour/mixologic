@@ -1,6 +1,6 @@
 import { IsDefined, IsString, MinLength, MaxLength } from 'class-validator';
 
-export class CreateIngredientTypeDto {
+export class CreateCategoryDto {
   @IsDefined()
   @IsString()
   @MinLength(2)

@@ -4,10 +4,10 @@ import { Base } from '../../utils/base.entity';
 import { Ingredient } from '../../ingredients/entities/ingredient.entity';
 
 @Entity()
-export class IngredientType extends Base {
+export class Categories extends Base {
   @Column({ type: 'citext', unique: true })
   name!: string;
 
-  @OneToMany(() => Ingredient, (ingredient) => ingredient.ingredientType)
+  @OneToMany(() => Ingredient, (ingredient) => ingredient.categories)
   ingredients?: Ingredient[];
 }

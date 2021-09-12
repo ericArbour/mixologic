@@ -4,7 +4,7 @@ content-type: application/json
 
 {
   "name": "Gin",
-  "ingredientTypeId": 1
+  "categoryId": 1
 }
 
 ### Find all ingredients

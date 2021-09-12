@@ -1,0 +1,24 @@
+### Create a new category
+POST http://localhost:3333/api/categories
+content-type: application/json
+
+{
+  "name": "Liquor"
+}
+
+### Find all categories
+GET http://localhost:3333/api/categories
+
+### Find one category by id
+GET http://localhost:3333/api/categories/1
+
+### Update an category
+PATCH http://localhost:3333/api/categories/1
+content-type: application/json
+
+{
+  "name": "Liqueur"
+}
+
+### Delete an category
+DELETE http://localhost:3333/api/categories/1

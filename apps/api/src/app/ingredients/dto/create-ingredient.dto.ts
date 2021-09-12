@@ -6,6 +6,7 @@ import {
   MaxLength,
   IsPositive,
 } from 'class-validator';
+import { CreateCategoryDto } from '../../categories/dto/create-category.dto';
 
 export class CreateIngredientDto {
   @IsDefined()
@@ -17,5 +18,5 @@ export class CreateIngredientDto {
   @IsDefined()
   @IsInt()
   @IsPositive()
-  ingredientTypeId!: number;
+  categories!: CreateCategoryDto[];
 }

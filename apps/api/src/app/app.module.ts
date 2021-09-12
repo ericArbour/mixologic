@@ -5,7 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DrinksModule } from './drinks/drinks.module';
 import { GlassesModule } from './glasses/glasses.module';
-import { IngredientTypesModule } from './ingredient-types/ingredient-types.module';
+import { CategoriesModule } from './categories/categories.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { UnitsModule } from './units/units.module';
 
@@ -24,7 +24,7 @@ import { UnitsModule } from './units/units.module';
     DrinksModule,
     GlassesModule,
     IngredientsModule,
-    IngredientTypesModule,
+    CategoriesModule,
     UnitsModule,
   ],
   controllers: [AppController],

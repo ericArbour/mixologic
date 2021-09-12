@@ -13,6 +13,34 @@ export class Ingredient extends Base {
   @JoinTable()
   categories?: Category[];
 
+  @ManyToMany(() => Ingredient)
+  @JoinTable({
+    name: 'ingredient_satisfies_ingredient',
+    joinColumn: {
+      name: 'ingredient_1',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'ingredient_2',
+      referencedColumnName: 'id',
+    },
+  })
+  satisfiesIngredients?: Ingredient[];
+
+  @ManyToMany(() => Ingredient)
+  @JoinTable({
+    name: 'ingredient_satisfies_ingredient',
+    joinColumn: {
+      name: 'ingredient_2',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'ingredient_1',
+      referencedColumnName: 'id',
+    },
+  })
+  satisfiedByIngredients?: Ingredient[];
+
   @OneToMany(
     () => DrinkIngredient,
     (drinkIngredient) => drinkIngredient.ingredient

@@ -3,24 +3,21 @@ POST http://localhost:3333/api/drinks
 content-type: application/json
 
 {
-  "name": "Dirty Martini",
-  "url": "https://www.liquor.com/recipes/dirty-martini/",
+  "name": "Dirty Martini 2",
+  "url": "https://www.liquor.com/recipes/dirty-martini/2",
   "glassId": 1,
   "drinkIngredients": [
     {
+      "id": null,
       "ingredientId": 1,
       "amount": 2.5,
       "unitId": 1
     },
     {
+      "id": null,
       "ingredientId": 2,
       "amount": 4,
       "unitId": 1
-    }
-  ],
-  "drinkTags": [
-    {
-      "name": "Sweet"
     }
   ]
 }
@@ -36,7 +33,9 @@ PATCH http://localhost:3333/api/drinks/1
 content-type: application/json
 
 {
-  "name": "Dirty Martini"
+  "name": "Dirty Martini",
+  "url": "https://www.liquor.com/recipes/dirty-martini/",
+  "glassId": 1,
 }
 
 ### Delete a drink

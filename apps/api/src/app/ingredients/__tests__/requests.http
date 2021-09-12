@@ -3,7 +3,7 @@ POST http://localhost:3333/api/ingredients
 content-type: application/json
 
 {
-  "name": "Whiskey",
+  "name": "Gin",
   "ingredientTypeId": 1
 }
 

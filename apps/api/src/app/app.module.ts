@@ -8,7 +8,6 @@ import { GlassesModule } from './glasses/glasses.module';
 import { IngredientTypesModule } from './ingredient-types/ingredient-types.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { UnitsModule } from './units/units.module';
-import { DrinkTagsModule } from './drink-tags/drink-tags.module';
 
 @Module({
   imports: [
@@ -23,7 +22,6 @@ import { DrinkTagsModule } from './drink-tags/drink-tags.module';
       autoLoadEntities: true,
     }),
     DrinksModule,
-    DrinkTagsModule,
     GlassesModule,
     IngredientsModule,
     IngredientTypesModule,

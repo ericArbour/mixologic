@@ -1,2 +1,0 @@
-### Find all drink tags
-GET http://localhost:3333/api/drink-tags

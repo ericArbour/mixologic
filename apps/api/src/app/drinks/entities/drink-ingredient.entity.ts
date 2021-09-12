@@ -6,7 +6,7 @@ import { Unit } from '../../units/entities/unit.entity';
 import { Drink } from './drink.entity';
 
 @Entity()
-@Unique(['drinkId', 'ingredientId'])
+@Unique(['drinkId', 'ingredientId', 'unitId'])
 export class DrinkIngredient extends Base {
   @Column({ type: 'real' })
   amount!: number;

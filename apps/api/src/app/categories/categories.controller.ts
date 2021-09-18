@@ -9,12 +9,15 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 
+import { Serialize } from '../interceptors/serialize.interceptor';
 import { CategoriesService } from './categories.service';
+import { CategoryDto } from './dto/category.dto';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category } from './entities/category.entity';
 
 @Controller('categories')
+@Serialize(CategoryDto)
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 

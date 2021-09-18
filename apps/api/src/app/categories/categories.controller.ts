@@ -9,11 +9,12 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 
+import { CategoryDto } from '@mixologic/common';
+import { CreateCategoryDto } from '@mixologic/common';
+import { UpdateCategoryDto } from '@mixologic/common';
+
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { CategoriesService } from './categories.service';
-import { CategoryDto } from './dto/category.dto';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category } from './entities/category.entity';
 
 @Controller('categories')

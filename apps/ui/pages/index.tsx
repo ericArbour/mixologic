@@ -10,7 +10,7 @@ async function fetchCategories() {
   const categoryDtos = plainToClass(CategoryDto, categories);
   for (const categoryDto of categoryDtos) {
     await validateOrReject(categoryDto);
-  };
+  }
   return categoryDtos;
 }
 
@@ -25,12 +25,12 @@ export async function getStaticProps() {
     props: {
       dehydratedState: dehydrate(queryClient),
     },
-  }
+  };
 }
 
 const useCategories = () => {
-  return useQuery(['categories'], () => fetchCategories())
-}
+  return useQuery(['categories'], () => fetchCategories());
+};
 
 function Index() {
   const { isLoading, data } = useCategories();
@@ -39,7 +39,11 @@ function Index() {
   return (
     <div>
       <h2>Categories</h2>
-      <ul>{data.map(category => <li key={category.id}>{category.name}</li>)}</ul>
+      <ul>
+        {data.map((category) => (
+          <li key={category.id}>{category.name}</li>
+        ))}
+      </ul>
     </div>
   );
 }

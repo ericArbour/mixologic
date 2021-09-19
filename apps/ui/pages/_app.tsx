@@ -10,17 +10,21 @@ import './_app.css';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
-  
+
   return (
     <>
       <Head>
         <title>Welcome to ui!</title>
       </Head>
-      {pageProps.statusCode || !pageProps.dehydratedState?.queries?.length ? 
-        <Error statusCode={pageProps.statusCode ?? 500} title="Error fetching data" /> :
+      {pageProps.statusCode || !pageProps.dehydratedState?.queries?.length ? (
+        <Error
+          statusCode={pageProps.statusCode ?? 500}
+          title="Error fetching data"
+        />
+      ) : (
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-          <ReactQueryDevtools />
+            <ReactQueryDevtools />
             <div>
               <header>
                 <h1>Mixologic</h1>
@@ -31,7 +35,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
             </div>
           </Hydrate>
         </QueryClientProvider>
-      }
+      )}
     </>
   );
 }

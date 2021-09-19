@@ -2,12 +2,16 @@ import { QueryClient, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import { CategoryDto } from '@mixologic/common';
 import { plainToClass } from 'class-transformer';
-
+import { validateOrReject } from 'class-validator';
 
 async function fetchCategories() {
   const response = await fetch('http://localhost:4200/api/categories');
   const categories: unknown[] = await response.json();
-  return plainToClass(CategoryDto, categories);
+  const categoryDtos = plainToClass(CategoryDto, categories);
+  for (const categoryDto of categoryDtos) {
+    await validateOrReject(categoryDto);
+  };
+  return categoryDtos;
 }
 
 export async function getStaticProps() {

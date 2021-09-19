@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Hydrate } from 'react-query/hydration';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
+import { Header } from '../components';
+
 import './_app.css';
 
 function CustomApp({ Component, pageProps }: AppProps) {
@@ -26,9 +28,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
           <Hydrate state={pageProps.dehydratedState}>
             <ReactQueryDevtools />
             <div>
-              <header>
-                <h1>Mixologic</h1>
-              </header>
+              <Header links={[]} />
               <main>
                 <Component {...pageProps} />
               </main>

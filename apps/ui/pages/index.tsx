@@ -1,8 +1,11 @@
 import { QueryClient, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
-import { CategoryDto } from '@mixologic/common';
 import { plainToClass } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
+
+import { CategoryDto } from '@mixologic/common';
+
+import { Table } from '../components';
 
 async function fetchCategories() {
   const response = await fetch('http://localhost:4200/api/categories');
@@ -32,20 +35,23 @@ const useCategories = () => {
   return useQuery(['categories'], () => fetchCategories());
 };
 
-function Index() {
+export default function Index() {
   const { isLoading, data } = useCategories();
 
   if (isLoading) return 'Loading...';
+
   return (
-    <div>
-      <h2>Categories</h2>
-      <ul>
-        {data.map((category) => (
-          <li key={category.id}>{category.name}</li>
-        ))}
-      </ul>
+    <div className="container flex flex-col mx-auto w-full items-center justify-center">
+      <Table
+        title="Ingredient Categories"
+        columns={[
+          { field: 'name', displayName: 'Name' },
+          { field: 'createdDate', displayName: 'Created' },
+          { field: 'updatedDate', displayName: 'Updated' },
+          { field: 'hello', displayName: 'Test' },
+        ]}
+        rows={data}
+      />
     </div>
   );
 }
-
-export default Index;

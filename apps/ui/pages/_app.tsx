@@ -27,9 +27,9 @@ function CustomApp({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <ReactQueryDevtools />
-            <div>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl h-screen overflow-hidden relative">
               <Header links={[]} />
-              <main>
+              <main className="container mx-auto px-4 py-4">
                 <Component {...pageProps} />
               </main>
             </div>

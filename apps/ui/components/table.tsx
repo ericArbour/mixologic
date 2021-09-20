@@ -8,6 +8,7 @@ type Props<T> = {
   title: string;
   columns: ColumnConfig[];
   rows: T[];
+  editPathname: string;
 };
 
 type ColumnConfig = {
@@ -19,6 +20,7 @@ export function Table<T extends Record<string, unknown> & HasId>({
   title,
   columns,
   rows,
+  editPathname,
 }: Props<T>) {
   return (
     <div className="container mx-auto px-4 sm:px-8 max-w-3xl">
@@ -73,7 +75,7 @@ export function Table<T extends Record<string, unknown> & HasId>({
                       })}
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <a
-                          href="#"
+                          href={`${editPathname}/${row.id}`}
                           className="text-indigo-600 hover:text-indigo-900"
                         >
                           Edit

@@ -10,7 +10,7 @@ interface Props {
 }
 interface HeaderLink {
   label: string;
-  link?: string;
+  pathname: string;
   isSelected?: boolean;
   desc?: string;
   icon?: JSX.Element;
@@ -38,7 +38,7 @@ export function Header(props: Props) {
                 <div className="ml-10 flex items-baseline space-x-4">
                   {props.links.map((link) => {
                     return (
-                      <Link key={link.label} href={link.link || '#'}>
+                      <Link key={link.label} href={link.pathname}>
                         <a
                           key={link.label}
                           className={`${
@@ -111,7 +111,7 @@ export function Header(props: Props) {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {props.links.map((link) => {
                 return (
-                  <Link key={link.label} href={link.link || '#'}>
+                  <Link key={link.label} href={link.pathname}>
                     <a
                       className={`${
                         link.isSelected

@@ -10,15 +10,17 @@ import { Header } from '../components';
 
 import './_app.css';
 
-function CustomApp({ Component, pageProps }: AppProps) {
+export default function CustomApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
     <>
       <Head>
-        <title>Welcome to ui!</title>
+        <title>Mixologic</title>
       </Head>
-      {pageProps.statusCode || !pageProps.dehydratedState?.queries?.length ? (
+      {pageProps.statusCode ||
+      (pageProps.dehydratedState?.queries &&
+        !pageProps.dehydratedState.queries.length) ? (
         <Error
           statusCode={pageProps.statusCode ?? 500}
           title="Error fetching data"
@@ -28,7 +30,9 @@ function CustomApp({ Component, pageProps }: AppProps) {
           <Hydrate state={pageProps.dehydratedState}>
             <ReactQueryDevtools />
             <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl h-screen overflow-hidden relative">
-              <Header links={[]} />
+              <Header
+                links={[{ label: 'Categories', pathname: '/categories' }]}
+              />
               <main className="container mx-auto px-4 py-4">
                 <Component {...pageProps} />
               </main>
@@ -39,5 +43,3 @@ function CustomApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
-
-export default CustomApp;

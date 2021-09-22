@@ -1,9 +1,5 @@
-import {
-  ChangeEventHandler,
-  FocusEventHandler,
-  LegacyRef,
-  forwardRef,
-} from 'react';
+import { ChangeEventHandler, FocusEventHandler, forwardRef } from 'react';
+import { LoadingInput } from './LoadingInput';
 
 interface Props {
   type?: string;
@@ -15,6 +11,7 @@ interface Props {
   placeholder?: string;
   name?: string;
   disabled?: boolean;
+  isLoading?: boolean;
   withForceIndications?: boolean;
   id?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -42,20 +39,24 @@ export const TextInput = forwardRef<HTMLInputElement, Props>(
             {props.helper}
           </span>
         )}
-        <input
-          id={props.id}
-          defaultValue={props.defaultValue}
-          disabled={props.disabled}
-          className={`${props.error ? 'ring-red-500 ring-2' : ''}${
-            props.helper ? ' rounded-r-lg' : ' rounded-lg border-transparent'
-          } flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent`}
-          type={props.type || 'text'}
-          name={props.name}
-          onChange={props.onChange}
-          onBlur={props.onBlur}
-          placeholder={props.placeholder}
-          ref={ref}
-        />
+        {props.isLoading ? (
+          <LoadingInput />
+        ) : (
+          <input
+            id={props.id}
+            defaultValue={props.defaultValue}
+            disabled={props.disabled}
+            className={`${props.error ? 'ring-red-500 ring-2' : ''}${
+              props.helper ? ' rounded-r-lg' : ' rounded-lg border-transparent'
+            } flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent`}
+            type={props.type || 'text'}
+            name={props.name}
+            onChange={props.onChange}
+            onBlur={props.onBlur}
+            placeholder={props.placeholder}
+            ref={ref}
+          />
+        )}
         {props.withForceIndications && (
           <>
             <div className="grid w-full h-1 grid-cols-12 gap-4 mt-3">

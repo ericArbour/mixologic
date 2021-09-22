@@ -22,14 +22,11 @@ async function fetchCategory(id: number) {
 
 export async function getServerSideProps(context) {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(
-    ['categories', context.query.id],
-    async ({ queryKey }) => {
-      console.log(queryKey);
-      const category = await fetchCategory(queryKey[1]);
-      return JSON.parse(JSON.stringify(category));
-    }
-  );
+  const queryKey: [string, number] = ['category', +context.query.id];
+  await queryClient.prefetchQuery(queryKey, async ({ queryKey }) => {
+    const category = await fetchCategory(queryKey[1]);
+    return JSON.parse(JSON.stringify(category));
+  });
 
   return {
     props: {
@@ -38,29 +35,29 @@ export async function getServerSideProps(context) {
   };
 }
 
-const useCategories = (id: number) => {
-  return useQuery(['categories', id], ({ queryKey }) =>
-    fetchCategory(queryKey[1] as number)
-  );
+const useCategory = (id: number) => {
+  const queryKey: [string, number] = ['category', id];
+  return useQuery(queryKey, ({ queryKey }) => fetchCategory(queryKey[1]));
 };
+
+/*
+  Todos:
+  1. Connect validation to class-validator.
+  2. Submit form.
+*/
 
 export default function Category() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
   const router = useRouter();
-  const { id } = router.query;
+  const id = router.query.id as string;
 
-  const { isLoading, data } = useCategories(parseInt(id as string));
-
-  if (isLoading) return 'Loading...';
+  const { isLoading, data } = useCategory(+id);
 
   const onSubmit = (data) => console.log(data);
-  console.log(watch('name'));
-  console.log(errors);
 
   return (
     <div className="container flex flex-col mx-auto w-full items-center justify-center">
@@ -76,7 +73,8 @@ export default function Category() {
             <div className="col-span-2">
               <TextInput
                 label="Name"
-                defaultValue={data.name}
+                defaultValue={!isLoading && data.name}
+                isLoading={isLoading}
                 {...register('name', { required: true })}
                 required
                 error={errors.name && 'This field is required'}

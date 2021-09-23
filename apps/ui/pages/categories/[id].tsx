@@ -4,8 +4,9 @@ import { dehydrate } from 'react-query/hydration';
 import { plainToClass } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
 import { useForm } from 'react-hook-form';
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
-import { CategoryDto } from '@mixologic/common';
+import { CategoryDto, UpdateCategoryDto } from '@mixologic/common';
 
 import { Button } from '../../components';
 import { TextInput } from '../../components';
@@ -42,16 +43,17 @@ const useCategory = (id: number) => {
 
 /*
   Todos:
-  1. Connect validation to class-validator.
-  2. Submit form.
+  1. Submit form.
 */
+
+const resolver = classValidatorResolver(UpdateCategoryDto);
 
 export default function Category() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver });
   const router = useRouter();
   const id = router.query.id as string;
 
@@ -75,9 +77,9 @@ export default function Category() {
                 label="Name"
                 defaultValue={!isLoading && data.name}
                 isLoading={isLoading}
-                {...register('name', { required: true })}
+                {...register('name')}
                 required
-                error={errors.name && 'This field is required'}
+                error={errors.name?.message}
               />
             </div>
             <div className="col-span-2 text-right">

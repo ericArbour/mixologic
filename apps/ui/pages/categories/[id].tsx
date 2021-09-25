@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { QueryClient, useQuery } from 'react-query';
+import { QueryClient, useMutation, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import { plainToClass } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
@@ -8,8 +9,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { CategoryDto, UpdateCategoryDto } from '@mixologic/common';
 
-import { Button } from '../../components';
-import { TextInput } from '../../components';
+import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
 
 async function fetchCategory(id: number) {
   const response = await fetch(`http://localhost:4200/api/categories/${id}`);
@@ -41,11 +41,6 @@ const useCategory = (id: number) => {
   return useQuery(queryKey, ({ queryKey }) => fetchCategory(queryKey[1]));
 };
 
-/*
-  Todos:
-  1. Submit form.
-*/
-
 const resolver = classValidatorResolver(UpdateCategoryDto);
 
 export default function Category() {
@@ -55,11 +50,43 @@ export default function Category() {
     formState: { errors },
   } = useForm({ resolver });
   const router = useRouter();
+  const [shouldAnimateLoading, setShouldAnimateLoading] = useState(false);
   const id = router.query.id as string;
 
   const { isLoading, data } = useCategory(+id);
+  const mutation = useMutation<Response, Error, UpdateCategoryDto>(
+    async (updateCategoryDto) => {
+      const response = await fetch(
+        `http://localhost:4200/api/categories/${id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updateCategoryDto), // body data type must match "Content-Type" header
+        }
+      );
 
-  const onSubmit = (data) => console.log(data);
+      if (!response.ok) {
+        const json = await response.json();
+        throw new Error(json.message);
+      }
+
+      return response;
+    }
+  );
+
+  useEffect(() => {
+    if (mutation.isLoading) {
+      setShouldAnimateLoading(true);
+      setTimeout(() => {
+        setShouldAnimateLoading(false);
+      }, 500);
+    }
+  }, [mutation.isLoading]);
+
+  const onSubmit = (updateCategoryDto: UpdateCategoryDto) =>
+    mutation.mutate(updateCategoryDto);
 
   return (
     <div className="container flex flex-col mx-auto w-full items-center justify-center">
@@ -83,8 +110,28 @@ export default function Category() {
               />
             </div>
             <div className="col-span-2 text-right">
-              <Button submit={true} label="Save" color="indigo" />
+              <Button
+                submit={true}
+                label="Save"
+                color="indigo"
+                isLoading={mutation.isLoading || shouldAnimateLoading}
+                icon={<CheckIcon className="-ml-1 mr-1" />}
+              />
             </div>
+            {!shouldAnimateLoading && mutation.isSuccess ? (
+              <div className="col-span-2">
+                <CheckIcon className="-mt-1 mr-1 inline text-green-500" />
+                Category saved
+              </div>
+            ) : !shouldAnimateLoading && mutation.isError ? (
+              <div className="col-span-2">
+                <p>
+                  <ErrorIcon className="mr-1 inline-block -mt-1" />
+                  An error occurred:
+                </p>
+                <p>{mutation.error.message}</p>
+              </div>
+            ) : null}
           </div>
         </div>
       </form>

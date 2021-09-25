@@ -1,12 +1,27 @@
-interface Props {
+interface SharedProps {
   rounded?: boolean;
   color?: string;
   icon?: JSX.Element;
+  label?: string;
+}
+
+interface ButtonProps extends SharedProps {
   disabled?: boolean;
   submit?: boolean;
-  label?: string;
   isLoading?: boolean;
   onClick?: () => void;
+}
+
+interface ButtonLinkProps extends SharedProps {
+  href?: string;
+}
+
+function getSharedClassNames(props: SharedProps): string {
+  return `py-2 px-4 ${props.icon ? 'flex justify-center items-center ' : ''} ${
+    colors[props.color]
+  } text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+    !props.label ? ' w-12 h-12' : ''
+  } ${props.rounded ? 'rounded-full' : 'rounded-lg '}`;
 }
 
 const colors = {
@@ -26,20 +41,14 @@ const colors = {
   pink: 'bg-pink-600 hover:bg-pink-700 focus:ring-pink-500 focus:ring-offset-pink-200',
 };
 
-export function Button(props: Props) {
+export function Button(props: ButtonProps) {
   return (
     <button
       onClick={props.onClick}
       type={props.submit ? 'submit' : 'button'}
       disabled={props.disabled}
-      className={`py-2 px-4 ${
-        props.icon ? 'flex justify-center items-center ' : ''
-      } ${
-        colors[props.color]
-      } text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+      className={`${getSharedClassNames(props)} ${
         props.disabled ? ' opacity-70 cursor-not-allowed' : ''
-      }${!props.label ? ' w-12 h-12' : ''} ${
-        props.rounded ? 'rounded-full' : 'rounded-lg '
       }`}
     >
       {props.icon && props.isLoading ? (
@@ -68,5 +77,14 @@ export function Button(props: Props) {
       ) : null}
       {props.label && props.label}
     </button>
+  );
+}
+
+export function ButtonLink(props: ButtonLinkProps) {
+  return (
+    <a href={props.href} className={getSharedClassNames(props)}>
+      {props.icon ? props.icon : null}
+      {props.label && props.label}
+    </a>
   );
 }

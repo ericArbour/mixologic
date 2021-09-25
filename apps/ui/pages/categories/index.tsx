@@ -50,9 +50,9 @@ export default function Index() {
           { field: 'name', displayName: 'Name' },
           { field: 'createdDate', displayName: 'Created' },
           { field: 'updatedDate', displayName: 'Updated' },
-          { field: 'hello', displayName: 'Test' },
         ]}
         rows={data}
+        createPathname="/categories/create"
         editPathname="/categories"
       />
     </div>

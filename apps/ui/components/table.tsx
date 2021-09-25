@@ -1,3 +1,6 @@
+import Link from 'next/link';
+
+import { ButtonLink, PlusIcon } from '.';
 import { FormSubscribe } from './form-subscribe';
 
 interface HasId {
@@ -8,6 +11,7 @@ type Props<T> = {
   title: string;
   columns: ColumnConfig[];
   rows: T[];
+  createPathname: string;
   editPathname: string;
 };
 
@@ -20,6 +24,7 @@ export function Table<T extends Record<string, unknown> & HasId>({
   title,
   columns,
   rows,
+  createPathname,
   editPathname,
 }: Props<T>) {
   return (
@@ -74,12 +79,11 @@ export function Table<T extends Record<string, unknown> & HasId>({
                         );
                       })}
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a
-                          href={`${editPathname}/${row.id}`}
-                          className="text-indigo-600 hover:text-indigo-900"
-                        >
-                          Edit
-                        </a>
+                        <Link href={`${editPathname}/${row.id}`}>
+                          <a className="text-indigo-600 hover:text-indigo-900">
+                            Edit
+                          </a>
+                        </Link>
                       </td>
                     </tr>
                   );
@@ -87,6 +91,13 @@ export function Table<T extends Record<string, unknown> & HasId>({
               </tbody>
             </table>
           </div>
+          <Link href={createPathname} passHref>
+            <ButtonLink
+              label="Add"
+              icon={<PlusIcon className="mr-1" />}
+              color="green"
+            />
+          </Link>
         </div>
       </div>
     </div>

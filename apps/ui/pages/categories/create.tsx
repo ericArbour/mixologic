@@ -1,71 +1,37 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { QueryClient, useMutation, useQuery } from 'react-query';
-import { dehydrate } from 'react-query/hydration';
-import { plainToClass } from 'class-transformer';
-import { validateOrReject } from 'class-validator';
+import { useMutation } from 'react-query';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
-import { CategoryDto, UpdateCategoryDto } from '@mixologic/common';
+import { CreateCategoryDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
 
-async function fetchCategory(id: number) {
-  const response = await fetch(`http://localhost:4200/api/categories/${id}`);
-  const json = await response.json();
-  if (!response.ok) throw new Error(json.error);
+const resolver = classValidatorResolver(CreateCategoryDto);
 
-  const categoryDto = plainToClass(CategoryDto, json);
-  await validateOrReject(categoryDto);
-  return categoryDto;
-}
-
-export async function getServerSideProps(context) {
-  const queryClient = new QueryClient();
-  const queryKey: [string, number] = ['category', +context.query.id];
-  await queryClient.prefetchQuery(queryKey, async ({ queryKey }) => {
-    const category = await fetchCategory(queryKey[1]);
-    return JSON.parse(JSON.stringify(category));
-  });
-
+export async function getServerSideProps() {
   return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
+    props: {},
   };
 }
 
-const useCategory = (id: number) => {
-  const queryKey: [string, number] = ['category', id];
-  return useQuery(queryKey, ({ queryKey }) => fetchCategory(queryKey[1]));
-};
-
-const resolver = classValidatorResolver(UpdateCategoryDto);
-
-export default function Category() {
+export default function CreateCategory() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver });
-  const router = useRouter();
-  const id = router.query.id as string;
   const [shouldAnimateLoading, setShouldAnimateLoading] = useState(false);
 
-  const { isLoading, data } = useCategory(+id);
-  const mutation = useMutation<Response, Error, UpdateCategoryDto>(
-    async (updateCategoryDto) => {
-      const response = await fetch(
-        `http://localhost:4200/api/categories/${id}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updateCategoryDto), // body data type must match "Content-Type" header
-        }
-      );
+  const mutation = useMutation<Response, Error, CreateCategoryDto>(
+    async (createCategoryDto) => {
+      const response = await fetch(`http://localhost:4200/api/categories`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(createCategoryDto), // body data type must match "Content-Type" header
+      });
 
       if (!response.ok) {
         const json = await response.json();
@@ -85,8 +51,8 @@ export default function Category() {
     }
   }, [mutation.isLoading]);
 
-  const onSubmit = (updateCategoryDto: UpdateCategoryDto) =>
-    mutation.mutate(updateCategoryDto);
+  const onSubmit = (createCategoryDto: CreateCategoryDto) =>
+    mutation.mutate(createCategoryDto);
 
   return (
     <div className="container flex flex-col mx-auto w-full items-center justify-center">
@@ -102,8 +68,7 @@ export default function Category() {
             <div className="col-span-2">
               <TextInput
                 label="Name"
-                defaultValue={!isLoading && data.name}
-                isLoading={isLoading}
+                defaultValue=""
                 {...register('name')}
                 required
                 error={errors.name?.message}

@@ -1,15 +1,17 @@
+import { forwardRef } from 'react';
+
 interface SharedProps {
   rounded?: boolean;
   color?: string;
   icon?: JSX.Element;
   label?: string;
+  onClick?: () => void;
 }
 
 interface ButtonProps extends SharedProps {
   disabled?: boolean;
   submit?: boolean;
   isLoading?: boolean;
-  onClick?: () => void;
 }
 
 interface ButtonLinkProps extends SharedProps {
@@ -80,11 +82,18 @@ export function Button(props: ButtonProps) {
   );
 }
 
-export function ButtonLink(props: ButtonLinkProps) {
-  return (
-    <a href={props.href} className={getSharedClassNames(props)}>
-      {props.icon ? props.icon : null}
-      {props.label && props.label}
-    </a>
-  );
-}
+export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(
+  (props: ButtonLinkProps, ref) => {
+    return (
+      <a
+        ref={ref}
+        href={props.href}
+        onClick={props.onClick}
+        className={getSharedClassNames(props)}
+      >
+        {props.icon ? props.icon : null}
+        {props.label && props.label}
+      </a>
+    );
+  }
+);

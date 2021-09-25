@@ -30,7 +30,7 @@ export function Table<T extends Record<string, unknown> & HasId>({
   return (
     <div className="container mx-auto px-4 sm:px-8 max-w-3xl">
       <div className="py-8">
-        <div className="flex flex-row mb-1 sm:mb-0 justify-between w-full">
+        <div className="flex flex-row mb-1 sm:mb-0 justify-between items-center w-full">
           <h2 className="text-2xl leading-tight">{title}</h2>
           <div className="text-end">
             <FormSubscribe placeholder="name" label="Filter" />
@@ -93,7 +93,7 @@ export function Table<T extends Record<string, unknown> & HasId>({
           </div>
           <Link href={createPathname} passHref>
             <ButtonLink
-              label="Add"
+              label="Create"
               icon={<PlusIcon className="mr-1" />}
               color="green"
             />

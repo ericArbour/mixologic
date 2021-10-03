@@ -29,9 +29,6 @@ export async function fetchDto<T extends Record<string, unknown>>(
   return glassDto;
 }
 
-export async function serializeForDehydration<T>(
-  fetchDtos: () => Promise<T[]>
-) {
-  const dtos = await fetchDtos();
-  return JSON.parse(JSON.stringify(dtos));
+export async function serializeForDehydration<T>(fetchFn: () => Promise<T>) {
+  return JSON.parse(JSON.stringify(await fetchFn()));
 }

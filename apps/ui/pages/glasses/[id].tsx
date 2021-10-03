@@ -8,7 +8,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { GlassDto, UpdateGlassDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
-import { fetchDto } from '../../utils';
+import { fetchDto, serializeForDehydration } from '../../utils';
 
 async function fetchGlass(id: number) {
   return fetchDto(GlassDto, `http://localhost:4200/api/glasses/${id}`);
@@ -18,8 +18,7 @@ export async function getServerSideProps(context) {
   const queryClient = new QueryClient();
   const queryKey: [string, number] = ['glass', +context.query.id];
   await queryClient.prefetchQuery(queryKey, async ({ queryKey }) => {
-    const glass = await fetchGlass(queryKey[1]);
-    return JSON.parse(JSON.stringify(glass));
+    return serializeForDehydration(async () => await fetchGlass(queryKey[1]));
   });
 
   return {

@@ -8,7 +8,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { CategoryDto, UpdateCategoryDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
-import { fetchDto } from '../../utils';
+import { fetchDto, serializeForDehydration } from '../../utils';
 
 async function fetchCategory(id: number) {
   return fetchDto(CategoryDto, `http://localhost:4200/api/categories/${id}`);
@@ -18,8 +18,9 @@ export async function getServerSideProps(context) {
   const queryClient = new QueryClient();
   const queryKey: [string, number] = ['category', +context.query.id];
   await queryClient.prefetchQuery(queryKey, async ({ queryKey }) => {
-    const category = await fetchCategory(queryKey[1]);
-    return JSON.parse(JSON.stringify(category));
+    return serializeForDehydration(
+      async () => await fetchCategory(queryKey[1])
+    );
   });
 
   return {

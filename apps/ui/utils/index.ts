@@ -2,8 +2,8 @@ import { ClassConstructor, plainToClass } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
 
 export async function fetchDtos<T extends Record<string, unknown>>(
-  path: string,
-  dtoClass: ClassConstructor<T>
+  dtoClass: ClassConstructor<T>,
+  path: string
 ) {
   const response = await fetch(path);
   const json = await response.json();
@@ -14,6 +14,19 @@ export async function fetchDtos<T extends Record<string, unknown>>(
     await validateOrReject(dto);
   }
   return dtos;
+}
+
+export async function fetchDto<T extends Record<string, unknown>>(
+  dtoClass: ClassConstructor<T>,
+  path: string
+) {
+  const response = await fetch(path);
+  const json = await response.json();
+  if (!response.ok) throw new Error(json.error);
+
+  const glassDto = plainToClass(dtoClass, json);
+  await validateOrReject(glassDto);
+  return glassDto;
 }
 
 export async function serializeForDehydration<T>(

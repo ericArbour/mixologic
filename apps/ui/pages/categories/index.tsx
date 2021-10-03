@@ -7,7 +7,7 @@ import { Table } from '../../components';
 import { fetchDtos, serializeForDehydration } from '../../utils';
 
 const fetchCategories = () =>
-  fetchDtos('http://localhost:4200/api/categories', CategoryDto);
+  fetchDtos(CategoryDto, 'http://localhost:4200/api/categories');
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();

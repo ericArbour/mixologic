@@ -2,23 +2,16 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
-import { plainToClass } from 'class-transformer';
-import { validateOrReject } from 'class-validator';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { GlassDto, UpdateGlassDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
+import { fetchDto } from '../../utils';
 
 async function fetchGlass(id: number) {
-  const response = await fetch(`http://localhost:4200/api/glasses/${id}`);
-  const json = await response.json();
-  if (!response.ok) throw new Error(json.error);
-
-  const glassDto = plainToClass(GlassDto, json);
-  await validateOrReject(glassDto);
-  return glassDto;
+  return fetchDto(GlassDto, `http://localhost:4200/api/glasses/${id}`);
 }
 
 export async function getServerSideProps(context) {

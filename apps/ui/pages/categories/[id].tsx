@@ -2,23 +2,16 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
-import { plainToClass } from 'class-transformer';
-import { validateOrReject } from 'class-validator';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { CategoryDto, UpdateCategoryDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
+import { fetchDto } from '../../utils';
 
 async function fetchCategory(id: number) {
-  const response = await fetch(`http://localhost:4200/api/categories/${id}`);
-  const json = await response.json();
-  if (!response.ok) throw new Error(json.error);
-
-  const categoryDto = plainToClass(CategoryDto, json);
-  await validateOrReject(categoryDto);
-  return categoryDto;
+  return fetchDto(CategoryDto, `http://localhost:4200/api/categories/${id}`);
 }
 
 export async function getServerSideProps(context) {

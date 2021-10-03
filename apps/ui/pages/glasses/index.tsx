@@ -4,19 +4,15 @@ import { dehydrate } from 'react-query/hydration';
 import { GlassDto } from '@mixologic/common';
 
 import { Table } from '../../components';
-import { fetchDtos } from '../../utils';
+import { fetchDtos, serializeForDehydration } from '../../utils';
 
-const fetchGlasses = fetchDtos.bind(
-  null,
-  'http://localhost:4200/api/glasses',
-  GlassDto
-);
+const fetchGlasses = () =>
+  fetchDtos('http://localhost:4200/api/glasses', GlassDto);
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['glasses'], async () => {
-    const glasses = await fetchGlasses();
-    return JSON.parse(JSON.stringify(glasses));
+  await queryClient.prefetchQuery(['glasses'], () => {
+    return serializeForDehydration(fetchGlasses);
   });
 
   return {

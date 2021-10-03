@@ -23,7 +23,7 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
         !pageProps.dehydratedState.queries.length) ? (
         <Error
           statusCode={pageProps.statusCode ?? 500}
-          title="Error fetching data"
+          title={!pageProps.statusCode && 'Error fetching data'}
         />
       ) : (
         <QueryClientProvider client={queryClient}>

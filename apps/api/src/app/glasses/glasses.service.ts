@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { CreateGlassDto } from './dto/create-glass.dto';
-import { UpdateGlassDto } from './dto/update-glass.dto';
+import { CreateGlassDto, UpdateGlassDto } from '@mixologic/common';
+
 import { Glass } from './entities/glass.entity';
 
 @Injectable()

@@ -15,3 +15,10 @@ export async function fetchDtos<T extends Record<string, unknown>>(
   }
   return dtos;
 }
+
+export async function serializeForDehydration<T>(
+  fetchDtos: () => Promise<T[]>
+) {
+  const dtos = await fetchDtos();
+  return JSON.parse(JSON.stringify(dtos));
+}

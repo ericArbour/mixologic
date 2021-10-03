@@ -4,19 +4,15 @@ import { dehydrate } from 'react-query/hydration';
 import { CategoryDto } from '@mixologic/common';
 
 import { Table } from '../../components';
-import { fetchDtos } from '../../utils';
+import { fetchDtos, serializeForDehydration } from '../../utils';
 
-const fetchCategories = fetchDtos.bind(
-  null,
-  'http://localhost:4200/api/categories',
-  CategoryDto
-);
+const fetchCategories = () =>
+  fetchDtos('http://localhost:4200/api/categories', CategoryDto);
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['categories'], async () => {
-    const categories = await fetchCategories();
-    return JSON.parse(JSON.stringify(categories));
+  await queryClient.prefetchQuery(['categories'], () => {
+    return serializeForDehydration(fetchCategories);
   });
 
   return {

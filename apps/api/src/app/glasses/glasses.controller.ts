@@ -9,12 +9,14 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 
+import { GlassDto, CreateGlassDto, UpdateGlassDto } from '@mixologic/common';
+
+import { Serialize } from '../interceptors/serialize.interceptor';
 import { GlassesService } from './glasses.service';
-import { CreateGlassDto } from './dto/create-glass.dto';
-import { UpdateGlassDto } from './dto/update-glass.dto';
 import { Glass } from './entities/glass.entity';
 
 @Controller('glasses')
+@Serialize(GlassDto)
 export class GlassesController {
   constructor(private readonly glassesService: GlassesService) {}
 

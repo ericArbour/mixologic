@@ -1,22 +1,22 @@
 import { QueryClient, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 
-import { CategoryDto } from '@mixologic/common';
+import { GlassDto } from '@mixologic/common';
 
 import { Table } from '../../components';
 import { fetchDtos } from '../../utils';
 
-const fetchCategories = fetchDtos.bind(
+const fetchGlasses = fetchDtos.bind(
   null,
-  'http://localhost:4200/api/categories',
-  CategoryDto
+  'http://localhost:4200/api/glasses',
+  GlassDto
 );
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['categories'], async () => {
-    const categories = await fetchCategories();
-    return JSON.parse(JSON.stringify(categories));
+  await queryClient.prefetchQuery(['glasses'], async () => {
+    const glasses = await fetchGlasses();
+    return JSON.parse(JSON.stringify(glasses));
   });
 
   return {
@@ -26,26 +26,26 @@ export async function getServerSideProps() {
   };
 }
 
-const useCategories = () => {
-  return useQuery(['categories'], () => fetchCategories());
+const useGlasses = () => {
+  return useQuery(['glasses'], () => fetchGlasses());
 };
 
 export default function Index() {
-  const { isLoading, data } = useCategories();
+  const { isLoading, data } = useGlasses();
 
   if (isLoading) return 'Loading...';
 
   return (
     <Table
-      title="Ingredient Categories"
+      title="Glasses"
       columns={[
         { field: 'name', displayName: 'Name' },
         { field: 'createdDate', displayName: 'Created' },
         { field: 'updatedDate', displayName: 'Updated' },
       ]}
       rows={data}
-      createPathname="/categories/create"
-      editPathname="/categories"
+      createPathname="/glasses/create"
+      editPathname="/glasses"
     />
   );
 }

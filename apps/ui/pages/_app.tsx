@@ -31,7 +31,10 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
             <ReactQueryDevtools />
             <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl h-screen overflow-hidden relative flex flex-col">
               <Header
-                links={[{ label: 'Categories', pathname: '/categories' }]}
+                links={[
+                  { label: 'Categories', pathname: '/categories' },
+                  { label: 'Glasses', pathname: '/glasses' },
+                ]}
               />
               <main className="flex-grow overflow-auto">
                 <div className="container mx-auto p-4 sm:p-8 max-w-3xl flex flex-col">

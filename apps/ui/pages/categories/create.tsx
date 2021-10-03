@@ -6,14 +6,9 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { CreateCategoryDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
+import { useAnimateLoading } from '../../hooks';
 
 const resolver = classValidatorResolver(CreateCategoryDto);
-
-export async function getServerSideProps() {
-  return {
-    props: {},
-  };
-}
 
 export default function CreateCategory() {
   const {
@@ -21,7 +16,6 @@ export default function CreateCategory() {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver });
-  const [shouldAnimateLoading, setShouldAnimateLoading] = useState(false);
 
   const mutation = useMutation<Response, Error, CreateCategoryDto>(
     async (createCategoryDto) => {
@@ -41,15 +35,7 @@ export default function CreateCategory() {
       return response;
     }
   );
-
-  useEffect(() => {
-    if (mutation.isLoading) {
-      setShouldAnimateLoading(true);
-      setTimeout(() => {
-        setShouldAnimateLoading(false);
-      }, 500);
-    }
-  }, [mutation.isLoading]);
+  const { shouldAnimateLoading } = useAnimateLoading(mutation);
 
   const onSubmit = (createCategoryDto: CreateCategoryDto) =>
     mutation.mutate(createCategoryDto);

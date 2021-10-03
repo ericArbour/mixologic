@@ -27,9 +27,10 @@ const useGlasses = () => {
 };
 
 export default function Index() {
-  const { isLoading, data } = useGlasses();
+  const queryResult = useGlasses();
 
-  if (isLoading) return 'Loading...';
+  if (queryResult.isLoading || queryResult.isIdle) return 'Loading...';
+  if (queryResult.isError) return 'Oops, an error occurred';
 
   return (
     <Table
@@ -39,7 +40,7 @@ export default function Index() {
         { field: 'createdDate', displayName: 'Created' },
         { field: 'updatedDate', displayName: 'Updated' },
       ]}
-      rows={data}
+      rows={queryResult.data}
       createPathname="/glasses/create"
       editPathname="/glasses"
     />

@@ -1,3 +1,4 @@
+import { AnyAaaaRecord } from 'dns';
 import Link from 'next/link';
 
 import { ButtonLink, PlusIcon } from '.';
@@ -9,18 +10,18 @@ interface HasId {
 
 type Props<T> = {
   title: string;
-  columns: ColumnConfig[];
+  columns: ColumnConfig<T>[];
   rows: T[];
   createPathname: string;
   editPathname: string;
 };
 
-type ColumnConfig = {
-  field: string;
+type ColumnConfig<T> = {
+  field: string & keyof T;
   displayName: string;
 };
 
-export function Table<T extends Record<string, unknown> & HasId>({
+export function Table<T extends Record<string, any> & HasId>({
   title,
   columns,
   rows,

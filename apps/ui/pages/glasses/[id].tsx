@@ -9,14 +9,16 @@ import { GlassDto, UpdateGlassDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
 import { fetchDto, serializeForDehydration } from '../../utils';
+import { useAnimateLoading } from '../../hooks';
+import { GetServerSidePropsContext } from 'next';
 
 async function fetchGlass(id: number) {
   return fetchDto(GlassDto, `http://localhost:4200/api/glasses/${id}`);
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const queryClient = new QueryClient();
-  const queryKey: [string, number] = ['glass', +context.query.id];
+  const queryKey: [string, number] = ['glass', +(context.query.id ?? 0)];
   await queryClient.prefetchQuery(queryKey, async ({ queryKey }) => {
     return serializeForDehydration(async () => await fetchGlass(queryKey[1]));
   });
@@ -43,9 +45,8 @@ export default function Glass() {
   } = useForm({ resolver });
   const router = useRouter();
   const id = router.query.id as string;
-  const [shouldAnimateLoading, setShouldAnimateLoading] = useState(false);
 
-  const { isLoading, data } = useGlass(+id);
+  const queryResult = useGlass(+id);
   const mutation = useMutation<Response, Error, UpdateGlassDto>(
     async (updateGlassDto) => {
       const response = await fetch(`http://localhost:4200/api/glasses/${id}`, {
@@ -64,15 +65,9 @@ export default function Glass() {
       return response;
     }
   );
+  const { shouldAnimateLoading } = useAnimateLoading(mutation);
 
-  useEffect(() => {
-    if (mutation.isLoading) {
-      setShouldAnimateLoading(true);
-      setTimeout(() => {
-        setShouldAnimateLoading(false);
-      }, 500);
-    }
-  }, [mutation.isLoading]);
+  if (queryResult.isError) return 'Oops, an error occurred';
 
   const onSubmit = (updateGlassDto: UpdateGlassDto) =>
     mutation.mutate(updateGlassDto);
@@ -89,8 +84,8 @@ export default function Glass() {
         <div className="col-span-2">
           <TextInput
             label="Name"
-            defaultValue={!isLoading && data.name}
-            isLoading={isLoading}
+            defaultValue={queryResult.data?.name}
+            isLoading={queryResult.isLoading}
             {...register('name')}
             required
             error={errors.name?.message}

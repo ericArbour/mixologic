@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
@@ -9,14 +10,15 @@ import { CategoryDto, UpdateCategoryDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
 import { fetchDto, serializeForDehydration } from '../../utils';
+import { useAnimateLoading } from '../../hooks';
 
 async function fetchCategory(id: number) {
   return fetchDto(CategoryDto, `http://localhost:4200/api/categories/${id}`);
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const queryClient = new QueryClient();
-  const queryKey: [string, number] = ['category', +context.query.id];
+  const queryKey: [string, number] = ['category', +(context.query.id ?? 0)];
   await queryClient.prefetchQuery(queryKey, async ({ queryKey }) => {
     return serializeForDehydration(
       async () => await fetchCategory(queryKey[1])
@@ -45,9 +47,8 @@ export default function Category() {
   } = useForm({ resolver });
   const router = useRouter();
   const id = router.query.id as string;
-  const [shouldAnimateLoading, setShouldAnimateLoading] = useState(false);
 
-  const { isLoading, data } = useCategory(+id);
+  const queryResult = useCategory(+id);
   const mutation = useMutation<Response, Error, UpdateCategoryDto>(
     async (updateCategoryDto) => {
       const response = await fetch(
@@ -69,15 +70,9 @@ export default function Category() {
       return response;
     }
   );
+  const { shouldAnimateLoading } = useAnimateLoading(mutation);
 
-  useEffect(() => {
-    if (mutation.isLoading) {
-      setShouldAnimateLoading(true);
-      setTimeout(() => {
-        setShouldAnimateLoading(false);
-      }, 500);
-    }
-  }, [mutation.isLoading]);
+  if (queryResult.isError) return 'Oops, an error occurred';
 
   const onSubmit = (updateCategoryDto: UpdateCategoryDto) =>
     mutation.mutate(updateCategoryDto);
@@ -94,8 +89,8 @@ export default function Category() {
         <div className="col-span-2">
           <TextInput
             label="Name"
-            defaultValue={!isLoading && data.name}
-            isLoading={isLoading}
+            defaultValue={queryResult.data?.name}
+            isLoading={queryResult.isLoading}
             {...register('name')}
             required
             error={errors.name?.message}

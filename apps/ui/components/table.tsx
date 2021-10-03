@@ -1,4 +1,3 @@
-import { AnyAaaaRecord } from 'dns';
 import Link from 'next/link';
 
 import { ButtonLink, PlusIcon } from '.';
@@ -21,7 +20,15 @@ type ColumnConfig<T> = {
   displayName: string;
 };
 
-export function Table<T extends Record<string, any> & HasId>({
+function formatText(val: unknown) {
+  if (typeof val === 'string') return val;
+  if (typeof val === 'number') return val;
+  if (typeof val === 'boolean') return val;
+  if (val === null) return val;
+  if (val instanceof Date) return val.toISOString();
+}
+
+export function Table<T extends Record<string, unknown> & HasId>({
   title,
   columns,
   rows,
@@ -65,6 +72,8 @@ export function Table<T extends Record<string, any> & HasId>({
                 return (
                   <tr key={row.id}>
                     {columns.map((column) => {
+                      const text = formatText(row[column.field]);
+
                       return (
                         <td
                           key={column.field}
@@ -72,7 +81,7 @@ export function Table<T extends Record<string, any> & HasId>({
                         >
                           <div className="flex items-center">
                             <p className="text-gray-900 whitespace-no-wrap">
-                              {row[column.field]}
+                              {text}
                             </p>
                           </div>
                         </td>

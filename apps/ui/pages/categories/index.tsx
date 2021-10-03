@@ -43,18 +43,16 @@ export default function Index() {
   if (isLoading) return 'Loading...';
 
   return (
-    <div className="container flex flex-col mx-auto w-full items-center justify-center">
-      <Table
-        title="Ingredient Categories"
-        columns={[
-          { field: 'name', displayName: 'Name' },
-          { field: 'createdDate', displayName: 'Created' },
-          { field: 'updatedDate', displayName: 'Updated' },
-        ]}
-        rows={data}
-        createPathname="/categories/create"
-        editPathname="/categories"
-      />
-    </div>
+    <Table
+      title="Ingredient Categories"
+      columns={[
+        { field: 'name', displayName: 'Name' },
+        { field: 'createdDate', displayName: 'Created' },
+        { field: 'updatedDate', displayName: 'Updated' },
+      ]}
+      rows={data}
+      createPathname="/categories/create"
+      editPathname="/categories"
+    />
   );
 }

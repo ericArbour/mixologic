@@ -29,12 +29,14 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <ReactQueryDevtools />
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl h-screen overflow-hidden relative">
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl h-screen overflow-hidden relative flex flex-col">
               <Header
                 links={[{ label: 'Categories', pathname: '/categories' }]}
               />
-              <main className="container mx-auto px-4 py-4">
-                <Component {...pageProps} />
+              <main className="flex-grow overflow-auto">
+                <div className="container mx-auto p-4 sm:p-8 max-w-3xl flex flex-col">
+                  <Component {...pageProps} />
+                </div>
               </main>
             </div>
           </Hydrate>

@@ -26,14 +26,16 @@ export function Header(props: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div>
-      <nav className="bg-white dark:bg-gray-800 shadow">
+    <header>
+      <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 border-solid shadow-sm">
         <div className="max-w-7xl mx-auto px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <a className="flex-shrink-0" href="/">
-                <h1 className="text-xl">Mixologic</h1>
-              </a>
+              <Link href="/">
+                <a className="flex-shrink-0">
+                  <h1 className="text-xl">Mixologic</h1>
+                </a>
+              </Link>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
                   {props.links.map((link) => {
@@ -56,7 +58,7 @@ export function Header(props: Props) {
               </div>
             </div>
             <div className="block">
-              <div className="md:block -mr-2 flex">
+              <div className="hidden md:block -mr-2 flex">
                 <FormSubscribe
                   label="Search"
                   placeholder="Drinks, ingredients, etc."
@@ -131,6 +133,6 @@ export function Header(props: Props) {
           </div>
         )}
       </nav>
-    </div>
+    </header>
   );
 }

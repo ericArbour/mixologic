@@ -6,7 +6,7 @@ import { UnitDto } from '@mixologic/common';
 import { Table } from '../../components';
 import { fetchDtos, serializeForDehydration } from '../../utils';
 
-const fetchUnits = () => fetchDtos(UnitDto, 'http://localhost:4200/api/units');
+const fetchUnits = () => fetchDtos(UnitDto, 'units');
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();

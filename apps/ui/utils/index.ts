@@ -7,7 +7,7 @@ export async function fetchDtos<T extends BaseResponseDto>(
   dtoClass: ClassConstructor<T>,
   path: string
 ) {
-  const response = await fetch(path);
+  const response = await fetch(`http://localhost:4200/api/${path}`);
   const json = await response.json();
   if (!response.ok) throw new Error(json.error);
 
@@ -22,7 +22,7 @@ export async function fetchDto<T extends BaseResponseDto>(
   dtoClass: ClassConstructor<T>,
   path: string
 ) {
-  const response = await fetch(path);
+  const response = await fetch(`http://localhost:4200/api/${path}`);
   const json = await response.json();
   if (!response.ok) throw new Error(json.error);
 

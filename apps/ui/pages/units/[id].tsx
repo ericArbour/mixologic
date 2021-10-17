@@ -12,7 +12,7 @@ import { fetchDto, submitMutation, serializeForDehydration } from '../../utils';
 import { useAnimateLoading } from '../../hooks';
 
 async function fetchUnit(id: number) {
-  return fetchDto(UnitDto, `http://localhost:4200/api/units/${id}`);
+  return fetchDto(UnitDto, `units/${id}`);
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {

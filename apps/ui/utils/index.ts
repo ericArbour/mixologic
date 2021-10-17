@@ -34,3 +34,20 @@ export async function fetchDto<T extends BaseResponseDto>(
 export async function serializeForDehydration<T>(fetchFn: () => Promise<T>) {
   return JSON.parse(JSON.stringify(await fetchFn()));
 }
+
+export async function postMutation(updateDto: unknown, path: string) {
+  const response = await fetch(`http://localhost:4200/api/${path}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updateDto), // body data type must match "Content-Type" header
+  });
+
+  if (!response.ok) {
+    const json = await response.json();
+    throw new Error(json.message);
+  }
+
+  return response;
+}

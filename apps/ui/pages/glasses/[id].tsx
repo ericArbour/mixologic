@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
@@ -8,9 +8,8 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { GlassDto, UpdateGlassDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
-import { fetchDto, serializeForDehydration } from '../../utils';
+import { fetchDto, postMutation, serializeForDehydration } from '../../utils';
 import { useAnimateLoading } from '../../hooks';
-import { GetServerSidePropsContext } from 'next';
 
 async function fetchGlass(id: number) {
   return fetchDto(GlassDto, `http://localhost:4200/api/glasses/${id}`);
@@ -48,22 +47,7 @@ export default function Glass() {
 
   const queryResult = useGlass(+id);
   const mutation = useMutation<Response, Error, UpdateGlassDto>(
-    async (updateGlassDto) => {
-      const response = await fetch(`http://localhost:4200/api/glasses/${id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updateGlassDto), // body data type must match "Content-Type" header
-      });
-
-      if (!response.ok) {
-        const json = await response.json();
-        throw new Error(json.message);
-      }
-
-      return response;
-    }
+    (updateGlassDto) => postMutation(updateGlassDto, `glasses/${id}`)
   );
   const { shouldAnimateLoading } = useAnimateLoading(mutation);
 

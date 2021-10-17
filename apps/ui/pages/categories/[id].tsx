@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient, useMutation, useQuery } from 'react-query';
@@ -9,7 +8,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { CategoryDto, UpdateCategoryDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
-import { fetchDto, serializeForDehydration } from '../../utils';
+import { fetchDto, postMutation, serializeForDehydration } from '../../utils';
 import { useAnimateLoading } from '../../hooks';
 
 async function fetchCategory(id: number) {
@@ -50,25 +49,7 @@ export default function Category() {
 
   const queryResult = useCategory(+id);
   const mutation = useMutation<Response, Error, UpdateCategoryDto>(
-    async (updateCategoryDto) => {
-      const response = await fetch(
-        `http://localhost:4200/api/categories/${id}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updateCategoryDto), // body data type must match "Content-Type" header
-        }
-      );
-
-      if (!response.ok) {
-        const json = await response.json();
-        throw new Error(json.message);
-      }
-
-      return response;
-    }
+    (updateCategoryDto) => postMutation(updateCategoryDto, `categories/${id}`)
   );
   const { shouldAnimateLoading } = useAnimateLoading(mutation);
 

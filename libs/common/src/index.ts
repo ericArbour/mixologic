@@ -6,4 +6,8 @@ export * from './lib/dto/glasses/glass.dto';
 export * from './lib/dto/glasses/create-glass.dto';
 export * from './lib/dto/glasses/update-glass.dto';
 
+export * from './lib/dto/units/unit.dto';
+export * from './lib/dto/units/create-unit.dto';
+export * from './lib/dto/units/update-unit.dto';
+
 export * from './lib/utils/base-response-dto';

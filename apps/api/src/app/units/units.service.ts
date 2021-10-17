@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { CreateUnitDto } from './dto/create-unit.dto';
-import { UpdateUnitDto } from './dto/update-unit.dto';
+import { CreateUnitDto, UpdateUnitDto } from '@mixologic/common';
+
 import { Unit } from './entities/unit.entity';
 
 @Injectable()

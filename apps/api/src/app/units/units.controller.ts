@@ -9,12 +9,14 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 
+import { UnitDto, CreateUnitDto, UpdateUnitDto } from '@mixologic/common';
+
+import { Serialize } from '../interceptors/serialize.interceptor';
 import { UnitsService } from './units.service';
-import { CreateUnitDto } from './dto/create-unit.dto';
-import { UpdateUnitDto } from './dto/update-unit.dto';
 import { Unit } from './entities/unit.entity';
 
 @Controller('units')
+@Serialize(UnitDto)
 export class UnitsController {
   constructor(private readonly unitsService: UnitsService) {}
 

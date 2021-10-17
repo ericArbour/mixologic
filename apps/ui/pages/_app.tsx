@@ -34,6 +34,7 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
                 links={[
                   { label: 'Categories', pathname: '/categories' },
                   { label: 'Glasses', pathname: '/glasses' },
+                  { label: 'Units', pathname: '/units' },
                 ]}
               />
               <main className="flex-grow overflow-auto">

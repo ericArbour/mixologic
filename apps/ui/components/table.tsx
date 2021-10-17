@@ -4,6 +4,7 @@ import { BaseResponseDto } from '@mixologic/common';
 
 import { ButtonLink, PlusIcon } from '.';
 import { FormSubscribe } from './form-subscribe';
+import { convertUTCDateToLocalDateString } from '../utils';
 
 type Props<T> = {
   title: string;
@@ -18,12 +19,9 @@ type ColumnConfig<T> = {
   displayName: string;
 };
 
-function formatText(val: unknown) {
-  if (typeof val === 'string') return val;
-  if (typeof val === 'number') return val;
-  if (typeof val === 'boolean') return val;
-  if (val === null) return val;
-  if (val instanceof Date) return val.toISOString();
+function formatText<T>(val: T): T | string {
+  if (val instanceof Date) return convertUTCDateToLocalDateString(val);
+  return val;
 }
 
 export function Table<T extends BaseResponseDto>({

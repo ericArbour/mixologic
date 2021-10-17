@@ -1,5 +1,5 @@
-import { Expose, Transform } from 'class-transformer';
-import { IsDate, IsDefined, IsInt, IsOptional } from 'class-validator';
+import { Expose } from 'class-transformer';
+import { IsDateString, IsDefined, IsInt, IsOptional } from 'class-validator';
 
 export class BaseResponseDto {
   @Expose()
@@ -9,17 +9,11 @@ export class BaseResponseDto {
 
   @Expose()
   @IsDefined()
-  @IsDate()
-  @Transform((params) => new Date(params.value), {
-    toClassOnly: true,
-  })
+  @IsDateString()
   createdDate!: Date;
 
   @Expose()
   @IsOptional()
-  @IsDate()
-  @Transform((params) => new Date(params.value), {
-    toClassOnly: true,
-  })
+  @IsDateString()
   updatedDate?: Date;
 }

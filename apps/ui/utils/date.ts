@@ -1,4 +1,5 @@
-export function convertUTCDateToLocalDateString(date: Date): string {
+export function convertUTCDateToLocalDate(dateStr: string): string {
+  const date = new Date(dateStr);
   const newDate = new Date(
     date.getTime() + date.getTimezoneOffset() * 60 * 1000
   );

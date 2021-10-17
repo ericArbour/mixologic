@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
@@ -7,6 +6,7 @@ import { CreateCategoryDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
 import { useAnimateLoading } from '../../hooks';
+import { submitMutation } from '../../utils';
 
 const resolver = classValidatorResolver(CreateCategoryDto);
 
@@ -18,22 +18,7 @@ export default function CreateCategory() {
   } = useForm({ resolver });
 
   const mutation = useMutation<Response, Error, CreateCategoryDto>(
-    async (createCategoryDto) => {
-      const response = await fetch(`http://localhost:4200/api/categories`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(createCategoryDto), // body data type must match "Content-Type" header
-      });
-
-      if (!response.ok) {
-        const json = await response.json();
-        throw new Error(json.message);
-      }
-
-      return response;
-    }
+    (createCategoryDto) => submitMutation(createCategoryDto, 'categories')
   );
   const { shouldAnimateLoading } = useAnimateLoading(mutation);
 

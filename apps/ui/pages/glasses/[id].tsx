@@ -8,7 +8,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { GlassDto, UpdateGlassDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
-import { fetchDto, postMutation, serializeForDehydration } from '../../utils';
+import { fetchDto, submitMutation, serializeForDehydration } from '../../utils';
 import { useAnimateLoading } from '../../hooks';
 
 async function fetchGlass(id: number) {
@@ -47,7 +47,7 @@ export default function Glass() {
 
   const queryResult = useGlass(+id);
   const mutation = useMutation<Response, Error, UpdateGlassDto>(
-    (updateGlassDto) => postMutation(updateGlassDto, `glasses/${id}`)
+    (updateGlassDto) => submitMutation(updateGlassDto, `glasses/${id}`, 'PATCH')
   );
   const { shouldAnimateLoading } = useAnimateLoading(mutation);
 

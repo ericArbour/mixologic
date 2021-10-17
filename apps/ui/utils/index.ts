@@ -35,13 +35,17 @@ export async function serializeForDehydration<T>(fetchFn: () => Promise<T>) {
   return JSON.parse(JSON.stringify(await fetchFn()));
 }
 
-export async function postMutation(updateDto: unknown, path: string) {
+export async function submitMutation(
+  dto: unknown,
+  path: string,
+  method = 'POST'
+) {
   const response = await fetch(`http://localhost:4200/api/${path}`, {
-    method: 'PATCH',
+    method,
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(updateDto), // body data type must match "Content-Type" header
+    body: JSON.stringify(dto), // body data type must match "Content-Type" header
   });
 
   if (!response.ok) {

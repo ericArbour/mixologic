@@ -8,7 +8,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { CategoryDto, UpdateCategoryDto } from '@mixologic/common';
 
 import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
-import { fetchDto, postMutation, serializeForDehydration } from '../../utils';
+import { fetchDto, submitMutation, serializeForDehydration } from '../../utils';
 import { useAnimateLoading } from '../../hooks';
 
 async function fetchCategory(id: number) {
@@ -49,7 +49,8 @@ export default function Category() {
 
   const queryResult = useCategory(+id);
   const mutation = useMutation<Response, Error, UpdateCategoryDto>(
-    (updateCategoryDto) => postMutation(updateCategoryDto, `categories/${id}`)
+    (updateCategoryDto) =>
+      submitMutation(updateCategoryDto, `categories/${id}`, 'PATCH')
   );
   const { shouldAnimateLoading } = useAnimateLoading(mutation);
 

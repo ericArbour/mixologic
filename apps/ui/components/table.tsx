@@ -1,11 +1,9 @@
 import Link from 'next/link';
 
+import { BaseResponseDto } from '@mixologic/common';
+
 import { ButtonLink, PlusIcon } from '.';
 import { FormSubscribe } from './form-subscribe';
-
-interface HasId {
-  id: number;
-}
 
 type Props<T> = {
   title: string;
@@ -28,7 +26,7 @@ function formatText(val: unknown) {
   if (val instanceof Date) return val.toISOString();
 }
 
-export function Table<T extends Record<string, unknown> & HasId>({
+export function Table<T extends BaseResponseDto>({
   title,
   columns,
   rows,

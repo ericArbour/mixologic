@@ -2,8 +2,6 @@ import { Expose, Transform } from 'class-transformer';
 import { IsDate, IsDefined, IsInt, IsOptional } from 'class-validator';
 
 export class BaseResponseDto {
-  [k: string]: unknown;
-
   @Expose()
   @IsDefined()
   @IsInt()

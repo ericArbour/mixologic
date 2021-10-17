@@ -1,7 +1,9 @@
 import { ClassConstructor, plainToClass } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
 
-export async function fetchDtos<T extends Record<string, unknown>>(
+import { BaseResponseDto } from '@mixologic/common';
+
+export async function fetchDtos<T extends BaseResponseDto>(
   dtoClass: ClassConstructor<T>,
   path: string
 ) {
@@ -16,7 +18,7 @@ export async function fetchDtos<T extends Record<string, unknown>>(
   return dtos;
 }
 
-export async function fetchDto<T extends Record<string, unknown>>(
+export async function fetchDto<T extends BaseResponseDto>(
   dtoClass: ClassConstructor<T>,
   path: string
 ) {

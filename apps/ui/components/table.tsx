@@ -17,6 +17,7 @@ type Props<T> = {
 type ColumnConfig<T> = {
   field: string & keyof T;
   displayName: string;
+  valueFormatter?: (row: T) => string;
 };
 
 function formatText<T>(val: T, field: string): T | string {
@@ -73,7 +74,10 @@ export function Table<T extends BaseResponseDto>({
                 return (
                   <tr key={row.id}>
                     {columns.map((column) => {
-                      const text = formatText(row[column.field], column.field);
+                      const value = column.valueFormatter
+                        ? column.valueFormatter(row)
+                        : row[column.field];
+                      const text = formatText(value, column.field);
 
                       return (
                         <td

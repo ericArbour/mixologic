@@ -36,6 +36,12 @@ export default function Index() {
       title="Ingredients"
       columns={[
         { field: 'name', displayName: 'Name' },
+        {
+          field: 'categories',
+          displayName: 'Categories',
+          valueFormatter: (x) =>
+            x.categories.map((category) => category.name).join(', '),
+        },
         { field: 'createdDate', displayName: 'Created' },
         { field: 'updatedDate', displayName: 'Updated' },
       ]}

@@ -39,7 +39,7 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
                 ]}
               />
               <main className="flex-grow overflow-auto">
-                <div className="container mx-auto p-4 sm:p-8 max-w-3xl flex flex-col">
+                <div className="container mx-auto p-4 sm:p-8 max-w-4xl flex flex-col">
                   <Component {...pageProps} />
                 </div>
               </main>

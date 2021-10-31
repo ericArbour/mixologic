@@ -32,6 +32,15 @@ export class IngredientDto extends BaseResponseDto {
   @Expose()
   @IsOptional()
   @ValidateNested({ each: true })
-  @Type(() => IngredientDto)
-  satisfiesIngredients?: IngredientDto[];
+  @Type(() => SatisfiesIngredientDto)
+  satisfiesIngredients?: SatisfiesIngredientDto[];
+}
+
+class SatisfiesIngredientDto extends BaseResponseDto {
+  @Expose()
+  @IsDefined()
+  @IsString()
+  @MinLength(2)
+  @MaxLength(20)
+  name!: string;
 }

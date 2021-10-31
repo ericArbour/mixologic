@@ -26,9 +26,9 @@ export async function fetchDto<T extends BaseResponseDto>(
   const json = await response.json();
   if (!response.ok) throw new Error(json.error);
 
-  const glassDto = plainToClass(dtoClass, json);
-  await validateOrReject(glassDto);
-  return glassDto;
+  const dto = plainToClass(dtoClass, json);
+  await validateOrReject(dto);
+  return dto;
 }
 
 export async function serializeForDehydration<T>(fetchFn: () => Promise<T>) {

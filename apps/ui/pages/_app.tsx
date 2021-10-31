@@ -34,6 +34,7 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
                 links={[
                   { label: 'Categories', pathname: '/categories' },
                   { label: 'Glasses', pathname: '/glasses' },
+                  { label: 'Ingredients', pathname: '/ingredients' },
                   { label: 'Units', pathname: '/units' },
                 ]}
               />

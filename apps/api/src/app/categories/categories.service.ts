@@ -2,8 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { CreateCategoryDto } from '@mixologic/common';
-import { UpdateCategoryDto } from '@mixologic/common';
+import { CreateCategoryDto, UpdateCategoryDto } from '@mixologic/common';
 
 import { Category } from './entities/category.entity';
 

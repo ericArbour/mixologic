@@ -10,11 +10,16 @@ import {
 } from '@nestjs/common';
 
 import { IngredientsService } from './ingredients.service';
-import { CreateIngredientDto } from './dto/create-ingredient.dto';
-import { UpdateIngredientDto } from './dto/update-ingredient.dto';
+import {
+  CreateIngredientDto,
+  IngredientDto,
+  UpdateIngredientDto,
+} from '@mixologic/common';
 import { Ingredient } from './entities/ingredient.entity';
+import { Serialize } from '../interceptors/serialize.interceptor';
 
 @Controller('ingredients')
+@Serialize(IngredientDto)
 export class IngredientsController {
   constructor(private readonly ingredientsService: IngredientsService) {}
 

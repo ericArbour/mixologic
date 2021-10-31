@@ -12,7 +12,7 @@ content-type: application/json
 GET http://localhost:3333/api/ingredients
 
 ### Find one ingredient by id
-GET http://localhost:3333/api/ingredients/5
+GET http://localhost:3333/api/ingredients/3
 
 ### Update an ingredient
 PATCH http://localhost:3333/api/ingredients/5

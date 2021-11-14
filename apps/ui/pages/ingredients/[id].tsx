@@ -2,7 +2,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
-import { useForm, useController, NestedValue } from 'react-hook-form';
+import { useForm, Controller, NestedValue } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { IngredientDto } from '@mixologic/common';
@@ -22,6 +22,7 @@ import {
 import { fetchDto, submitMutation, serializeForDehydration } from '../../utils';
 import { useAnimateLoading } from '../../hooks';
 import { fetchCategories, useCategories } from '../categories';
+import { fetchIngredients, useIngredients } from '.';
 
 async function fetchIngredient(id: number) {
   return fetchDto(IngredientDto, `ingredients/${id}`);
@@ -41,6 +42,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   await queryClient.prefetchQuery(['categories'], () => {
     return serializeForDehydration(fetchCategories);
   });
+  await queryClient.prefetchQuery(['ingredients'], () => {
+    return serializeForDehydration(fetchIngredients);
+  });
 
   return {
     props: {
@@ -57,6 +61,9 @@ const useIngredient = (id: number) => {
 // NestedValue needed due to https://github.com/react-hook-form/react-hook-form/issues/2922
 type IngredientFormValues = IngredientDto & {
   categories: NestedValue<IngredientDto['categories']>;
+  satisfiesIngredients?: NestedValue<
+    NonNullable<IngredientDto['satisfiesIngredients']>
+  >;
 };
 
 const resolver = classValidatorResolver<
@@ -91,15 +98,11 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
     defaultValues: ingredient,
   });
 
-  const {
-    field: { onChange, value, name },
-  } = useController({
-    name: 'categories',
-    control,
-    defaultValue: [],
-  });
+  const { data: categoriesData, isLoading: isCategoriesLoading } =
+    useCategories();
 
-  const { data, isLoading } = useCategories();
+  const { data: ingredientsData, isLoading: isIngredientsLoading } =
+    useIngredients();
 
   const mutation = useMutation<Response, Error, IngredientDto>(
     (updateIngredientDto) =>
@@ -125,15 +128,36 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
             required
             error={errors.name?.message}
           />
-          <MultiSelect
-            label="Categories"
-            id={name}
-            value={value}
-            onChange={onChange}
-            options={data}
-            isLoading={isLoading}
-            required
-            error={errors.categories?.message}
+          <Controller
+            name="categories"
+            control={control}
+            render={({ field }) => (
+              <MultiSelect
+                label="Categories"
+                id={field.name}
+                value={field.value}
+                onChange={field.onChange}
+                options={categoriesData}
+                isLoading={isCategoriesLoading}
+                required
+                error={errors.categories?.message}
+              />
+            )}
+          />
+          <Controller
+            name="satisfiesIngredients"
+            control={control}
+            render={({ field }) => (
+              <MultiSelect
+                label="Satisfies Ingredients"
+                id={field.name}
+                value={field.value ?? []}
+                onChange={field.onChange}
+                options={ingredientsData}
+                isLoading={isIngredientsLoading}
+                error={errors.satisfiesIngredients?.message}
+              />
+            )}
           />
         </FormSection>
         <FormSection>

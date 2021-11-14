@@ -6,7 +6,7 @@ import { IngredientDto } from '@mixologic/common';
 import { Table } from '../../components';
 import { fetchDtos, serializeForDehydration } from '../../utils';
 
-const fetchIngredients = () => fetchDtos(IngredientDto, 'ingredients');
+export const fetchIngredients = () => fetchDtos(IngredientDto, 'ingredients');
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
@@ -21,7 +21,7 @@ export async function getServerSideProps() {
   };
 }
 
-const useIngredients = () => {
+export const useIngredients = () => {
   return useQuery(['ingredients'], () => fetchIngredients());
 };
 

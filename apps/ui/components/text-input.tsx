@@ -1,5 +1,5 @@
 import { ChangeEventHandler, FocusEventHandler, forwardRef } from 'react';
-import { ErrorIcon } from '.';
+import { ErrorMessage } from './error-message';
 import { LoadingInput } from './loading-input';
 
 interface Props {
@@ -23,7 +23,7 @@ export const TextInput = forwardRef<HTMLInputElement, Props>(
   (props: Props, ref) => {
     return (
       <div
-        className={`${props.helper ? 'flex' : ''} relative ${
+        className={`${props.helper ? 'flex' : ''} ${
           props.disabled ? 'opacity-50 pointer-events-none' : ''
         }`}
       >
@@ -69,14 +69,7 @@ export const TextInput = forwardRef<HTMLInputElement, Props>(
             <div className="mt-2 text-green-500">Valid password</div>
           </>
         )}
-        {props.error && (
-          <>
-            <ErrorIcon className="absolute right-2 bottom-3" />
-            <p className="absolute text-sm text-red-500 -bottom-6">
-              {props.error}
-            </p>
-          </>
-        )}
+        <ErrorMessage>{props.error}</ErrorMessage>
       </div>
     );
   }

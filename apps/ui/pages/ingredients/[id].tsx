@@ -10,8 +10,9 @@ import { IngredientDto } from '@mixologic/common';
 import {
   Button,
   CheckIcon,
-  ErrorIcon,
+  ErrorMessage,
   MultiSelect,
+  SuccessMessage,
   TextInput,
 } from '../../components';
 import { fetchDto, submitMutation, serializeForDehydration } from '../../utils';
@@ -110,8 +111,8 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
       <div className="mb-6 text-3xl font-light text-center text-gray-800 dark:text-white">
         Ingredient
       </div>
-      <div className="space-y-10">
-        <div className="space-y-6">
+      <div className="space-y-8">
+        <div className="space-y-2">
           <TextInput
             label="Name"
             {...register('name')}
@@ -125,11 +126,12 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
             onChange={onChange}
             options={data}
             isLoading={isLoading}
+            required
             // @ts-expect-error blah
             error={errors.categories?.message}
           />
         </div>
-        <div className="col-span-2 text-right">
+        <div className="space-y-2">
           <Button
             submit
             label="Save"
@@ -137,21 +139,12 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
             isLoading={mutation.isLoading || shouldAnimateLoading}
             icon={<CheckIcon className="-ml-1 mr-1" />}
           />
+          {!shouldAnimateLoading && mutation.isSuccess ? (
+            <SuccessMessage label="Ingredient" />
+          ) : !shouldAnimateLoading && mutation.isError ? (
+            <ErrorMessage>{mutation.error.message}</ErrorMessage>
+          ) : null}
         </div>
-        {!shouldAnimateLoading && mutation.isSuccess ? (
-          <div className="col-span-2">
-            <CheckIcon className="-mt-1 mr-1 inline text-green-500" />
-            Ingredient saved
-          </div>
-        ) : !shouldAnimateLoading && mutation.isError ? (
-          <div className="col-span-2">
-            <p>
-              <ErrorIcon className="mr-1 inline-block -mt-1" />
-              An error occurred:
-            </p>
-            <p>{mutation.error.message}</p>
-          </div>
-        ) : null}
       </div>
     </form>
   );

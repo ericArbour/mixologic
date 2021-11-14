@@ -1,5 +1,6 @@
 import Select, { MultiValue } from 'react-select';
 import { ErrorIcon } from '.';
+import { ErrorMessage } from './error-message';
 
 interface MultiSelectProps<TOption> {
   id: string;
@@ -23,7 +24,7 @@ export function MultiSelect<TOption extends { id: number; name: string }>({
   error,
 }: MultiSelectProps<TOption>) {
   return (
-    <div className="relative">
+    <div>
       <label>
         {label}{' '}
         {required && <span className="text-red-500 required-dot">*</span>}
@@ -38,12 +39,7 @@ export function MultiSelect<TOption extends { id: number; name: string }>({
           getOptionValue={(option) => option.id.toString()}
         />
       </label>
-      {error && (
-        <>
-          <ErrorIcon className="absolute right-2 bottom-3" />
-          <p className="absolute text-sm text-red-500 -bottom-6">{error}</p>
-        </>
-      )}
+      <ErrorMessage>{error}</ErrorMessage>
     </div>
   );
 }

@@ -1,6 +1,8 @@
 export * from './header';
 export * from './button';
+export * from './error-message';
 export * from './multi-select';
+export * from './success-message';
 export * from './table';
 export * from './text-input';
 

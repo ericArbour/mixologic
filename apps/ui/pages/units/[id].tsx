@@ -7,7 +7,17 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { UnitDto, UpdateUnitDto } from '@mixologic/common';
 
-import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
+import {
+  Button,
+  CheckIcon,
+  ErrorMessage,
+  Form,
+  FormBody,
+  FormHeader,
+  FormSection,
+  SuccessMessage,
+  TextInput,
+} from '../../components';
 import { fetchDto, submitMutation, serializeForDehydration } from '../../utils';
 import { useAnimateLoading } from '../../hooks';
 
@@ -57,25 +67,18 @@ export default function Unit() {
     mutation.mutate(updateUnitDto);
 
   return (
-    <form
-      className="w-full max-w-sm mx-auto px-5 py-10 bg-white rounded-lg shadow dark:bg-gray-800"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <div className="mb-6 text-3xl font-light text-center text-gray-800 dark:text-white">
-        Unit
-      </div>
-      <div className="grid max-w-xl grid-cols-2 gap-8 m-auto">
-        <div className="col-span-2">
-          <TextInput
-            label="Name"
-            defaultValue={queryResult.data?.name}
-            isLoading={queryResult.isLoading}
-            {...register('name')}
-            required
-            error={errors.name?.message}
-          />
-        </div>
-        <div className="col-span-2 text-right">
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <FormHeader>Unit</FormHeader>
+      <FormBody>
+        <TextInput
+          label="Name"
+          defaultValue={queryResult.data?.name}
+          isLoading={queryResult.isLoading}
+          {...register('name')}
+          required
+          error={errors.name?.message}
+        />
+        <FormSection>
           <Button
             submit={true}
             label="Save"
@@ -83,22 +86,13 @@ export default function Unit() {
             isLoading={mutation.isLoading || shouldAnimateLoading}
             icon={<CheckIcon className="-ml-1 mr-1" />}
           />
-        </div>
-        {!shouldAnimateLoading && mutation.isSuccess ? (
-          <div className="col-span-2">
-            <CheckIcon className="-mt-1 mr-1 inline text-green-500" />
-            Unit saved
-          </div>
-        ) : !shouldAnimateLoading && mutation.isError ? (
-          <div className="col-span-2">
-            <p>
-              <ErrorIcon className="mr-1 inline-block -mt-1" />
-              An error occurred:
-            </p>
-            <p>{mutation.error.message}</p>
-          </div>
-        ) : null}
-      </div>
-    </form>
+          {!shouldAnimateLoading && mutation.isSuccess ? (
+            <SuccessMessage label="Unit" />
+          ) : !shouldAnimateLoading && mutation.isError ? (
+            <ErrorMessage>{mutation.error.message}</ErrorMessage>
+          ) : null}
+        </FormSection>
+      </FormBody>
+    </Form>
   );
 }

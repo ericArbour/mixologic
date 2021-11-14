@@ -11,6 +11,10 @@ import {
   Button,
   CheckIcon,
   ErrorMessage,
+  Form,
+  FormBody,
+  FormHeader,
+  FormSection,
   MultiSelect,
   SuccessMessage,
   TextInput,
@@ -104,15 +108,10 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
     mutation.mutate(updateIngredientDto);
 
   return (
-    <form
-      className="w-full max-w-sm mx-auto px-5 py-10 bg-white rounded-lg shadow dark:bg-gray-800"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <div className="mb-6 text-3xl font-light text-center text-gray-800 dark:text-white">
-        Ingredient
-      </div>
-      <div className="space-y-8">
-        <div className="space-y-2">
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <FormHeader>Ingredient</FormHeader>
+      <FormBody>
+        <FormSection>
           <TextInput
             label="Name"
             {...register('name')}
@@ -130,8 +129,8 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
             // @ts-expect-error blah
             error={errors.categories?.message}
           />
-        </div>
-        <div className="space-y-2">
+        </FormSection>
+        <FormSection>
           <Button
             submit
             label="Save"
@@ -144,8 +143,8 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
           ) : !shouldAnimateLoading && mutation.isError ? (
             <ErrorMessage>{mutation.error.message}</ErrorMessage>
           ) : null}
-        </div>
-      </div>
-    </form>
+        </FormSection>
+      </FormBody>
+    </Form>
   );
 }

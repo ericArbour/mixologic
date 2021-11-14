@@ -2,7 +2,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
-import { useForm, useController, FieldError } from 'react-hook-form';
+import { useForm, useController, NestedValue } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { IngredientDto } from '@mixologic/common';
@@ -54,9 +54,16 @@ const useIngredient = (id: number) => {
   return useQuery(queryKey, ({ queryKey }) => fetchIngredient(queryKey[1]));
 };
 
-const resolver = classValidatorResolver<IngredientDto, IngredientDto, unknown>(
-  IngredientDto
-);
+// NestedValue needed due to https://github.com/react-hook-form/react-hook-form/issues/2922
+type IngredientFormValues = IngredientDto & {
+  categories: NestedValue<IngredientDto['categories']>;
+};
+
+const resolver = classValidatorResolver<
+  IngredientDto,
+  IngredientFormValues,
+  unknown
+>(IngredientDto);
 
 export default function Ingredient() {
   const router = useRouter();
@@ -79,7 +86,7 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IngredientFormValues>({
     resolver,
     defaultValues: ingredient,
   });
@@ -126,7 +133,6 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
             options={data}
             isLoading={isLoading}
             required
-            // @ts-expect-error blah
             error={errors.categories?.message}
           />
         </FormSection>

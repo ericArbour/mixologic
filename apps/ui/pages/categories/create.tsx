@@ -4,7 +4,17 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { CreateCategoryDto } from '@mixologic/common';
 
-import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
+import {
+  Button,
+  CheckIcon,
+  ErrorMessage,
+  Form,
+  FormBody,
+  FormHeader,
+  FormSection,
+  SuccessMessage,
+  TextInput,
+} from '../../components';
 import { useAnimateLoading } from '../../hooks';
 import { submitMutation } from '../../utils';
 
@@ -26,24 +36,17 @@ export default function CreateCategory() {
     mutation.mutate(createCategoryDto);
 
   return (
-    <form
-      className="w-full max-w-sm mx-auto px-5 py-10 bg-white rounded-lg shadow dark:bg-gray-800"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <div className="mb-6 text-3xl font-light text-center text-gray-800 dark:text-white">
-        Category
-      </div>
-      <div className="grid max-w-xl grid-cols-2 gap-8 m-auto">
-        <div className="col-span-2">
-          <TextInput
-            label="Name"
-            defaultValue=""
-            {...register('name')}
-            required
-            error={errors.name?.message}
-          />
-        </div>
-        <div className="col-span-2 text-right">
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <FormHeader>Category</FormHeader>
+      <FormBody>
+        <TextInput
+          label="Name"
+          defaultValue=""
+          {...register('name')}
+          required
+          error={errors.name?.message}
+        />
+        <FormSection>
           <Button
             submit={true}
             label="Save"
@@ -51,22 +54,13 @@ export default function CreateCategory() {
             isLoading={mutation.isLoading || shouldAnimateLoading}
             icon={<CheckIcon className="-ml-1 mr-1" />}
           />
-        </div>
+        </FormSection>
         {!shouldAnimateLoading && mutation.isSuccess ? (
-          <div className="col-span-2">
-            <CheckIcon className="-mt-1 mr-1 inline text-green-500" />
-            Category saved
-          </div>
+          <SuccessMessage label="Category" />
         ) : !shouldAnimateLoading && mutation.isError ? (
-          <div className="col-span-2">
-            <p>
-              <ErrorIcon className="mr-1 inline-block -mt-1" />
-              An error occurred:
-            </p>
-            <p>{mutation.error.message}</p>
-          </div>
+          <ErrorMessage>{mutation.error.message}</ErrorMessage>
         ) : null}
-      </div>
-    </form>
+      </FormBody>
+    </Form>
   );
 }

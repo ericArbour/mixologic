@@ -23,7 +23,7 @@ export const TextInput = forwardRef<HTMLInputElement, Props>(
   (props: Props, ref) => {
     return (
       <div
-        className={`${props.helper ? 'flex' : ''} ${
+        className={`space-y-2 ${props.helper ? 'flex' : ''} ${
           props.disabled ? 'opacity-50 pointer-events-none' : ''
         }`}
       >

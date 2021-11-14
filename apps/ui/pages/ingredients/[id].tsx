@@ -2,12 +2,18 @@ import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm, useController, FieldError } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { IngredientDto } from '@mixologic/common';
 
-import { Button, CheckIcon, ErrorIcon, TextInput } from '../../components';
+import {
+  Button,
+  CheckIcon,
+  ErrorIcon,
+  MultiSelect,
+  TextInput,
+} from '../../components';
 import { fetchDto, submitMutation, serializeForDehydration } from '../../utils';
 import { useAnimateLoading } from '../../hooks';
 import { fetchCategories, useCategories } from '../categories';
@@ -64,7 +70,6 @@ interface IngredientFormProps {
 
 function IngredientForm({ ingredient }: IngredientFormProps) {
   const {
-    watch,
     control,
     register,
     handleSubmit,
@@ -73,20 +78,24 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
     resolver,
     defaultValues: ingredient,
   });
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'categories',
-    keyName: 'key',
-  });
-  const router = useRouter();
-  const id = router.query.id as string;
-  console.log(errors);
 
-  const queryResult = useCategories();
+  const {
+    field: { onChange, value, name },
+  } = useController({
+    name: 'categories',
+    control,
+    defaultValue: [],
+  });
+
+  const { data, isLoading } = useCategories();
 
   const mutation = useMutation<Response, Error, IngredientDto>(
     (updateIngredientDto) =>
-      submitMutation(updateIngredientDto, `ingredients/${id}`, 'PATCH')
+      submitMutation(
+        updateIngredientDto,
+        `ingredients/${ingredient.id}`,
+        'PATCH'
+      )
   );
   const { shouldAnimateLoading } = useAnimateLoading(mutation);
 
@@ -101,49 +110,24 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
       <div className="mb-6 text-3xl font-light text-center text-gray-800 dark:text-white">
         Ingredient
       </div>
-      <div className="grid max-w-xl grid-cols-2 gap-8 m-auto">
-        <div className="col-span-2">
+      <div className="space-y-10">
+        <div className="space-y-6">
           <TextInput
             label="Name"
             {...register('name')}
             required
             error={errors.name?.message}
           />
-        </div>
-        <div className="col-span-2">
-          Categories
-          {fields.map((field, index) => (
-            <div key={field.key}>
-              <p>{field.name}</p>
-              <button onClick={() => remove(index)}>X</button>
-            </div>
-          ))}
-        </div>
-        <div className="col-span-2">
-          <label>
-            Add Category
-            <select
-              value=""
-              onChange={(e) => {
-                const categoryDto = queryResult?.data?.find(
-                  (categoryDto) => categoryDto.id === parseInt(e.target.value)
-                );
-                if (categoryDto) append(categoryDto);
-              }}
-            >
-              <option value=""></option>
-              {queryResult?.data
-                ?.filter(
-                  (categoryDto) =>
-                    !fields.find((field) => field.id === categoryDto.id)
-                )
-                .map((categoryDto) => (
-                  <option key={categoryDto.id} value={categoryDto.id}>
-                    {categoryDto.name}
-                  </option>
-                ))}
-            </select>
-          </label>
+          <MultiSelect
+            label="Categories"
+            id={name}
+            value={value}
+            onChange={onChange}
+            options={data}
+            isLoading={isLoading}
+            // @ts-expect-error blah
+            error={errors.categories?.message}
+          />
         </div>
         <div className="col-span-2 text-right">
           <Button

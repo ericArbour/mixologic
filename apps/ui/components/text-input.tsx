@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FocusEventHandler, forwardRef } from 'react';
 import { ErrorIcon } from '.';
-import { LoadingInput } from './LoadingInput';
+import { LoadingInput } from './loading-input';
 
 interface Props {
   type?: string;

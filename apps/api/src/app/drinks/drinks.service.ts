@@ -39,7 +39,12 @@ export class DrinksService {
 
   findAll() {
     return this.drinkRepository.find({
-      relations: ['drinkIngredients', 'drinkIngredients.ingredient', 'glass'],
+      relations: [
+        'drinkIngredients',
+        'drinkIngredients.ingredient',
+        'drinkIngredients.unit',
+        'glass',
+      ],
     });
   }
 
@@ -48,8 +53,8 @@ export class DrinksService {
       relations: [
         'drinkIngredients',
         'drinkIngredients.ingredient',
+        'drinkIngredients.unit',
         'glass',
-        'unit',
       ],
     });
   }

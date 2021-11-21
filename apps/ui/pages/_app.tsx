@@ -33,6 +33,7 @@ export default function CustomApp({ Component, pageProps }: AppProps) {
               <Header
                 links={[
                   { label: 'Categories', pathname: '/categories' },
+                  { label: 'Drinks', pathname: '/drinks' },
                   { label: 'Glasses', pathname: '/glasses' },
                   { label: 'Ingredients', pathname: '/ingredients' },
                   { label: 'Units', pathname: '/units' },

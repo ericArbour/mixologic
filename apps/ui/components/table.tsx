@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { BaseResponseDto } from '@mixologic/common';
 
-import { ButtonLink, PlusIcon } from '.';
+import { ButtonLink, PlusIcon, TextLink } from '.';
 import { FormSubscribe } from './form-subscribe';
 import { convertUTCDateToLocalDate } from '../utils';
 
@@ -17,7 +17,7 @@ type Props<T> = {
 type ColumnConfig<T> = {
   field: string & keyof T;
   displayName: string;
-  valueFormatter?: (row: T) => string;
+  valueFormatter?: (row: T) => string | JSX.Element;
 };
 
 function formatText<T>(val: T, field: string): T | string {
@@ -93,10 +93,8 @@ export function Table<T extends BaseResponseDto>({
                       );
                     })}
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <Link href={`${editPathname}/${row.id}`}>
-                        <a className="text-indigo-600 hover:text-indigo-900">
-                          Edit
-                        </a>
+                      <Link href={`${editPathname}/${row.id}`} passHref>
+                        <TextLink>Edit</TextLink>
                       </Link>
                     </td>
                   </tr>

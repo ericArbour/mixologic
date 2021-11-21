@@ -9,6 +9,7 @@ export * from './multi-select';
 export * from './success-message';
 export * from './table';
 export * from './text-input';
+export * from './text-link';
 
 // icons
 export * from './icons/check-icon';

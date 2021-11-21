@@ -2,8 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 
-import { CreateDrinkDto } from './dto/create-drink.dto';
-import { UpdateDrinkDto } from './dto/update-drink.dto';
+import { CreateDrinkDto, UpdateDrinkDto } from '@mixologic/common';
 import { DrinkIngredient } from './entities/drink-ingredient.entity';
 import { Drink } from './entities/drink.entity';
 
@@ -39,11 +38,20 @@ export class DrinksService {
   }
 
   findAll() {
-    return this.drinkRepository.find();
+    return this.drinkRepository.find({
+      relations: ['drinkIngredients', 'drinkIngredients.ingredient', 'glass'],
+    });
   }
 
   findOne(id: Drink['id']) {
-    return this.drinkRepository.findOne(id);
+    return this.drinkRepository.findOne(id, {
+      relations: [
+        'drinkIngredients',
+        'drinkIngredients.ingredient',
+        'glass',
+        'unit',
+      ],
+    });
   }
 
   async update(id: Drink['id'], updateDrinkDto: UpdateDrinkDto) {

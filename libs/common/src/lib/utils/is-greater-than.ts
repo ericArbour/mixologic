@@ -5,7 +5,7 @@ import {
   ValidationOptions,
   ValidationArguments,
 } from 'class-validator';
-import { CreateDrinkIngredientDto } from '../drinks/dto/create-drink.dto';
+import { CreateDrinkIngredientDto } from '../dto/drinks/create-drink.dto';
 
 export function IsGreaterThan(
   relatedPropertyName: keyof CreateDrinkIngredientDto,

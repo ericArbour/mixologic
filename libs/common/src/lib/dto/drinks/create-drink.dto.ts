@@ -16,29 +16,11 @@ import { Type } from 'class-transformer';
 
 import { IsGreaterThan } from '../../utils/is-greater-than';
 
-export class CreateDrinkDto {
-  @IsDefined()
-  @IsString()
-  @MinLength(2)
-  @MaxLength(30)
-  name!: string;
-
-  @IsDefined()
-  @IsString()
-  @IsUrl()
-  url!: string;
-
+class CreateDrinkGlassDto {
   @IsDefined()
   @IsInt()
   @IsPositive()
-  glassId!: number;
-
-  @IsDefined()
-  @ArrayMinSize(2)
-  @ArrayMaxSize(10)
-  @ValidateNested({ each: true })
-  @Type(() => CreateDrinkIngredientDto)
-  drinkIngredients!: CreateDrinkIngredientDto[];
+  id!: number;
 }
 
 export class CreateDrinkIngredientDto {
@@ -62,4 +44,29 @@ export class CreateDrinkIngredientDto {
   @IsInt()
   @IsPositive()
   unitId!: number;
+}
+
+export class CreateDrinkDto {
+  @IsDefined()
+  @IsString()
+  @MinLength(2)
+  @MaxLength(30)
+  name!: string;
+
+  @IsDefined()
+  @IsString()
+  @IsUrl()
+  url!: string;
+
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => CreateDrinkGlassDto)
+  glass!: CreateDrinkGlassDto;
+
+  @IsDefined()
+  @ArrayMinSize(2)
+  @ArrayMaxSize(10)
+  @ValidateNested({ each: true })
+  @Type(() => CreateDrinkIngredientDto)
+  drinkIngredients!: CreateDrinkIngredientDto[];
 }

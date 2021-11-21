@@ -1,18 +1,18 @@
-import Select, { MultiValue } from 'react-select';
+import ReactSelect, { SingleValue } from 'react-select';
 import { ErrorMessage } from './error-message';
 
-interface MultiSelectProps<TOption> {
+interface SelectProps<TOption> {
   id: string;
-  value: TOption[];
+  value: TOption;
   options: TOption[] | undefined;
-  onChange: (options: MultiValue<TOption>) => void;
+  onChange: (options: SingleValue<TOption>) => void;
   label: string;
   isLoading?: boolean;
   required?: boolean;
   error?: string;
 }
 
-export function MultiSelect<TOption extends { id: number; name: string }>({
+export function Select<TOption extends { id: number; name: string }>({
   id,
   value,
   options,
@@ -21,14 +21,13 @@ export function MultiSelect<TOption extends { id: number; name: string }>({
   isLoading,
   required,
   error,
-}: MultiSelectProps<TOption>) {
+}: SelectProps<TOption>) {
   return (
     <div>
       <label>
         {label}{' '}
         {required && <span className="text-red-500 required-dot">*</span>}
-        <Select
-          isMulti
+        <ReactSelect
           instanceId={id}
           value={value}
           onChange={onChange}

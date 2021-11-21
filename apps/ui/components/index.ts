@@ -6,6 +6,7 @@ export * from './form-body';
 export * from './form-header';
 export * from './form-section';
 export * from './multi-select';
+export * from './select';
 export * from './success-message';
 export * from './table';
 export * from './text-input';

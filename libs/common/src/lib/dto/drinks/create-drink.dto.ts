@@ -23,11 +23,25 @@ class CreateDrinkGlassDto {
   id!: number;
 }
 
-export class CreateDrinkIngredientDto {
+class CreateDrinkIngredientIngredientDto {
   @IsDefined()
   @IsInt()
   @IsPositive()
-  ingredientId!: number;
+  id!: number;
+}
+
+class CreateDrinkIngredientUnitDto {
+  @IsDefined()
+  @IsInt()
+  @IsPositive()
+  id!: number;
+}
+
+export class CreateDrinkIngredientDto {
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => CreateDrinkIngredientIngredientDto)
+  ingredient!: CreateDrinkIngredientIngredientDto;
 
   @IsDefined()
   @IsNumber()
@@ -41,9 +55,9 @@ export class CreateDrinkIngredientDto {
   upperRangeAmount?: number;
 
   @IsDefined()
-  @IsInt()
-  @IsPositive()
-  unitId!: number;
+  @ValidateNested({ each: true })
+  @Type(() => CreateDrinkIngredientUnitDto)
+  unit!: CreateDrinkIngredientUnitDto;
 }
 
 export class CreateDrinkDto {

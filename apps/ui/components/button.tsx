@@ -24,6 +24,7 @@ interface SharedProps {
   icon?: JSX.Element;
   label?: string;
   onClick?: () => void;
+  className?: string;
 }
 
 interface ButtonProps extends SharedProps {
@@ -37,13 +38,13 @@ interface ButtonLinkProps extends SharedProps {
 }
 
 function getSharedClassNames(props: SharedProps): string {
-  return `${props.small ? 'text-sm' : 'text-base'} ${
+  return `${props.small ? 'text-sm py-1 px-2' : 'text-base py-2 px-4 w-full'} ${
     props.icon ? 'flex justify-center items-center ' : ''
   } ${
     colors[props.color]
-  } py-2 px-4 text-white w-full transition ease-in duration-200 text-center font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-    !props.label ? ' w-12 h-12' : ''
-  } ${props.rounded ? 'rounded-full' : 'rounded-lg '}`;
+  } text-white transition ease-in duration-200 text-center font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+    !props.label && !props.small ? ' w-12 h-12' : ''
+  } ${props.rounded ? 'rounded-full' : 'rounded-lg '} ${props.className ?? ''}`;
 }
 
 export function Button(props: ButtonProps) {

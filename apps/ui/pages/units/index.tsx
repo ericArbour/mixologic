@@ -21,7 +21,7 @@ export async function getServerSideProps() {
   };
 }
 
-const useUnits = () => {
+export const useUnits = () => {
   return useQuery(['units'], () => fetchUnits());
 };
 

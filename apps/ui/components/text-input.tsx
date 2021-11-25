@@ -1,21 +1,21 @@
 import { ChangeEventHandler, FocusEventHandler, forwardRef } from 'react';
 import { ErrorMessage } from './error-message';
 import { LoadingInput } from './loading-input';
+import { RequiredDot } from './required-dot';
 
 interface Props {
+  name: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
   type?: string;
   label?: string;
-  defaultValue?: string;
+  defaultValue?: string | number;
   required?: boolean;
   error?: string;
   helper?: string;
   placeholder?: string;
-  name?: string;
   disabled?: boolean;
   isLoading?: boolean;
   withForceIndications?: boolean;
-  id?: string;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
 }
 
@@ -28,11 +28,9 @@ export const TextInput = forwardRef<HTMLInputElement, Props>(
         }`}
       >
         {props.label && (
-          <label htmlFor={props.id} className="text-gray-700">
-            {props.label}{' '}
-            {props.required && (
-              <span className="text-red-500 required-dot">*</span>
-            )}
+          <label htmlFor={props.name} className="text-gray-700">
+            {props.label}
+            {props.required && <RequiredDot />}
           </label>
         )}
         {props.helper && (
@@ -44,7 +42,7 @@ export const TextInput = forwardRef<HTMLInputElement, Props>(
           <LoadingInput />
         ) : (
           <input
-            id={props.id}
+            id={props.name}
             defaultValue={props.defaultValue}
             disabled={props.disabled}
             className={`${props.error ? 'ring-red-500 ring-2' : ''}${

@@ -15,6 +15,9 @@ import {
   FormBody,
   FormHeader,
   FormSection,
+  PlusIcon,
+  RemoveButton,
+  RequiredDot,
   Select,
   SuccessMessage,
   TextInput,
@@ -22,6 +25,8 @@ import {
 import { fetchDto, submitMutation, serializeForDehydration } from '../../utils';
 import { useAnimateLoading } from '../../hooks';
 import { fetchGlasses, useGlasses } from '../glasses';
+import { useIngredients } from '../ingredients';
+import { useUnits } from '../units';
 
 async function fetchDrink(id: number) {
   return fetchDto(DrinkDto, `drinks/${id}`);
@@ -63,6 +68,9 @@ export default function Drink() {
   const { data: drink, isLoading: isDrinkLoading, isError } = useDrink(+id);
 
   const { data: glasses, isLoading: isGlassesLoading } = useGlasses();
+  const { data: ingredients, isLoading: isIngredientsLoading } =
+    useIngredients();
+  const { data: units, isLoading: isUnitsLoading } = useUnits();
 
   const mutation = useMutation<Response, Error, UpdateDrinkDto>(
     (updateDrinkDto) => submitMutation(updateDrinkDto, `drinks/${id}`, 'PATCH')
@@ -111,6 +119,97 @@ export default function Drink() {
                 error={errors.glass?.message}
               />
             )}
+          />
+          <Controller
+            name="drinkIngredients"
+            control={control}
+            defaultValue={drink?.drinkIngredients}
+            render={({ field }) => {
+              return (
+                <div className="space-y-2">
+                  <h3>
+                    Ingredients
+                    <RequiredDot />
+                  </h3>
+                  {field.value.map(
+                    (
+                      drinkIngredient: DrinkDto['drinkIngredients'][number],
+                      index: number
+                    ) => {
+                      return (
+                        <div
+                          key={index}
+                          className="shadow rounded-lg p-2 border border-gray-300 w-full relative"
+                        >
+                          <RemoveButton
+                            onClick={() =>
+                              field.onChange(
+                                field.value.filter(
+                                  (_: unknown, i: number) => i !== index
+                                )
+                              )
+                            }
+                          />
+                          <div className="space-y-2">
+                            <Select
+                              label="Name"
+                              id={`${field.name}[${index}].ingredient`}
+                              value={drinkIngredient.ingredient}
+                              onChange={(e) => {
+                                field.onChange(field.value);
+                              }}
+                              options={ingredients}
+                              isLoading={isIngredientsLoading}
+                              required
+                              error={errors.glass?.message}
+                            />
+                            <div className="grid grid-cols-2 gap-2">
+                              <TextInput
+                                label="Amount"
+                                name={`${field.name}[${index}].amount`}
+                                defaultValue={drinkIngredient.amount}
+                                onChange={(e) => {
+                                  field.onChange(field.value);
+                                }}
+                                required
+                                error={errors.name?.message}
+                              />
+                              <TextInput
+                                label="Upper Range Amount"
+                                name={`${field.name}[${index}].upperRangeAmount`}
+                                defaultValue={drinkIngredient.upperRangeAmount}
+                                onChange={(e) => {
+                                  field.onChange(field.value);
+                                }}
+                                error={errors.name?.message}
+                              />
+                            </div>
+                            <Select
+                              label="Unit"
+                              id={`${field.name}[${index}].unit`}
+                              value={drinkIngredient.unit}
+                              onChange={(e) => {
+                                field.onChange(field.value);
+                              }}
+                              options={units}
+                              isLoading={isUnitsLoading}
+                              required
+                              error={errors.glass?.message}
+                            />
+                          </div>
+                        </div>
+                      );
+                    }
+                  )}
+                  <Button
+                    label="Add Ingredient"
+                    color="green"
+                    icon={<PlusIcon className="-ml-1 mr-1" />}
+                    small
+                  />
+                </div>
+              );
+            }}
           />
         </FormSection>
         <FormSection>

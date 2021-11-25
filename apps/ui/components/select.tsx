@@ -1,5 +1,6 @@
 import ReactSelect, { SingleValue } from 'react-select';
 import { ErrorMessage } from './error-message';
+import { RequiredDot } from './required-dot';
 
 interface SelectProps<TOption> {
   id: string;
@@ -23,20 +24,20 @@ export function Select<TOption extends { id: number; name: string }>({
   error,
 }: SelectProps<TOption>) {
   return (
-    <div>
-      <label>
-        {label}{' '}
-        {required && <span className="text-red-500 required-dot">*</span>}
-        <ReactSelect
-          instanceId={id}
-          value={value}
-          onChange={onChange}
-          isLoading={isLoading}
-          options={options}
-          getOptionLabel={(option) => option.name}
-          getOptionValue={(option) => option.id.toString()}
-        />
+    <div className="space-y-2">
+      <label htmlFor={`react-select-${id}-input`}>
+        {label}
+        {required && <RequiredDot />}
       </label>
+      <ReactSelect
+        instanceId={id}
+        value={value}
+        onChange={onChange}
+        isLoading={isLoading}
+        options={options}
+        getOptionLabel={(option) => option.name}
+        getOptionValue={(option) => option.id.toString()}
+      />
       <ErrorMessage>{error}</ErrorMessage>
     </div>
   );

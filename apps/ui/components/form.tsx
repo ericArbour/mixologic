@@ -8,7 +8,7 @@ interface FormProps {
 export function Form({ children, onSubmit }: FormProps) {
   return (
     <form
-      className="w-full max-w-sm mx-auto px-5 py-10 bg-white rounded-lg shadow dark:bg-gray-800"
+      className="w-full max-w-md mx-auto px-5 py-10 bg-white rounded-lg shadow dark:bg-gray-800"
       onSubmit={onSubmit}
     >
       {children}

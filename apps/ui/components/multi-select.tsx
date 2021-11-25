@@ -1,5 +1,6 @@
 import Select, { MultiValue } from 'react-select';
 import { ErrorMessage } from './error-message';
+import { RequiredDot } from './required-dot';
 
 interface MultiSelectProps<TOption> {
   id: string;
@@ -25,8 +26,7 @@ export function MultiSelect<TOption extends { id: number; name: string }>({
   return (
     <div>
       <label>
-        {label}{' '}
-        {required && <span className="text-red-500 required-dot">*</span>}
+        {label} {required && <RequiredDot />}
         <Select
           isMulti
           instanceId={id}

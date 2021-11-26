@@ -11,6 +11,7 @@ import {
   ErrorMessage,
   Form,
   FormBody,
+  FormCard,
   FormHeader,
   FormSection,
   PlusIcon,
@@ -121,7 +122,7 @@ export default function CreateDrink() {
               />
             )}
           />
-          <div className="space-y-2">
+          <FormSection>
             <h3>
               Ingredients
               <RequiredDot />
@@ -131,12 +132,9 @@ export default function CreateDrink() {
             ) : null}
             {fields.map((item, index) => {
               return (
-                <div
-                  key={item.key}
-                  className="shadow rounded-lg p-2 border border-gray-300 w-full relative"
-                >
+                <FormCard key={item.key}>
                   <RemoveButton onClick={() => remove(index)} />
-                  <div className="space-y-2">
+                  <FormSection>
                     <Controller
                       name={`drinkIngredients.${index}.ingredient`}
                       control={control}
@@ -199,8 +197,8 @@ export default function CreateDrink() {
                         />
                       )}
                     />
-                  </div>
-                </div>
+                  </FormSection>
+                </FormCard>
               );
             })}
             <Button
@@ -220,7 +218,7 @@ export default function CreateDrink() {
               }
               small
             />
-          </div>
+          </FormSection>
         </FormSection>
         <FormSection>
           <Button

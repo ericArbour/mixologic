@@ -13,6 +13,7 @@ import {
   ErrorMessage,
   Form,
   FormBody,
+  FormCard,
   FormHeader,
   FormSection,
   PlusIcon,
@@ -151,7 +152,7 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
               />
             )}
           />
-          <div className="space-y-2">
+          <FormSection>
             <h3>
               Ingredients
               <RequiredDot />
@@ -161,12 +162,9 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
             ) : null}
             {fields.map((item, index) => {
               return (
-                <div
-                  key={item.key}
-                  className="shadow rounded-lg p-2 border border-gray-300 w-full relative"
-                >
+                <FormCard key={item.key}>
                   <RemoveButton onClick={() => remove(index)} />
-                  <div className="space-y-2">
+                  <FormSection>
                     <Controller
                       name={`drinkIngredients.${index}.ingredient`}
                       control={control}
@@ -229,14 +227,15 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
                         />
                       )}
                     />
-                  </div>
-                </div>
+                  </FormSection>
+                </FormCard>
               );
             })}
             <Button
               label="Add Ingredient"
               color="green"
               icon={<PlusIcon className="-ml-1 mr-1" />}
+              small
               onClick={() =>
                 append(
                   {
@@ -248,9 +247,8 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
                   { shouldFocus: false }
                 )
               }
-              small
             />
-          </div>
+          </FormSection>
         </FormSection>
         <FormSection>
           <Button

@@ -3,6 +3,7 @@ export * from './button';
 export * from './error-message';
 export * from './form';
 export * from './form-body';
+export * from './form-card';
 export * from './form-header';
 export * from './form-section';
 export * from './multi-select';

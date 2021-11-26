@@ -4,7 +4,7 @@ import { RequiredDot } from './required-dot';
 
 interface SelectProps<TOption> {
   id: string;
-  value: TOption;
+  value: TOption | null;
   options: TOption[] | undefined;
   onChange: (options: SingleValue<TOption>) => void;
   label: string;
@@ -37,6 +37,7 @@ export function Select<TOption extends { id: number; name: string }>({
         options={options}
         getOptionLabel={(option) => option.name}
         getOptionValue={(option) => option.id.toString()}
+        isClearable
       />
       <ErrorMessage>{error}</ErrorMessage>
     </div>

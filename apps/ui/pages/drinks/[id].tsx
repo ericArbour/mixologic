@@ -5,7 +5,7 @@ import { dehydrate } from 'react-query/hydration';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
-import { DrinkDto, UpdateDrinkDto } from '@mixologic/common';
+import { CreateDrinkDto, DrinkDto, UpdateDrinkDto } from '@mixologic/common';
 
 import {
   Button,
@@ -27,6 +27,7 @@ import { useAnimateLoading } from '../../hooks';
 import { fetchGlasses, useGlasses } from '../glasses';
 import { fetchIngredients, useIngredients } from '../ingredients';
 import { fetchUnits, useUnits } from '../units';
+import { DrinkFormValues } from './sharedTypes';
 
 async function fetchDrink(id: number) {
   return fetchDto(DrinkDto, `drinks/${id}`);
@@ -59,7 +60,13 @@ const useDrink = (id: number) => {
   return useQuery(queryKey, ({ queryKey }) => fetchDrink(queryKey[1]));
 };
 
-const resolver = classValidatorResolver(UpdateDrinkDto);
+// Todo, figure out why UpdateDrinkDto does not work here but
+// validates on backend, probably due to DrinkFormValues requirement.
+const resolver = classValidatorResolver<
+  CreateDrinkDto,
+  DrinkFormValues,
+  unknown
+>(CreateDrinkDto);
 
 export default function Drink() {
   const router = useRouter();
@@ -87,7 +94,7 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<DrinkFormValues>({
     resolver,
     defaultValues: {
       drinkIngredients: drink.drinkIngredients,
@@ -112,6 +119,9 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
 
   const onSubmit = (updateDrinkDto: UpdateDrinkDto) =>
     mutation.mutate(updateDrinkDto);
+
+  // @ts-expect-error - react-hook-form doesn't allow both nested and array level
+  const arrayLevelErrors = errors.drinkIngredients?.message;
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -154,6 +164,9 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
               Ingredients
               <RequiredDot />
             </h3>
+            {arrayLevelErrors ? (
+              <ErrorMessage>{arrayLevelErrors}</ErrorMessage>
+            ) : null}
             {fields.map((item, index) => {
               return (
                 <div
@@ -163,43 +176,51 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
                   <RemoveButton onClick={() => remove(index)} />
                   <div className="space-y-2">
                     <Controller
-                      name={`drinkIngredients[${index}].ingredient`}
+                      name={`drinkIngredients.${index}.ingredient`}
                       control={control}
                       render={({ field }) => (
                         <Select
-                          label="Name"
+                          label="Ingredient"
                           id={field.name}
                           value={field.value}
                           onChange={field.onChange}
                           options={ingredients}
                           isLoading={isIngredientsLoading}
                           required
-                          error={errors.glass?.message}
+                          error={
+                            errors.drinkIngredients?.[index]?.ingredient
+                              ?.message
+                          }
                         />
                       )}
                     />
                     <div className="grid grid-cols-2 gap-2">
                       <TextInput
                         label="Amount"
-                        {...register(`drinkIngredients[${index}].amount`, {
+                        {...register(`drinkIngredients.${index}.amount`, {
                           setValueAs: convertToNumber,
                         })}
                         required
-                        error={errors.name?.message}
+                        error={
+                          errors.drinkIngredients?.[index]?.amount?.message
+                        }
                       />
                       <TextInput
                         label="Upper Range Amount"
                         {...register(
-                          `drinkIngredients[${index}].upperRangeAmount`,
+                          `drinkIngredients.${index}.upperRangeAmount`,
                           {
                             setValueAs: convertToNumber,
                           }
                         )}
-                        error={errors.name?.message}
+                        error={
+                          errors.drinkIngredients?.[index]?.upperRangeAmount
+                            ?.message
+                        }
                       />
                     </div>
                     <Controller
-                      name={`drinkIngredients[${index}].unit`}
+                      name={`drinkIngredients.${index}.unit`}
                       control={control}
                       render={({ field }) => (
                         <Select
@@ -210,7 +231,9 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
                           options={units}
                           isLoading={isUnitsLoading}
                           required
-                          error={errors.glass?.message}
+                          error={
+                            errors.drinkIngredients?.[index]?.unit?.message
+                          }
                         />
                       )}
                     />
@@ -222,6 +245,17 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
               label="Add Ingredient"
               color="green"
               icon={<PlusIcon className="-ml-1 mr-1" />}
+              onClick={() =>
+                append(
+                  {
+                    ingredient: null,
+                    amount: null,
+                    upperRangeAmount: null,
+                    unit: null,
+                  },
+                  { shouldFocus: false }
+                )
+              }
               small
             />
           </div>

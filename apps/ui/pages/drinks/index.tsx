@@ -3,7 +3,7 @@ import { dehydrate } from 'react-query/hydration';
 
 import { DrinkDto } from '@mixologic/common';
 
-import { Table, TextLink } from '../../components';
+import { DrinkColor, Table, TextLink } from '../../components';
 import { fetchDtos, serializeForDehydration } from '../../utils';
 
 export const fetchDrinks = () => fetchDtos(DrinkDto, 'drinks');
@@ -50,8 +50,13 @@ export default function Index() {
           displayName: 'Glass',
           valueFormatter: (x) => x.glass.name,
         },
-        { field: 'createdDate', displayName: 'Created' },
-        { field: 'updatedDate', displayName: 'Updated' },
+        {
+          field: 'drinkIngredients',
+          displayName: 'Color',
+          valueFormatter: (x) => (
+            <DrinkColor drinkIngredients={x.drinkIngredients} />
+          ),
+        },
       ]}
       rows={queryResult.data}
       createPathname="/drinks/create"

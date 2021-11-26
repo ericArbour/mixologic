@@ -50,4 +50,10 @@ export class ShallowIngredientDto extends BaseResponseDto {
   @MinLength(2)
   @MaxLength(20)
   name!: string;
+
+  @Expose()
+  @IsOptional()
+  @IsString()
+  @IsHexadecimal()
+  color?: string;
 }

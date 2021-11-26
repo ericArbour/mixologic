@@ -1,6 +1,7 @@
 export * from './header';
 export * from './button';
 export * from './color-preview';
+export * from './drink-color';
 export * from './error-message';
 export * from './form';
 export * from './form-body';

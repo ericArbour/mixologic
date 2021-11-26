@@ -3,6 +3,7 @@ import {
   ArrayMaxSize,
   ArrayMinSize,
   IsDefined,
+  IsHexadecimal,
   IsOptional,
   IsString,
   MaxLength,
@@ -20,6 +21,12 @@ export class IngredientDto extends BaseResponseDto {
   @MinLength(2)
   @MaxLength(20)
   name!: string;
+
+  @Expose()
+  @IsOptional()
+  @IsString()
+  @IsHexadecimal()
+  color?: string;
 
   @Expose()
   @IsDefined()

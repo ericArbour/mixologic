@@ -9,6 +9,7 @@ import {
   ArrayMinSize,
   ArrayMaxSize,
   ValidateNested,
+  IsHexadecimal,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -18,6 +19,11 @@ export class CreateIngredientDto {
   @MinLength(2)
   @MaxLength(20)
   name!: string;
+
+  @IsOptional()
+  @IsString()
+  @IsHexadecimal()
+  color?: string;
 
   @IsDefined()
   @ArrayMinSize(1)

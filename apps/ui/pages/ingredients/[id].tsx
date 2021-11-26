@@ -10,11 +10,13 @@ import { IngredientDto, UpdateIngredientDto } from '@mixologic/common';
 import {
   Button,
   CheckIcon,
+  ColorPreview,
   ErrorMessage,
   Form,
   FormBody,
   FormHeader,
   FormSection,
+  InputGroup,
   MultiSelect,
   SuccessMessage,
   TextInput,
@@ -112,6 +114,23 @@ export default function Ingredient() {
             isLoading={isIngredientLoading}
             required
             error={errors.name?.message}
+          />
+          <Controller
+            name="color"
+            control={control}
+            defaultValue={ingredient?.color}
+            render={({ field }) => (
+              <InputGroup>
+                <TextInput
+                  label="Color"
+                  {...field}
+                  defaultValue={field.value}
+                  isLoading={isIngredientLoading}
+                  error={errors.color?.message}
+                />
+                <ColorPreview color={field.value} />
+              </InputGroup>
+            )}
           />
           <Controller
             name="categories"

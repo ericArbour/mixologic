@@ -7,11 +7,13 @@ import { CreateIngredientDto } from '@mixologic/common';
 import {
   Button,
   CheckIcon,
+  ColorPreview,
   ErrorMessage,
   Form,
   FormBody,
   FormHeader,
   FormSection,
+  InputGroup,
   MultiSelect,
   SuccessMessage,
   TextInput,
@@ -61,6 +63,22 @@ export default function CreateIngredient() {
             {...register('name')}
             required
             error={errors.name?.message}
+          />
+          <Controller
+            name="color"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <InputGroup>
+                <TextInput
+                  label="Color"
+                  {...field}
+                  defaultValue={field.value}
+                  error={errors.color?.message}
+                />
+                <ColorPreview color={field.value} />
+              </InputGroup>
+            )}
           />
           <Controller
             name="categories"

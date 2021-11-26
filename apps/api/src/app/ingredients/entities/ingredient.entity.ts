@@ -9,6 +9,9 @@ export class Ingredient extends Base {
   @Column({ type: 'citext', unique: true })
   name!: string;
 
+  @Column({ nullable: true })
+  color?: string;
+
   @ManyToMany(() => Category)
   @JoinTable()
   categories?: Category[];

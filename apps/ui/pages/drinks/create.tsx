@@ -14,6 +14,7 @@ import {
   FormCard,
   FormHeader,
   FormSection,
+  InputGroup,
   PlusIcon,
   RemoveButton,
   RequiredDot,
@@ -154,7 +155,7 @@ export default function CreateDrink() {
                         />
                       )}
                     />
-                    <div className="grid grid-cols-2 gap-2">
+                    <InputGroup>
                       <TextInput
                         label="Amount"
                         {...register(`drinkIngredients.${index}.amount`, {
@@ -178,7 +179,7 @@ export default function CreateDrink() {
                             ?.message
                         }
                       />
-                    </div>
+                    </InputGroup>
                     <Controller
                       name={`drinkIngredients.${index}.unit`}
                       control={control}

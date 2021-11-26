@@ -3,7 +3,7 @@ import { dehydrate } from 'react-query/hydration';
 
 import { IngredientDto } from '@mixologic/common';
 
-import { Table } from '../../components';
+import { ColorPreview, Table } from '../../components';
 import { fetchDtos, serializeForDehydration } from '../../utils';
 
 export const fetchIngredients = () => fetchDtos(IngredientDto, 'ingredients');
@@ -37,13 +37,18 @@ export default function Index() {
       columns={[
         { field: 'name', displayName: 'Name' },
         {
+          field: 'color',
+          displayName: 'Color',
+          valueFormatter: (x) => (
+            <ColorPreview color={x.color} className="h-6 w-12" />
+          ),
+        },
+        {
           field: 'categories',
           displayName: 'Categories',
           valueFormatter: (x) =>
             x.categories.map((category) => category.name).join(', '),
         },
-        { field: 'createdDate', displayName: 'Created' },
-        { field: 'updatedDate', displayName: 'Updated' },
       ]}
       rows={queryResult.data}
       createPathname="/ingredients/create"

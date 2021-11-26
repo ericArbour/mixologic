@@ -2,7 +2,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { DrinkDto, UpdateDrinkDto } from '@mixologic/common';
@@ -25,8 +25,8 @@ import {
 import { fetchDto, submitMutation, serializeForDehydration } from '../../utils';
 import { useAnimateLoading } from '../../hooks';
 import { fetchGlasses, useGlasses } from '../glasses';
-import { useIngredients } from '../ingredients';
-import { useUnits } from '../units';
+import { fetchIngredients, useIngredients } from '../ingredients';
+import { fetchUnits, useUnits } from '../units';
 
 async function fetchDrink(id: number) {
   return fetchDto(DrinkDto, `drinks/${id}`);
@@ -40,6 +40,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   });
   await queryClient.prefetchQuery(['glasses'], () => {
     return serializeForDehydration(fetchGlasses);
+  });
+  await queryClient.prefetchQuery(['ingredients'], () => {
+    return serializeForDehydration(fetchIngredients);
+  });
+  await queryClient.prefetchQuery(['units'], () => {
+    return serializeForDehydration(fetchUnits);
   });
   return {
     props: {
@@ -56,16 +62,42 @@ const useDrink = (id: number) => {
 const resolver = classValidatorResolver(UpdateDrinkDto);
 
 export default function Drink() {
+  const router = useRouter();
+  const id = router.query.id as string;
+  const queryResult = useDrink(+id);
+
+  if (queryResult.isLoading || queryResult.isIdle) return <p>Loading...</p>;
+  if (queryResult.isError) return 'Oops, an error occurred';
+
+  return <DrinkForm drink={queryResult.data} />;
+}
+
+function convertToNumber(x: string | null) {
+  if (!x) return null;
+
+  const number = parseFloat(x);
+  if (isNaN(number)) return x;
+
+  return number;
+}
+
+function DrinkForm({ drink }: { drink: DrinkDto }) {
   const {
     control,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver });
-  const router = useRouter();
-  const id = router.query.id as string;
-
-  const { data: drink, isLoading: isDrinkLoading, isError } = useDrink(+id);
+  } = useForm({
+    resolver,
+    defaultValues: {
+      drinkIngredients: drink.drinkIngredients,
+    },
+  });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'drinkIngredients',
+    keyName: 'key',
+  });
 
   const { data: glasses, isLoading: isGlassesLoading } = useGlasses();
   const { data: ingredients, isLoading: isIngredientsLoading } =
@@ -73,11 +105,10 @@ export default function Drink() {
   const { data: units, isLoading: isUnitsLoading } = useUnits();
 
   const mutation = useMutation<Response, Error, UpdateDrinkDto>(
-    (updateDrinkDto) => submitMutation(updateDrinkDto, `drinks/${id}`, 'PATCH')
+    (updateDrinkDto) =>
+      submitMutation(updateDrinkDto, `drinks/${drink.id}`, 'PATCH')
   );
   const { shouldAnimateLoading } = useAnimateLoading(mutation);
-
-  if (isError) return 'Oops, an error occurred';
 
   const onSubmit = (updateDrinkDto: UpdateDrinkDto) =>
     mutation.mutate(updateDrinkDto);
@@ -89,16 +120,14 @@ export default function Drink() {
         <FormSection>
           <TextInput
             label="Name"
-            defaultValue={drink?.name}
-            isLoading={isDrinkLoading}
+            defaultValue={drink.name}
             {...register('name')}
             required
             error={errors.name?.message}
           />
           <TextInput
             label="URL"
-            defaultValue={drink?.url}
-            isLoading={isDrinkLoading}
+            defaultValue={drink.url}
             {...register('url')}
             required
             error={errors.url?.message}
@@ -106,7 +135,7 @@ export default function Drink() {
           <Controller
             name="glass"
             control={control}
-            defaultValue={drink?.glass}
+            defaultValue={drink.glass}
             render={({ field }) => (
               <Select
                 label="Glass"
@@ -114,103 +143,88 @@ export default function Drink() {
                 value={field.value}
                 onChange={field.onChange}
                 options={glasses}
-                isLoading={isDrinkLoading || isGlassesLoading}
+                isLoading={isGlassesLoading}
                 required
                 error={errors.glass?.message}
               />
             )}
           />
-          <Controller
-            name="drinkIngredients"
-            control={control}
-            defaultValue={drink?.drinkIngredients}
-            render={({ field }) => {
+          <div className="space-y-2">
+            <h3>
+              Ingredients
+              <RequiredDot />
+            </h3>
+            {fields.map((item, index) => {
               return (
-                <div className="space-y-2">
-                  <h3>
-                    Ingredients
-                    <RequiredDot />
-                  </h3>
-                  {field.value.map(
-                    (
-                      drinkIngredient: DrinkDto['drinkIngredients'][number],
-                      index: number
-                    ) => {
-                      return (
-                        <div
-                          key={index}
-                          className="shadow rounded-lg p-2 border border-gray-300 w-full relative"
-                        >
-                          <RemoveButton
-                            onClick={() =>
-                              field.onChange(
-                                field.value.filter(
-                                  (_: unknown, i: number) => i !== index
-                                )
-                              )
-                            }
-                          />
-                          <div className="space-y-2">
-                            <Select
-                              label="Name"
-                              id={`${field.name}[${index}].ingredient`}
-                              value={drinkIngredient.ingredient}
-                              onChange={(e) => {
-                                field.onChange(field.value);
-                              }}
-                              options={ingredients}
-                              isLoading={isIngredientsLoading}
-                              required
-                              error={errors.glass?.message}
-                            />
-                            <div className="grid grid-cols-2 gap-2">
-                              <TextInput
-                                label="Amount"
-                                name={`${field.name}[${index}].amount`}
-                                defaultValue={drinkIngredient.amount}
-                                onChange={(e) => {
-                                  field.onChange(field.value);
-                                }}
-                                required
-                                error={errors.name?.message}
-                              />
-                              <TextInput
-                                label="Upper Range Amount"
-                                name={`${field.name}[${index}].upperRangeAmount`}
-                                defaultValue={drinkIngredient.upperRangeAmount}
-                                onChange={(e) => {
-                                  field.onChange(field.value);
-                                }}
-                                error={errors.name?.message}
-                              />
-                            </div>
-                            <Select
-                              label="Unit"
-                              id={`${field.name}[${index}].unit`}
-                              value={drinkIngredient.unit}
-                              onChange={(e) => {
-                                field.onChange(field.value);
-                              }}
-                              options={units}
-                              isLoading={isUnitsLoading}
-                              required
-                              error={errors.glass?.message}
-                            />
-                          </div>
-                        </div>
-                      );
-                    }
-                  )}
-                  <Button
-                    label="Add Ingredient"
-                    color="green"
-                    icon={<PlusIcon className="-ml-1 mr-1" />}
-                    small
-                  />
+                <div
+                  key={item.key}
+                  className="shadow rounded-lg p-2 border border-gray-300 w-full relative"
+                >
+                  <RemoveButton onClick={() => remove(index)} />
+                  <div className="space-y-2">
+                    <Controller
+                      name={`drinkIngredients[${index}].ingredient`}
+                      control={control}
+                      render={({ field }) => (
+                        <Select
+                          label="Name"
+                          id={field.name}
+                          value={field.value}
+                          onChange={field.onChange}
+                          options={ingredients}
+                          isLoading={isIngredientsLoading}
+                          required
+                          error={errors.glass?.message}
+                        />
+                      )}
+                    />
+                    <div className="grid grid-cols-2 gap-2">
+                      <TextInput
+                        label="Amount"
+                        {...register(`drinkIngredients[${index}].amount`, {
+                          setValueAs: convertToNumber,
+                        })}
+                        required
+                        error={errors.name?.message}
+                      />
+                      <TextInput
+                        label="Upper Range Amount"
+                        {...register(
+                          `drinkIngredients[${index}].upperRangeAmount`,
+                          {
+                            setValueAs: convertToNumber,
+                          }
+                        )}
+                        error={errors.name?.message}
+                      />
+                    </div>
+                    <Controller
+                      name={`drinkIngredients[${index}].unit`}
+                      control={control}
+                      render={({ field }) => (
+                        <Select
+                          label="Unit"
+                          id={field.name}
+                          value={field.value}
+                          onChange={field.onChange}
+                          options={units}
+                          isLoading={isUnitsLoading}
+                          required
+                          error={errors.glass?.message}
+                        />
+                      )}
+                    />
+                  </div>
                 </div>
               );
-            }}
-          />
+            })}
+            <Button
+              label="Add Ingredient"
+              color="green"
+              icon={<PlusIcon className="-ml-1 mr-1" />}
+              small
+            />
+          </div>
         </FormSection>
         <FormSection>
           <Button

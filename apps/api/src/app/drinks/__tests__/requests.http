@@ -13,7 +13,6 @@ content-type: application/json
       "unit": { "id": 1 }
     },
     {
-      "id": null,
       "ingredient": { "id": 2 },
       "amount": 4,
       "unit": { "id": 1 }
@@ -32,9 +31,21 @@ PATCH http://localhost:3333/api/drinks/1
 content-type: application/json
 
 {
-  "name": "Dirty Martini",
+  "name": "Dirty Martini 5",
   "url": "https://www.liquor.com/recipes/dirty-martini/",
   "glassId": 1,
+  "drinkIngredients": [
+    {
+      "ingredient": { "id": 1 },
+      "amount": 4,
+      "unit": { "id": 2 }
+    },
+    {
+      "ingredient": { "id": 3 },
+      "amount": 4,
+      "unit": { "id": 2 }
+    }
+  ]
 }
 
 ### Delete a drink

@@ -61,13 +61,52 @@ export class DrinksService {
 
   async update(id: Drink['id'], updateDrinkDto: UpdateDrinkDto) {
     return await this.connection.transaction(async (manager) => {
-      const drink = await manager.findOne(Drink, id);
+      const drink = await manager.findOne(Drink, id, {
+        relations: [
+          'drinkIngredients',
+          'drinkIngredients.ingredient',
+          'drinkIngredients.unit',
+          'glass',
+        ],
+      });
 
       if (!drink) throw new NotFoundException('Drink not found');
 
-      const newDrink = { ...drink, ...updateDrinkDto };
+      const {
+        drinkIngredients: updateDrinkIngredients,
+        ...restUpdateDrinkDto
+      } = updateDrinkDto;
+      const { drinkIngredients, ...restDrink } = drink;
+      const newDrink = {
+        ...restDrink,
+        ...restUpdateDrinkDto,
+      };
 
-      return manager.save(Drink, newDrink);
+      const savedDrink = await manager.save(Drink, newDrink);
+
+      if (updateDrinkIngredients) {
+        drinkIngredients?.forEach((drinkIngredient) => {
+          manager.delete(DrinkIngredient, drinkIngredient.id);
+        });
+      }
+
+      const drinkIngredientOps = updateDrinkIngredients?.map(
+        (drinkIngredientDto) => {
+          const drinkIngredient = manager.create(DrinkIngredient, {
+            ...drinkIngredientDto,
+            drinkId: drink.id,
+          });
+
+          return manager.save(drinkIngredient);
+        }
+      );
+
+      const savedDrinkIngredients =
+        drinkIngredientOps && (await Promise.all(drinkIngredientOps));
+
+      savedDrink.drinkIngredients = savedDrinkIngredients ?? drinkIngredients;
+
+      return savedDrink;
     });
   }
 

@@ -1,4 +1,5 @@
 #  psql -h localhost -p 5432 -d dev -U dev
+# \copy (SELECT * FROM unit) to './tools/seed-data/unit.csv' with (FORMAT CSV, HEADER);
 
 version: '3.9'
 services:

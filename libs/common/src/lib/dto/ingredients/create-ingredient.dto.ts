@@ -10,6 +10,8 @@ import {
   ArrayMaxSize,
   ValidateNested,
   IsHexadecimal,
+  ValidateIf,
+  Length,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -21,7 +23,9 @@ export class CreateIngredientDto {
   name!: string;
 
   @IsOptional()
+  @ValidateIf((o) => o.color !== '')
   @IsString()
+  @Length(6)
   @IsHexadecimal()
   color?: string;
 

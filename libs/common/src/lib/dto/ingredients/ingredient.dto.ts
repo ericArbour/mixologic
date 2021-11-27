@@ -6,15 +6,17 @@ import {
   IsHexadecimal,
   IsOptional,
   IsString,
+  Length,
   MaxLength,
   MinLength,
+  ValidateIf,
   ValidateNested,
 } from 'class-validator';
 
 import { BaseResponseDto } from '../../utils/base-response-dto';
 import { CategoryDto } from '../categories/category.dto';
 
-export class IngredientDto extends BaseResponseDto {
+export class ShallowIngredientDto extends BaseResponseDto {
   @Expose()
   @IsDefined()
   @IsString()
@@ -24,10 +26,14 @@ export class IngredientDto extends BaseResponseDto {
 
   @Expose()
   @IsOptional()
+  @ValidateIf((o) => o.color !== '')
   @IsString()
+  @Length(6)
   @IsHexadecimal()
   color?: string;
+}
 
+export class IngredientDto extends ShallowIngredientDto {
   @Expose()
   @IsDefined()
   @ArrayMinSize(1)
@@ -41,19 +47,4 @@ export class IngredientDto extends BaseResponseDto {
   @ValidateNested({ each: true })
   @Type(() => ShallowIngredientDto)
   satisfiesIngredients?: ShallowIngredientDto[];
-}
-
-export class ShallowIngredientDto extends BaseResponseDto {
-  @Expose()
-  @IsDefined()
-  @IsString()
-  @MinLength(2)
-  @MaxLength(30)
-  name!: string;
-
-  @Expose()
-  @IsOptional()
-  @IsString()
-  @IsHexadecimal()
-  color?: string;
 }

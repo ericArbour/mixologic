@@ -26,6 +26,10 @@ function blendColors(colorA: string, colorB: string, amount: number) {
   return r + g + b;
 }
 
+function isNotEmpty(x?: string | null): x is string {
+  return !!x;
+}
+
 /**
  * A rough approximation for the color of a drink based on
  * the color of its ingredients. This is a minimal approach
@@ -33,9 +37,13 @@ function blendColors(colorA: string, colorB: string, amount: number) {
  * of each ingredient in the drink.
  */
 export function DrinkColor({ drinkIngredients }: DrinkColorProps) {
-  const colors = drinkIngredients.map(
-    (drinkIngredient) => drinkIngredient.ingredient.color || 'ffffff'
-  );
+  const nonGarnishColors = drinkIngredients.map((drinkIngredient) => {
+    if (['garnish', 'dash(es)'].includes(drinkIngredient.unit.name))
+      return null;
+
+    return drinkIngredient.ingredient.color;
+  });
+  const colors = nonGarnishColors.filter(isNotEmpty);
 
   const mixed = colors.reduce((mix, color) => blendColors(mix, color, 0.5));
 

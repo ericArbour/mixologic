@@ -9,6 +9,7 @@ import {
   IsString,
   IsUrl,
   MaxLength,
+  Min,
   MinLength,
   ValidateNested,
 } from 'class-validator';
@@ -55,7 +56,7 @@ export class DrinkIngredientDto {
   @Expose()
   @IsDefined()
   @IsNumber()
-  @IsPositive()
+  @Min(0)
   amount!: number;
 
   @Expose()

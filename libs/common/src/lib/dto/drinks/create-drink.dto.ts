@@ -11,6 +11,7 @@ import {
   IsOptional,
   ValidateNested,
   ArrayMaxSize,
+  Min,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -45,7 +46,7 @@ export class CreateDrinkIngredientDto {
 
   @IsDefined()
   @IsNumber()
-  @IsPositive()
+  @Min(0)
   amount!: number;
 
   @IsOptional()

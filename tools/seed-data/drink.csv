@@ -2,15 +2,23 @@ id,createdDate,updatedDate,deletedDate,name,url,glassId
 1,2021-11-27 13:25:08.254989,2021-11-27 13:25:08.254989,,Paper Plane,https://www.liquor.com/recipes/the-paper-plane/,1
 3,2021-11-27 17:22:10.946696,2021-11-27 17:22:10.946696,,Aviation,https://www.liquor.com/recipes/aviation/,2
 4,2021-11-27 17:52:57.687573,2021-11-27 17:52:57.687573,,Negroni,https://www.liquor.com/recipes/negroni/,4
-5,2021-11-27 18:06:52.102046,2021-11-27 18:06:52.102046,,Dry Martini,https://www.liquor.com/recipes/dry-martini/,3
 7,2021-11-27 18:16:25.810017,2021-11-27 18:16:25.810017,,Last Word,https://www.liquor.com/recipes/the-last-word/,1
 8,2021-11-27 18:30:02.517958,2021-11-27 18:30:02.517958,,Old Fashioned,https://www.liquor.com/recipes/bourbon-old-fashioned/,4
 9,2021-11-27 18:34:09.28066,2021-11-27 18:34:09.28066,,Manhattan,https://www.liquor.com/recipes/manhattan-2/,1
 10,2021-11-27 18:50:02.089871,2021-11-27 18:50:02.089871,,Dirty Martini,https://www.liquor.com/recipes/dirty-martini/,3
-12,2021-11-27 18:53:24.932511,2021-11-27 18:53:24.932511,,Dirty Vodka Martini,https://www.allrecipes.com/recipe/32238/dirty-martini/,3
-13,2021-11-27 19:04:16.466156,2021-11-27 19:04:16.466156,,Espresso Martini,https://www.liquor.com/recipes/espresso-martini-2/,3
 14,2021-11-28 20:35:00.234098,2021-11-28 20:35:00.234098,,Rye Old Fashioned,https://cooking.nytimes.com/recipes/1012569-rye-old-fashioned,4
 15,2021-11-28 20:59:09.672557,2021-11-28 20:59:09.672557,,Rusty Nail,https://www.liquor.com/recipes/rusty-nail/,4
 16,2021-11-28 21:07:59.214446,2021-11-28 21:07:59.214446,,Corpse Reviver No. 2,https://www.liquor.com/recipes/corpse-reviver-no-2/,1
 17,2021-11-28 21:16:01.516864,2021-11-28 21:16:01.516864,,Aperol Spritz,https://www.liquor.com/recipes/aperol-spritz/,6
 18,2021-11-28 21:19:27.647002,2021-11-28 21:19:27.647002,,Black Manhattan,https://www.liquor.com/black-manhattan-cocktail-recipe-5184291,1
+19,2021-12-04 17:19:17.866577,2021-12-04 17:19:17.866577,,Dry Vodka Martini,https://www.delish.com/cooking/recipe-ideas/a29252178/classic-vodka-martini-recipe/,3
+20,2021-12-04 17:56:46.21413,2021-12-04 17:56:46.21413,,Smoky Martini,https://www.liquor.com/recipes/smoky-martini/,3
+24,2021-12-04 18:03:58.350849,2021-12-04 18:03:58.350849,,Gibson,https://www.liquor.com/recipes/gibson/,2
+25,2021-12-04 18:06:52.132951,2021-12-04 18:06:52.132951,,Vesper Martini,https://www.liquor.com/recipes/vesper/,2
+26,2021-12-04 18:09:46.847641,2021-12-04 18:09:46.847641,,Perfect Martini,https://www.thespruceeats.com/perfect-martini-recipe-759777,2
+27,2021-12-04 18:13:21.079385,2021-12-04 18:13:21.079385,,Bronx,https://www.liquor.com/recipes/bronx/,2
+5,2021-11-27 18:06:52.102046,2021-12-04 18:21:25.471863,,Dry Martini,https://www.liquor.com/recipes/dry-martini/,2
+13,2021-11-27 19:04:16.466156,2021-12-04 18:21:52.40706,,Espresso Martini,https://www.liquor.com/recipes/espresso-martini-2/,2
+22,2021-12-04 18:01:23.16496,2021-12-04 18:22:17.76466,,50/50 Martini,https://www.liquor.com/recipes/5050-martini/,2
+21,2021-12-04 17:58:22.620153,2021-12-04 18:22:37.072588,,French Martini,https://www.liquor.com/recipes/french-martini/,2
+12,2021-11-27 18:53:24.932511,2021-12-04 18:25:15.170337,,Dirty Vodka Martini,https://www.allrecipes.com/recipe/32238/dirty-martini/,2

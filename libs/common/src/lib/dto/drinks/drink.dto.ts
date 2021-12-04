@@ -24,7 +24,7 @@ export class DrinkDto extends BaseResponseDto {
   @IsDefined()
   @IsString()
   @MinLength(2)
-  @MaxLength(20)
+  @MaxLength(30)
   name!: string;
 
   @Expose()

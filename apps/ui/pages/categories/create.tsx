@@ -37,7 +37,7 @@ export default function CreateCategory() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader>Category</FormHeader>
+      <FormHeader>Create Category</FormHeader>
       <FormBody>
         <TextInput
           label="Name"

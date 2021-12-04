@@ -104,7 +104,7 @@ export default function Ingredient() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader>Ingredient</FormHeader>
+      <FormHeader>Edit Ingredient</FormHeader>
       <FormBody>
         <FormSection>
           <TextInput

@@ -71,7 +71,7 @@ export default function Category() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader>Category</FormHeader>
+      <FormHeader>Edit Category</FormHeader>
       <FormBody>
         <TextInput
           label="Name"

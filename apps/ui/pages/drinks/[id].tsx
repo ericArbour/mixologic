@@ -119,7 +119,7 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader>Drink</FormHeader>
+      <FormHeader>Edit Drink</FormHeader>
       <FormBody>
         <FormSection>
           <TextInput
@@ -190,6 +190,7 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
                         label="Amount"
                         {...register(`drinkIngredients.${index}.amount`, {
                           setValueAs: convertToNumber,
+                          value: item.amount,
                         })}
                         required
                         error={
@@ -202,6 +203,7 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
                           `drinkIngredients.${index}.upperRangeAmount`,
                           {
                             setValueAs: convertToNumber,
+                            value: item.upperRangeAmount,
                           }
                         )}
                         error={

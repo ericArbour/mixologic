@@ -68,7 +68,7 @@ export default function Glass() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader>Glass</FormHeader>
+      <FormHeader>Edit Glass</FormHeader>
       <FormBody>
         <TextInput
           label="Name"

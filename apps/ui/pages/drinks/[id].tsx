@@ -26,7 +26,7 @@ import {
 } from '../../components';
 import { fetchDto, submitMutation, serializeForDehydration } from '../../utils';
 import { useAnimateLoading } from '../../hooks';
-import { convertToNumber } from '../../utils';
+import { convertEventToNumber, nullToUndefined } from '../../utils';
 import { fetchGlasses, useGlasses } from '../glasses';
 import { fetchIngredients, useIngredients } from '../ingredients';
 import { fetchUnits, useUnits } from '../units';
@@ -186,30 +186,41 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
                       )}
                     />
                     <InputGroup>
-                      <TextInput
-                        label="Amount"
-                        {...register(`drinkIngredients.${index}.amount`, {
-                          setValueAs: convertToNumber,
-                          value: item.amount,
-                        })}
-                        required
-                        error={
-                          errors.drinkIngredients?.[index]?.amount?.message
-                        }
-                      />
-                      <TextInput
-                        label="Upper Range Amount"
-                        {...register(
-                          `drinkIngredients.${index}.upperRangeAmount`,
-                          {
-                            setValueAs: convertToNumber,
-                            value: item.upperRangeAmount,
-                          }
+                      <Controller
+                        name={`drinkIngredients.${index}.amount`}
+                        control={control}
+                        render={({ field }) => (
+                          <TextInput
+                            label="Amount"
+                            defaultValue={nullToUndefined(field.value)}
+                            {...field}
+                            onChange={(e) =>
+                              field.onChange(convertEventToNumber(e))
+                            }
+                            required
+                            error={
+                              errors.drinkIngredients?.[index]?.amount?.message
+                            }
+                          />
                         )}
-                        error={
-                          errors.drinkIngredients?.[index]?.upperRangeAmount
-                            ?.message
-                        }
+                      />
+                      <Controller
+                        name={`drinkIngredients.${index}.upperRangeAmount`}
+                        control={control}
+                        render={({ field }) => (
+                          <TextInput
+                            label="Upper Range Amount"
+                            defaultValue={nullToUndefined(field.value)}
+                            {...field}
+                            onChange={(e) =>
+                              field.onChange(convertEventToNumber(e))
+                            }
+                            error={
+                              errors.drinkIngredients?.[index]?.upperRangeAmount
+                                ?.message
+                            }
+                          />
+                        )}
                       />
                     </InputGroup>
                     <Controller

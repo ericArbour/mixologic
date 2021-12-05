@@ -1,3 +1,3 @@
 export default function Index() {
-  return <div>Home</div>;
+  return <div>Search it, find it, mix it, drink it. Mixologic.</div>;
 }

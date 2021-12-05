@@ -4,6 +4,6 @@ export class CreateUnitDto {
   @IsDefined()
   @IsString()
   @MinLength(2)
-  @MaxLength(10)
+  @MaxLength(15)
   name!: string;
 }

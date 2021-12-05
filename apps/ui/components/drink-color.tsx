@@ -38,7 +38,7 @@ function isNotEmpty(x?: string | null): x is string {
  */
 export function DrinkColor({ drinkIngredients }: DrinkColorProps) {
   const nonGarnishColors = drinkIngredients.map((drinkIngredient) => {
-    if (drinkIngredient.unit.name !== 'fl oz') return null;
+    if (drinkIngredient.unit?.name !== 'fl oz') return null;
 
     return drinkIngredient.ingredient.color;
   });

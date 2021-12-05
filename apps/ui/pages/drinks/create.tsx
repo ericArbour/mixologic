@@ -191,7 +191,6 @@ export default function CreateDrink() {
                           onChange={field.onChange}
                           options={units}
                           isLoading={isUnitsLoading}
-                          required
                           error={
                             errors.drinkIngredients?.[index]?.unit?.message
                           }

@@ -223,7 +223,6 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
                           onChange={field.onChange}
                           options={units}
                           isLoading={isUnitsLoading}
-                          required
                           error={
                             errors.drinkIngredients?.[index]?.unit?.message
                           }

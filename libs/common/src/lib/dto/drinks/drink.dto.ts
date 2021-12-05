@@ -66,7 +66,7 @@ export class DrinkIngredientDto {
   upperRangeAmount?: number;
 
   @Expose()
-  @IsDefined()
+  @IsOptional()
   @Type(() => UnitDto)
-  unit!: UnitDto;
+  unit?: UnitDto;
 }

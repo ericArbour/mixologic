@@ -20,8 +20,8 @@ export class DrinkIngredient extends Base {
   @Column()
   ingredientId!: Ingredient['id'];
 
-  @Column()
-  unitId!: Unit['id'];
+  @Column({ nullable: true })
+  unitId?: Unit['id'];
 
   @ManyToOne(() => Drink, (drink) => drink.drinkIngredients)
   drink?: Drink;

@@ -55,10 +55,10 @@ export class CreateDrinkIngredientDto {
   @IsGreaterThan('amount')
   upperRangeAmount?: number;
 
-  @IsDefined()
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => CreateDrinkIngredientUnitDto)
-  unit!: CreateDrinkIngredientUnitDto;
+  unit?: CreateDrinkIngredientUnitDto;
 }
 
 export class CreateDrinkDto {

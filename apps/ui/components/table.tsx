@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { BaseResponseDto } from '@mixologic/common';
 
 import { ButtonLink, PlusIcon, TextLink } from '.';
-import { FormSubscribe } from './form-subscribe';
+import { SearchInput } from './search-input';
 import { convertUTCDateToLocalDate } from '../utils';
+import { useState } from 'react';
 
 type Props<T> = {
   title: string;
@@ -12,6 +13,7 @@ type Props<T> = {
   rows: T[];
   createPathname: string;
   editPathname: string;
+  filterPlaceholder?: string;
 };
 
 type ColumnConfig<T> = {
@@ -36,13 +38,20 @@ export function Table<T extends BaseResponseDto>({
   rows,
   createPathname,
   editPathname,
+  filterPlaceholder,
 }: Props<T>) {
+  const [filterValue, setFilterValue] = useState('');
+
   return (
     <>
       <div className="flex flex-row mb-1 sm:mb-0 justify-between items-center w-full">
         <h2 className="text-2xl leading-tight">{title}</h2>
         <div className="text-end">
-          <FormSubscribe placeholder="name" label="Filter" />
+          <SearchInput
+            placeholder={filterPlaceholder ?? 'name'}
+            label="Filter"
+            onSearch={(value) => setFilterValue(value)}
+          />
         </div>
       </div>
       <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -71,14 +80,29 @@ export function Table<T extends BaseResponseDto>({
             </thead>
             <tbody>
               {rows.map((row) => {
+                const columnsWithValues = columns.map((column) => {
+                  const value = column.valueFormatter
+                    ? column.valueFormatter(row)
+                    : row[column.field];
+                  return { ...column, value: formatText(value, column.field) };
+                });
+
+                const showRow =
+                  !filterValue ||
+                  columnsWithValues.find((column) => {
+                    return (
+                      typeof column.value === 'string' &&
+                      column.value
+                        .toLowerCase()
+                        .includes(filterValue.toLowerCase())
+                    );
+                  });
+
+                if (!showRow) return null;
+
                 return (
                   <tr key={row.id}>
-                    {columns.map((column) => {
-                      const value = column.valueFormatter
-                        ? column.valueFormatter(row)
-                        : row[column.field];
-                      const text = formatText(value, column.field);
-
+                    {columnsWithValues.map((column) => {
                       return (
                         <td
                           key={column.field}
@@ -86,7 +110,7 @@ export function Table<T extends BaseResponseDto>({
                         >
                           <div className="flex items-center">
                             <p className="text-gray-900 whitespace-no-wrap">
-                              {text}
+                              {column.value}
                             </p>
                           </div>
                         </td>

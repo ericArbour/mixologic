@@ -5,7 +5,7 @@ import { RequiredDot } from './required-dot';
 
 interface Props {
   name: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   type?: string;
   label?: string;
   defaultValue?: string | number;

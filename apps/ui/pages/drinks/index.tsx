@@ -34,6 +34,7 @@ export default function Index() {
   return (
     <Table
       title="Drinks"
+      filterPlaceholder="name or glass"
       columns={[
         { field: 'name', displayName: 'Name' },
         {

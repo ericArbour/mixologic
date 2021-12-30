@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { FormSubscribe } from './form-subscribe';
+import { SearchInput } from './search-input';
 import { DropDownMenu } from './drop-down-menu';
 import Link from 'next/link';
 
@@ -59,9 +59,10 @@ export function Header(props: Props) {
             </div>
             <div className="block">
               <div className="hidden md:block -mr-2 flex">
-                <FormSubscribe
+                <SearchInput
                   label="Search"
                   placeholder="Drinks, ingredients, etc."
+                  onSearch={(value) => console.log(value)}
                 />
               </div>
               <div className="ml-4 flex items-center md:ml-6">
@@ -128,7 +129,11 @@ export function Header(props: Props) {
               })}
             </div>
             <div className="p-2 flex">
-              <FormSubscribe label="Search" placeholder="Search" />
+              <SearchInput
+                label="Search"
+                placeholder="Search"
+                onSearch={(value) => console.log(value)}
+              />
             </div>
           </div>
         )}

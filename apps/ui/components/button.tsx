@@ -20,6 +20,7 @@ const colors = {
 interface SharedProps {
   rounded?: boolean;
   small?: boolean;
+  full?: boolean;
   color: keyof typeof colors;
   icon?: JSX.Element;
   label?: string;
@@ -38,9 +39,9 @@ interface ButtonLinkProps extends SharedProps {
 }
 
 function getSharedClassNames(props: SharedProps): string {
-  return `${props.small ? 'text-sm py-1 px-2' : 'text-base py-2 px-4 w-full'} ${
-    props.icon ? 'flex justify-center items-center ' : ''
-  } ${
+  return `${props.small ? 'text-sm py-1 px-2' : 'text-base py-2 px-4'} ${
+    props.full ? 'w-full' : ''
+  } ${props.icon ? 'flex justify-center items-center ' : ''} ${
     colors[props.color]
   } text-white transition ease-in duration-200 text-center font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
     !props.label && !props.small ? ' w-12 h-12' : ''

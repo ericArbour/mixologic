@@ -46,7 +46,14 @@ export function Table<T extends BaseResponseDto>({
     <>
       <div className="flex flex-row mb-1 sm:mb-0 justify-between items-center w-full">
         <h2 className="text-2xl leading-tight">{title}</h2>
-        <div className="text-end">
+        <div className="flex flex-col sm:flex-row sm:space-x-3 space-y-3 sm:space-y-0 justify-center">
+          <Link href={createPathname} passHref>
+            <ButtonLink
+              label="Create"
+              icon={<PlusIcon className="mr-1" />}
+              color="green"
+            />
+          </Link>
           <SearchInput
             placeholder={filterPlaceholder ?? 'name'}
             label="Filter"
@@ -54,86 +61,77 @@ export function Table<T extends BaseResponseDto>({
           />
         </div>
       </div>
-      <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-        <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-          <table className="min-w-full leading-normal">
-            <thead>
-              <tr>
-                {columns.map((column) => {
-                  return (
-                    <th
-                      scope="col"
-                      key={column.field}
-                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
-                    >
-                      {column.displayName}
-                    </th>
-                  );
-                })}
-                <th
-                  scope="col"
-                  className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
-                >
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row) => {
-                const columnsWithValues = columns.map((column) => {
-                  const value = column.valueFormatter
-                    ? column.valueFormatter(row)
-                    : row[column.field];
-                  return { ...column, value: formatText(value, column.field) };
-                });
-
-                const showRow =
-                  !filterValue ||
-                  columnsWithValues.find((column) => {
-                    return (
-                      typeof column.value === 'string' &&
-                      column.value
-                        .toLowerCase()
-                        .includes(filterValue.toLowerCase())
-                    );
-                  });
-
-                if (!showRow) return null;
-
+      <div className="min-w-full shadow rounded-lg overflow-x-auto">
+        <table className="min-w-full leading-normal">
+          <thead>
+            <tr>
+              {columns.map((column) => {
                 return (
-                  <tr key={row.id}>
-                    {columnsWithValues.map((column) => {
-                      return (
-                        <td
-                          key={column.field}
-                          className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
-                        >
-                          <div className="flex items-center">
-                            <p className="text-gray-900 whitespace-no-wrap">
-                              {column.value}
-                            </p>
-                          </div>
-                        </td>
-                      );
-                    })}
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <Link href={`${editPathname}/${row.id}`} passHref>
-                        <TextLink>Edit</TextLink>
-                      </Link>
-                    </td>
-                  </tr>
+                  <th
+                    scope="col"
+                    key={column.field}
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                  >
+                    {column.displayName}
+                  </th>
                 );
               })}
-            </tbody>
-          </table>
-        </div>
-        <Link href={createPathname} passHref>
-          <ButtonLink
-            label="Create"
-            icon={<PlusIcon className="mr-1" />}
-            color="green"
-          />
-        </Link>
+              <th
+                scope="col"
+                className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+              >
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => {
+              const columnsWithValues = columns.map((column) => {
+                const value = column.valueFormatter
+                  ? column.valueFormatter(row)
+                  : row[column.field];
+                return { ...column, value: formatText(value, column.field) };
+              });
+
+              const showRow =
+                !filterValue ||
+                columnsWithValues.find((column) => {
+                  return (
+                    typeof column.value === 'string' &&
+                    column.value
+                      .toLowerCase()
+                      .includes(filterValue.toLowerCase())
+                  );
+                });
+
+              if (!showRow) return null;
+
+              return (
+                <tr key={row.id}>
+                  {columnsWithValues.map((column) => {
+                    return (
+                      <td
+                        key={column.field}
+                        className="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                      >
+                        <div className="flex items-center">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {column.value}
+                          </p>
+                        </div>
+                      </td>
+                    );
+                  })}
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <Link href={`${editPathname}/${row.id}`} passHref>
+                      <TextLink>Edit</TextLink>
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </>
   );

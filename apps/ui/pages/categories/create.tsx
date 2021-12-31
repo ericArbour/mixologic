@@ -48,11 +48,12 @@ export default function CreateCategory() {
         />
         <FormSection>
           <Button
-            submit={true}
             label="Save"
             color="indigo"
             isLoading={mutation.isLoading || shouldAnimateLoading}
             icon={<CheckIcon className="-ml-1 mr-1" />}
+            submit
+            full
           />
         </FormSection>
         {!shouldAnimateLoading && mutation.isSuccess ? (

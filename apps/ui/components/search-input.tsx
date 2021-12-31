@@ -13,7 +13,7 @@ export function SearchInput({
 }: SearchInputProps) {
   return (
     <form
-      className="flex flex-col md:flex-row w-3/4 md:w-full max-w-sm md:space-x-3 space-y-3 md:space-y-0 justify-center"
+      className="flex flex-col sm:flex-row sm:space-x-3 space-y-3 sm:space-y-0 justify-center"
       onSubmit={(e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);

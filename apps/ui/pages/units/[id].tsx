@@ -80,11 +80,12 @@ export default function Unit() {
         />
         <FormSection>
           <Button
-            submit={true}
             label="Save"
             color="indigo"
             isLoading={mutation.isLoading || shouldAnimateLoading}
             icon={<CheckIcon className="-ml-1 mr-1" />}
+            submit
+            full
           />
           {!shouldAnimateLoading && mutation.isSuccess ? (
             <SuccessMessage label="Unit" />

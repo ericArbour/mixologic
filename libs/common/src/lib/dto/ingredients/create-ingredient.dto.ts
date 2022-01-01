@@ -19,7 +19,7 @@ export class CreateIngredientDto {
   @IsDefined()
   @IsString()
   @MinLength(2)
-  @MaxLength(30)
+  @MaxLength(35)
   name!: string;
 
   @IsOptional()

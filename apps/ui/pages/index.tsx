@@ -47,7 +47,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#c43019; #f29f64;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="indefinite"
@@ -56,7 +56,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#f29f64; #c43019;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="indefinite"
@@ -67,7 +67,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#c43019; #f29f64;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="mixAnimation.begin"
@@ -75,7 +75,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#f29f64; #c43019;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="unmixAnimation.begin"
@@ -83,7 +83,7 @@ export default function Index() {
             <animate
               attributeName="offset"
               values="25%; 0;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="mixAnimation.begin"
@@ -91,7 +91,7 @@ export default function Index() {
             <animate
               attributeName="offset"
               values="0; 25%;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="unmixAnimation.begin"
@@ -101,7 +101,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#e75200; #f29f64;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="mixAnimation.begin"
@@ -109,7 +109,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#f29f64; #e75200;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="unmixAnimation.begin"
@@ -119,7 +119,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#e75200; #f29f64;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="mixAnimation.begin"
@@ -127,7 +127,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#f29f64; #e75200;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="unmixAnimation.begin"
@@ -137,7 +137,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#fb431f; #f29f64;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="mixAnimation.begin"
@@ -145,7 +145,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#f29f64; #fb431f;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="unmixAnimation.begin"
@@ -155,7 +155,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#fb431f; #f29f64;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="mixAnimation.begin"
@@ -163,7 +163,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#f29f64; #fb431f;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="unmixAnimation.begin"
@@ -173,7 +173,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#fff7ba; #f29f64;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="mixAnimation.begin"
@@ -181,7 +181,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#f29f64; #fff7ba;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="unmixAnimation.begin"
@@ -189,7 +189,7 @@ export default function Index() {
             <animate
               attributeName="offset"
               values="75%; 100%;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="mixAnimation.begin"
@@ -197,7 +197,7 @@ export default function Index() {
             <animate
               attributeName="offset"
               values="100%; 75%;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="unmixAnimation.begin"
@@ -207,7 +207,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#fff7ba; #f29f64;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="mixAnimation.begin"
@@ -215,7 +215,7 @@ export default function Index() {
             <animate
               attributeName="stop-color"
               values="#f29f64; #fff7ba;"
-              dur="3s"
+              dur="1s"
               repeatCount={1}
               fill="freeze"
               begin="unmixAnimation.begin"

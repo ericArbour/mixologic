@@ -26,16 +26,16 @@ export default function Index() {
           setShouldMix((shouldMix) => !shouldMix);
         }}
       />
-      <PaperPlaneCoupe />
+      <PaperPlaneCocktail />
     </div>
   );
 }
 
-function PaperPlaneCoupe() {
+function PaperPlaneCocktail() {
   return (
     <svg
-      xmlSpace="preserve"
       viewBox="0 0 150 200"
+      xmlSpace="preserve"
       height="400px"
       width="300px"
       style={{
@@ -45,11 +45,9 @@ function PaperPlaneCoupe() {
         strokeLinejoin: 'round',
       }}
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      version="1.1"
       xmlns="http://www.w3.org/2000/svg"
+      version="1.1"
     >
-      <metadata></metadata>
-      <defs />
       <linearGradient id="liquid" x1="0%" y1="100%" x2="0%" y2="0%">
         <stop offset="0%" style={{ stopColor: '#c43019', stopOpacity: 1 }}>
           <animate
@@ -88,24 +86,44 @@ function PaperPlaneCoupe() {
             fill="freeze"
             begin="unmixAnimation.begin"
           />
+        </stop>
+        <stop offset="30%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
           <animate
-            attributeName="offset"
-            values="30%; 0;"
+            attributeName="stop-color"
+            values="#000000; #f29f64;"
             dur="1s"
             repeatCount={1}
             fill="freeze"
             begin="mixAnimation.begin"
           />
           <animate
-            attributeName="offset"
-            values="0; 30%;"
+            attributeName="stop-color"
+            values="#f29f64; #000000;"
             dur="1s"
             repeatCount={1}
             fill="freeze"
             begin="unmixAnimation.begin"
           />
         </stop>
-        <stop offset="30%" style={{ stopColor: '#e75200', stopOpacity: 1 }}>
+        <stop offset="31%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
+          <animate
+            attributeName="stop-color"
+            values="#000000; #f29f64;"
+            dur="1s"
+            repeatCount={1}
+            fill="freeze"
+            begin="mixAnimation.begin"
+          />
+          <animate
+            attributeName="stop-color"
+            values="#f29f64; #000000;"
+            dur="1s"
+            repeatCount={1}
+            fill="freeze"
+            begin="unmixAnimation.begin"
+          />
+        </stop>
+        <stop offset="31%" style={{ stopColor: '#e75200', stopOpacity: 1 }}>
           <animate
             attributeName="stop-color"
             values="#e75200; #f29f64;"
@@ -123,7 +141,7 @@ function PaperPlaneCoupe() {
             begin="unmixAnimation.begin"
           />
         </stop>
-        <stop offset="55%" style={{ stopColor: '#e75200', stopOpacity: 1 }}>
+        <stop offset="53%" style={{ stopColor: '#e75200', stopOpacity: 1 }}>
           <animate
             attributeName="stop-color"
             values="#e75200; #f29f64;"
@@ -141,7 +159,43 @@ function PaperPlaneCoupe() {
             begin="unmixAnimation.begin"
           />
         </stop>
-        <stop offset="55%" style={{ stopColor: '#fb431f', stopOpacity: 1 }}>
+        <stop offset="53%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
+          <animate
+            attributeName="stop-color"
+            values="#000000; #f29f64;"
+            dur="1s"
+            repeatCount={1}
+            fill="freeze"
+            begin="mixAnimation.begin"
+          />
+          <animate
+            attributeName="stop-color"
+            values="#f29f64; #000000;"
+            dur="1s"
+            repeatCount={1}
+            fill="freeze"
+            begin="unmixAnimation.begin"
+          />
+        </stop>
+        <stop offset="54%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
+          <animate
+            attributeName="stop-color"
+            values="#000000; #f29f64;"
+            dur="1s"
+            repeatCount={1}
+            fill="freeze"
+            begin="mixAnimation.begin"
+          />
+          <animate
+            attributeName="stop-color"
+            values="#f29f64; #000000;"
+            dur="1s"
+            repeatCount={1}
+            fill="freeze"
+            begin="unmixAnimation.begin"
+          />
+        </stop>
+        <stop offset="54%" style={{ stopColor: '#fb431f', stopOpacity: 1 }}>
           <animate
             attributeName="stop-color"
             values="#fb431f; #f29f64;"
@@ -159,7 +213,7 @@ function PaperPlaneCoupe() {
             begin="unmixAnimation.begin"
           />
         </stop>
-        <stop offset="80%" style={{ stopColor: '#fb431f', stopOpacity: 1 }}>
+        <stop offset="75%" style={{ stopColor: '#fb431f', stopOpacity: 1 }}>
           <animate
             attributeName="stop-color"
             values="#fb431f; #f29f64;"
@@ -177,7 +231,43 @@ function PaperPlaneCoupe() {
             begin="unmixAnimation.begin"
           />
         </stop>
-        <stop offset="80%" style={{ stopColor: '#fff7ba', stopOpacity: 1 }}>
+        <stop offset="75%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
+          <animate
+            attributeName="stop-color"
+            values="#000000; #f29f64;"
+            dur="1s"
+            repeatCount={1}
+            fill="freeze"
+            begin="mixAnimation.begin"
+          />
+          <animate
+            attributeName="stop-color"
+            values="#f29f64; #000000;"
+            dur="1s"
+            repeatCount={1}
+            fill="freeze"
+            begin="unmixAnimation.begin"
+          />
+        </stop>
+        <stop offset="76%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
+          <animate
+            attributeName="stop-color"
+            values="#000000; #f29f64;"
+            dur="1s"
+            repeatCount={1}
+            fill="freeze"
+            begin="mixAnimation.begin"
+          />
+          <animate
+            attributeName="stop-color"
+            values="#f29f64; #000000;"
+            dur="1s"
+            repeatCount={1}
+            fill="freeze"
+            begin="unmixAnimation.begin"
+          />
+        </stop>
+        <stop offset="76%" style={{ stopColor: '#fff7ba', stopOpacity: 1 }}>
           <animate
             attributeName="stop-color"
             values="#fff7ba; #f29f64;"
@@ -189,22 +279,6 @@ function PaperPlaneCoupe() {
           <animate
             attributeName="stop-color"
             values="#f29f64; #fff7ba;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-          <animate
-            attributeName="offset"
-            values="80%; 100%;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="offset"
-            values="100%; 80%;"
             dur="1s"
             repeatCount={1}
             fill="freeze"
@@ -230,78 +304,43 @@ function PaperPlaneCoupe() {
           />
         </stop>
       </linearGradient>
-      <g id="Glass">
-        <path
-          stroke="#000000"
-          fill="#000000"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M40+181.009C40+176.043+55.67+172.018+75+172.018C94.33+172.018+110+176.043+110+181.009C110+185.975+94.33+190+75+190C55.67+190+40+185.975+40+181.009Z"
-          opacity="1"
-          strokeWidth="5"
-        />
+      <g id="Layer 1">
         <path
           strokeWidth="5"
-          stroke="#000000"
-          opacity="1"
-          strokeLinejoin="round"
-          d="M75+175L75+90"
-          fill="none"
-          strokeLinecap="round"
-        />
-        <path
-          strokeLinecap="round"
-          fill="#000000"
-          d="M51+185.002C51+185.002+61.8137+186.462+67.7515+175.843C73.6894+165.225+75+167.856+75+167.856C75+167.856+76.7988+165.168+82.7515+175.843C88.7043+186.519+98.5626+185.231+98.5626+185.231L51+185.002Z"
-          opacity="1"
-          stroke="#000000"
-          strokeWidth="5"
-          strokeLinejoin="round"
-        />
-        <path
-          strokeWidth="5"
-          strokeLinecap="round"
-          opacity="1"
           fill="url(#liquid)"
           stroke="#000000"
+          strokeLinecap="round"
           strokeLinejoin="round"
-          d="M9.81853+20C9.81853+20+3.56853+43.75+19.8185+60C36.0685+76.25+74.8185+85+74.8185+85C74.8185+85+113.569+76.25+129.819+60C146.069+43.75+139.819+20+139.819+20"
+          opacity="1"
+          d="M30.3351+10L120+10C120+10+116.25+41.25+105+60C93.75+78.75+75+85+75+85C75+85+56.1662+78.75+45+60C33.8338+41.25+30.3351+10+30.3351+10Z"
         />
         <path
-          stroke="#000000"
-          fill="none"
           strokeLinecap="round"
-          strokeWidth="5"
           strokeLinejoin="round"
-          d="M75+90C75+90+76.2559+87.5533+79.8624+85.1977C83.4689+82.8422+90.4261+80.5779+90.4261+80.5779C90.4261+80.5779+82.4325+82.9601+75+83C67.5675+83.0399+59.6961+80.7373+59.6961+80.7373C59.6961+80.7373+66.3858+82.9705+70.2118+85.2862C74.0378+87.6019+75+90+75+90Z"
+          strokeWidth="5"
+          d="M75+160L75.0418+85.1549"
+          fill="#000000"
+          opacity="1"
+          stroke="#000000"
+        />
+        <path
+          d="M40+190C40+190+57.5782+183.643+65+175C72.4218+166.357+75.0137+155.429+75.0137+155.429C75.0137+155.429+77.5992+166.357+85+175C92.4008+183.643+110+190+110+190L40+190Z"
+          strokeLinejoin="round"
+          stroke="#000000"
+          fill="#000000"
+          strokeWidth="5"
+          strokeLinecap="round"
           opacity="1"
         />
         <path
           strokeWidth="5"
-          fill="#fff7ba"
+          fill="#000000"
+          strokeLinecap="round"
           stroke="#000000"
           strokeLinejoin="round"
           opacity="1"
-          strokeLinecap="round"
-          d="M10+20C10+14.4772+39.1015+10+75+10C110.899+10+140+14.4772+140+20C140+25.5228+110.899+30+75+30C39.1015+30+10+25.5228+10+20Z"
-        >
-          <animate
-            attributeName="fill"
-            values="#fff7ba; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="fill"
-            values="#f29f64; #fff7ba;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </path>
+          d="M75.0362+95.2223C75.0362+95.2223+76.3442+89.5965+80+85C83.6558+80.4035+89.6593+76.8362+89.6593+76.8362C89.6593+76.8362+82.3231+79.9882+75+80C67.6769+80.0118+60.367+76.8836+60.367+76.8836C60.367+76.8836+66.3327+80.4153+70+85C73.6673+89.5847+75.0362+95.2223+75.0362+95.2223Z"
+        />
       </g>
     </svg>
   );

@@ -140,8 +140,8 @@ function CoupeGlassSvg({ drinkIngredients }: CoupeGlassSvgProps) {
                   dur="1s"
                   repeatCount={1}
                   fill="freeze"
-                  begin="indefinite"
-                  id="mixAnimation"
+                  begin={index === 0 ? 'indefinite' : 'mixAnimation.begin'}
+                  id={index === 0 ? 'mixAnimation' : undefined}
                 />
                 <animate
                   attributeName="stop-color"
@@ -149,8 +149,8 @@ function CoupeGlassSvg({ drinkIngredients }: CoupeGlassSvgProps) {
                   dur="1s"
                   repeatCount={1}
                   fill="freeze"
-                  begin="indefinite"
-                  id="unmixAnimation"
+                  begin={index === 0 ? 'indefinite' : 'unmixAnimation.begin'}
+                  id={index === 0 ? 'unmixAnimation' : undefined}
                 />
               </stop>
               <stop

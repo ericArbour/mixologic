@@ -2,10 +2,6 @@ import { DrinkDto } from '@mixologic/common';
 
 import { ColorPreview } from './color-preview';
 
-interface DrinkColorProps {
-  drinkIngredients: DrinkDto['drinkIngredients'];
-}
-
 /**
  * Averages 2 hex colors by the provided amount.
  *
@@ -30,6 +26,24 @@ function isNotEmpty(x?: string | null): x is string {
   return !!x;
 }
 
+export function mixIngredientColors(
+  drinkIngredients: DrinkDto['drinkIngredients']
+) {
+  const nonGarnishColors = drinkIngredients.map((drinkIngredient) => {
+    if (drinkIngredient.unit?.name !== 'fl oz') return null;
+
+    return drinkIngredient.ingredient.color;
+  });
+  const colors = nonGarnishColors.filter(isNotEmpty);
+  const mixed = colors.reduce((mix, color) => blendColors(mix, color, 0.5));
+
+  return mixed;
+}
+
+interface DrinkColorProps {
+  drinkIngredients: DrinkDto['drinkIngredients'];
+}
+
 /**
  * A rough approximation for the color of a drink based on
  * the color of its ingredients. This is a minimal approach
@@ -37,14 +51,6 @@ function isNotEmpty(x?: string | null): x is string {
  * of each ingredient in the drink.
  */
 export function DrinkColor({ drinkIngredients }: DrinkColorProps) {
-  const nonGarnishColors = drinkIngredients.map((drinkIngredient) => {
-    if (drinkIngredient.unit?.name !== 'fl oz') return null;
-
-    return drinkIngredient.ingredient.color;
-  });
-  const colors = nonGarnishColors.filter(isNotEmpty);
-
-  const mixed = colors.reduce((mix, color) => blendColors(mix, color, 0.5));
-
-  return <ColorPreview color={mixed} className="h-6 w-12" />;
+  const mixedColor = mixIngredientColors(drinkIngredients);
+  return <ColorPreview color={mixedColor} className="h-6 w-12" />;
 }

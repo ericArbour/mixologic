@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+import { DrinkDto } from '@mixologic/common';
 
-import { Button } from '../components';
+import { Button, mixIngredientColors } from '../components';
+import { useDrinks } from './drinks';
 
 export default function Index() {
   const [shouldMix, setShouldMix] = useState(false);
-  console.log(shouldMix);
+  const queryResult = useDrinks();
+
+  if (queryResult.isLoading || queryResult.isIdle) return 'Loading...';
+  if (queryResult.isError) return 'Oops, an error occurred';
+
   return (
     <div>
       <h2>Search it, find it, mix it, drink it. Mixologic.</h2>
@@ -26,12 +32,31 @@ export default function Index() {
           setShouldMix((shouldMix) => !shouldMix);
         }}
       />
-      <PaperPlaneCocktail />
+      <ul className="flex flex-wrap">
+        {queryResult.data
+          .filter((drinkDto) => drinkDto.name === 'Paper Plane')
+          .map((drinkDto) => {
+            return (
+              <li key={drinkDto.id} className="border">
+                <p>{drinkDto.name}</p>
+                <CoupeGlassSvg drinkIngredients={drinkDto.drinkIngredients} />
+              </li>
+            );
+          })}
+      </ul>
     </div>
   );
 }
 
-function PaperPlaneCocktail() {
+interface CoupeGlassSvgProps {
+  drinkIngredients: DrinkDto['drinkIngredients'];
+}
+
+function CoupeGlassSvg({ drinkIngredients }: CoupeGlassSvgProps) {
+  const mixedColor = mixIngredientColors(drinkIngredients);
+  const mixedHex = `#${mixedColor}`;
+  const regionPercent = Math.floor((1 / drinkIngredients.length) * 100);
+
   return (
     <svg
       viewBox="0 0 150 200"
@@ -49,260 +74,109 @@ function PaperPlaneCocktail() {
       version="1.1"
     >
       <linearGradient id="liquid" x1="0%" y1="100%" x2="0%" y2="0%">
-        <stop offset="0%" style={{ stopColor: '#c43019', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#c43019; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="indefinite"
-            id="mixAnimation"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #c43019;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="indefinite"
-            id="unmixAnimation"
-          />
-        </stop>
-        <stop offset="30%" style={{ stopColor: '#c43019', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#c43019; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #c43019;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="30%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#000000; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #000000;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="31%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#000000; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #000000;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="31%" style={{ stopColor: '#e75200', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#e75200; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #e75200;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="53%" style={{ stopColor: '#e75200', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#e75200; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #e75200;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="53%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#000000; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #000000;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="54%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#000000; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #000000;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="54%" style={{ stopColor: '#fb431f', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#fb431f; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #fb431f;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="75%" style={{ stopColor: '#fb431f', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#fb431f; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #fb431f;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="75%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#000000; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #000000;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="76%" style={{ stopColor: '#000000', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#000000; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #000000;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="76%" style={{ stopColor: '#fff7ba', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#fff7ba; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #fff7ba;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
-        <stop offset="100%" style={{ stopColor: '#fff7ba', stopOpacity: 1 }}>
-          <animate
-            attributeName="stop-color"
-            values="#fff7ba; #f29f64;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="mixAnimation.begin"
-          />
-          <animate
-            attributeName="stop-color"
-            values="#f29f64; #fff7ba;"
-            dur="1s"
-            repeatCount={1}
-            fill="freeze"
-            begin="unmixAnimation.begin"
-          />
-        </stop>
+        {drinkIngredients.map((drinkIngredient, index) => {
+          const colorHex = `#${drinkIngredient.ingredient.color}` ?? '#fff';
+          const startPercent = index * regionPercent;
+          const endPercent = (index + 1) * regionPercent;
+
+          const separator =
+            index === 0 ? null : (
+              <>
+                <stop
+                  offset={`${startPercent}%`}
+                  style={{ stopColor: '#000000', stopOpacity: 1 }}
+                >
+                  <animate
+                    attributeName="stop-color"
+                    values={`#000000; ${mixedHex};`}
+                    dur="1s"
+                    repeatCount={1}
+                    fill="freeze"
+                    begin="mixAnimation.begin"
+                  />
+                  <animate
+                    attributeName="stop-color"
+                    values={`${mixedHex}; #000000;`}
+                    dur="1s"
+                    repeatCount={1}
+                    fill="freeze"
+                    begin="unmixAnimation.begin"
+                  />
+                </stop>
+                <stop
+                  offset={`${startPercent + 1}%`}
+                  style={{ stopColor: '#000000', stopOpacity: 1 }}
+                >
+                  <animate
+                    attributeName="stop-color"
+                    values={`#000000; ${mixedHex};`}
+                    dur="1s"
+                    repeatCount={1}
+                    fill="freeze"
+                    begin="mixAnimation.begin"
+                  />
+                  <animate
+                    attributeName="stop-color"
+                    values={`${mixedHex}; #000000;`}
+                    dur="1s"
+                    repeatCount={1}
+                    fill="freeze"
+                    begin="unmixAnimation.begin"
+                  />
+                </stop>
+              </>
+            );
+
+          return (
+            <Fragment key={drinkIngredient.ingredient.id}>
+              {separator}
+              <stop
+                offset={`${index === 0 ? startPercent : startPercent + 1}%`}
+                style={{ stopColor: colorHex, stopOpacity: 1 }}
+              >
+                <animate
+                  attributeName="stop-color"
+                  values={`${colorHex}; ${mixedHex};`}
+                  dur="1s"
+                  repeatCount={1}
+                  fill="freeze"
+                  begin="indefinite"
+                  id="mixAnimation"
+                />
+                <animate
+                  attributeName="stop-color"
+                  values={`${mixedHex}; ${colorHex};`}
+                  dur="1s"
+                  repeatCount={1}
+                  fill="freeze"
+                  begin="indefinite"
+                  id="unmixAnimation"
+                />
+              </stop>
+              <stop
+                offset={`${endPercent}%`}
+                style={{ stopColor: colorHex, stopOpacity: 1 }}
+              >
+                <animate
+                  attributeName="stop-color"
+                  values={`${colorHex}; ${mixedHex};`}
+                  dur="1s"
+                  repeatCount={1}
+                  fill="freeze"
+                  begin="mixAnimation.begin"
+                />
+                <animate
+                  attributeName="stop-color"
+                  values={`${mixedHex}; ${colorHex};`}
+                  dur="1s"
+                  repeatCount={1}
+                  fill="freeze"
+                  begin="unmixAnimation.begin"
+                />
+              </stop>
+            </Fragment>
+          );
+        })}
       </linearGradient>
       <g id="Layer 1">
         <path

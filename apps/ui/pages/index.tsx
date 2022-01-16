@@ -92,7 +92,10 @@ function CoupeGlassSvg({
           y2="0%"
         >
           {drinkIngredients.map((drinkIngredient, index) => {
-            const colorHex = `#${drinkIngredient.ingredient.color}` ?? '#fff';
+            const colorHex = drinkIngredient.ingredient.color
+              ? `#${drinkIngredient.ingredient.color}`
+              : // Todo: Make this colorless instead of white.
+                '#fff';
             const startPercent = index * regionPercent;
             const endPercent = (index + 1) * regionPercent;
 

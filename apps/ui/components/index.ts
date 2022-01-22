@@ -18,6 +18,9 @@ export * from './table';
 export * from './text-input';
 export * from './text-link';
 
+// glass svgs
+export * from './glass-svgs/CoupeGlassSvg';
+
 // icons
 export * from './icons/check-icon';
 export * from './icons/error-icon';

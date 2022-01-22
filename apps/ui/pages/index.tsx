@@ -1,4 +1,6 @@
-import { CoupeGlassSvg } from '../components';
+import { DrinkDto } from '@mixologic/common';
+import { useState } from 'react';
+import { Button, CoupeGlassSvg } from '../components';
 import { useDrinks } from './drinks';
 
 export default function Index() {
@@ -13,16 +15,57 @@ export default function Index() {
       <ul className="flex flex-wrap">
         {queryResult.data.map((drinkDto, index) => {
           return (
-            <li key={drinkDto.id} className="border">
-              <p>{drinkDto.name}</p>
-              <CoupeGlassSvg
-                drinkIngredients={drinkDto.drinkIngredients}
-                index={index}
-              />
-            </li>
+            <DrinkCard
+              key={drinkDto.id}
+              drinkDto={drinkDto}
+              drinkIndex={index}
+            />
           );
         })}
       </ul>
     </div>
+  );
+}
+
+interface DrinkCardProps {
+  drinkDto: DrinkDto;
+  drinkIndex: number;
+}
+
+function DrinkCard({ drinkDto, drinkIndex }: DrinkCardProps) {
+  const [shouldMix, setShouldMix] = useState(false);
+
+  return (
+    <li key={drinkDto.id} className="border flex flex-col w-48">
+      <div>
+        <p>{drinkDto.name}</p>
+        <Button
+          label={shouldMix ? 'Unmix' : 'Mix'}
+          color="blue"
+          onClick={() => {
+            if (!shouldMix) {
+              const mixAnimation = document.getElementById(
+                `mixAnimation${drinkIndex}`
+              );
+              if (mixAnimation instanceof SVGAnimateElement) {
+                mixAnimation.beginElement();
+              }
+            } else {
+              const unmixAnimation = document.getElementById(
+                `unmixAnimation${drinkIndex}`
+              );
+              if (unmixAnimation instanceof SVGAnimateElement) {
+                unmixAnimation.beginElement();
+              }
+            }
+            setShouldMix((shouldMix) => !shouldMix);
+          }}
+        />
+      </div>
+      <CoupeGlassSvg
+        drinkIngredients={drinkDto.drinkIngredients}
+        drinkIndex={drinkIndex}
+      />
+    </li>
   );
 }

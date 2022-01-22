@@ -39,8 +39,9 @@ export function CoupeGlassSvg({
         {drinkIngredients.map((drinkIngredient, index) => {
           const colorHex = drinkIngredient.ingredient.color
             ? `#${drinkIngredient.ingredient.color}`
-            : // Todo: Make this colorless instead of white.
-              '#fff';
+            : // This hex is the current background color which gives a colorless affect.
+              // Ideally this should be read from a variable and not hard-coded.
+              '#f3f4f6';
           const startPercent = index * regionPercent;
           const endPercent = (index + 1) * regionPercent;
 
@@ -49,11 +50,11 @@ export function CoupeGlassSvg({
               <>
                 <stop
                   offset={`${startPercent}%`}
-                  style={{ stopColor: '#000000', stopOpacity: 1 }}
+                  style={{ stopColor: 'currentColor', stopOpacity: 1 }}
                 >
                   <animate
                     attributeName="stop-color"
-                    values={`#000000; ${mixedHex};`}
+                    values={`currentColor; ${mixedHex};`}
                     dur="1s"
                     repeatCount={1}
                     fill="freeze"
@@ -61,7 +62,7 @@ export function CoupeGlassSvg({
                   />
                   <animate
                     attributeName="stop-color"
-                    values={`${mixedHex}; #000000;`}
+                    values={`${mixedHex}; currentColor;`}
                     dur="1s"
                     repeatCount={1}
                     fill="freeze"
@@ -70,11 +71,11 @@ export function CoupeGlassSvg({
                 </stop>
                 <stop
                   offset={`${startPercent + 1}%`}
-                  style={{ stopColor: '#000000', stopOpacity: 1 }}
+                  style={{ stopColor: 'currentColor', stopOpacity: 1 }}
                 >
                   <animate
                     attributeName="stop-color"
-                    values={`#000000; ${mixedHex};`}
+                    values={`currentColor; ${mixedHex};`}
                     dur="1s"
                     repeatCount={1}
                     fill="freeze"
@@ -82,7 +83,7 @@ export function CoupeGlassSvg({
                   />
                   <animate
                     attributeName="stop-color"
-                    values={`${mixedHex}; #000000;`}
+                    values={`${mixedHex}; currentColor;`}
                     dur="1s"
                     repeatCount={1}
                     fill="freeze"
@@ -155,7 +156,7 @@ export function CoupeGlassSvg({
         <path
           strokeWidth="5"
           fill={`url(#liquid${drinkIndex})`}
-          stroke="#000000"
+          stroke="currentColor"
           strokeLinecap="round"
           strokeLinejoin="round"
           opacity="1"
@@ -166,24 +167,24 @@ export function CoupeGlassSvg({
           strokeLinejoin="round"
           strokeWidth="5"
           d="M75+160L75.0418+85.1549"
-          fill="#000000"
+          fill="currentColor"
           opacity="1"
-          stroke="#000000"
+          stroke="currentColor"
         />
         <path
           d="M40+190C40+190+57.5782+183.643+65+175C72.4218+166.357+75.0137+155.429+75.0137+155.429C75.0137+155.429+77.5992+166.357+85+175C92.4008+183.643+110+190+110+190L40+190Z"
           strokeLinejoin="round"
-          stroke="#000000"
-          fill="#000000"
+          stroke="currentColor"
+          fill="currentColor"
           strokeWidth="5"
           strokeLinecap="round"
           opacity="1"
         />
         <path
           strokeWidth="5"
-          fill="#000000"
+          fill="currentColor"
           strokeLinecap="round"
-          stroke="#000000"
+          stroke="currentColor"
           strokeLinejoin="round"
           opacity="1"
           d="M75.0362+95.2223C75.0362+95.2223+76.3442+89.5965+80+85C83.6558+80.4035+89.6593+76.8362+89.6593+76.8362C89.6593+76.8362+82.3231+79.9882+75+80C67.6769+80.0118+60.367+76.8836+60.367+76.8836C60.367+76.8836+66.3327+80.4153+70+85C73.6673+89.5847+75.0362+95.2223+75.0362+95.2223Z"

@@ -9,7 +9,10 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": { "react/display-name": 0}
+      "rules": {
+        "react/display-name": 0,
+        "@next/next/no-html-link-for-pages": ["error", "apps/ui/pages"]
+      }
     },
     {
       "files": ["*.ts", "*.tsx"],

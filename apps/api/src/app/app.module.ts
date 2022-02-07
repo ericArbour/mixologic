@@ -8,6 +8,7 @@ import { GlassesModule } from './glasses/glasses.module';
 import { CategoriesModule } from './categories/categories.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { UnitsModule } from './units/units.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { UnitsModule } from './units/units.module';
     IngredientsModule,
     CategoriesModule,
     UnitsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

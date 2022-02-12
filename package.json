@@ -8,7 +8,8 @@
     "test": "nx test",
     "start-all": "nx run-many --all --target=serve --parallel",
     "nx-upgrade": "nx migrate latest",
-    "nx-migrate": "nx migrate --run-migrations"
+    "nx-migrate": "nx migrate --run-migrations",
+    "e2e": "nx e2e ui-e2e"
   },
   "private": true,
   "dependencies": {

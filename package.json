@@ -37,7 +37,7 @@
     "rxjs": "^7.1.0",
     "tailwindcss": "^2.2.15",
     "tslib": "^2.0.0",
-    "typeorm": "^0.2.37"
+    "typeorm": "^0.2.43"
   },
   "devDependencies": {
     "@nestjs/schematics": "^8.0.0",

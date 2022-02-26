@@ -32,7 +32,7 @@ export function Header(props: Props) {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <Link href="/">
-                <a className="flex-shrink-0">
+                <a className="shrink-0">
                   <h1 className="text-xl">Mixologic</h1>
                 </a>
               </Link>

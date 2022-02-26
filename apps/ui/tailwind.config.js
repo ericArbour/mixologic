@@ -1,12 +1,13 @@
+// apps/app1/tailwind.config.js
 const { createGlobPatternsForDependencies } = require('@nrwl/react/tailwind');
+const { join } = require('path');
 
 module.exports = {
-  purge: createGlobPatternsForDependencies(__dirname),
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    join(__dirname, '**/!(*.stories|*.spec).{ts,tsx,html}'),
+    ...createGlobPatternsForDependencies(__dirname),
+  ],
   theme: {
-    extend: {},
-  },
-  variants: {
     extend: {},
   },
   plugins: [],

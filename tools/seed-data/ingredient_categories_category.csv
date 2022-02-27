@@ -1,6 +1,9 @@
 ingredientId,categoryId
 109,1
 111,12
+112,3
+112,5
+114,8
 1,1
 2,3
 2,4
@@ -120,3 +123,4 @@ ingredientId,categoryId
 106,8
 108,8
 110,8
+113,8

@@ -11,7 +11,7 @@ import {
 } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
-import { DrinkDto, UpdateDrinkDto } from '@mixologic/common';
+import { CreateDrinkDto, DrinkDto } from '@mixologic/common';
 
 import {
   Button,
@@ -72,7 +72,7 @@ const useDrink = (id: number) => {
 // Todo, figure out why UpdateDrinkDto does not work here but
 // validates on backend, probably due to DrinkFormValues requirement.
 const resolver = classValidatorResolver(
-  UpdateDrinkDto
+  CreateDrinkDto
 ) as Resolver<DrinkFormValues>;
 
 export default function Drink() {

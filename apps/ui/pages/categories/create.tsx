@@ -25,7 +25,7 @@ export default function CreateCategory() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver });
+  } = useForm<CreateCategoryDto>({ resolver });
 
   const mutation = useMutation<Response, Error, CreateCategoryDto>(
     (createCategoryDto) => submitMutation(createCategoryDto, 'categories')

@@ -2,7 +2,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, Resolver } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { IngredientDto, UpdateIngredientDto } from '@mixologic/common';
@@ -61,11 +61,9 @@ const useIngredient = (id: number) => {
   return useQuery(queryKey, ({ queryKey }) => fetchIngredient(queryKey[1]));
 };
 
-const resolver = classValidatorResolver<
-  UpdateIngredientDto,
-  IngredientFormValues,
-  unknown
->(UpdateIngredientDto);
+const resolver = classValidatorResolver(
+  UpdateIngredientDto
+) as Resolver<IngredientFormValues>;
 
 export default function Ingredient() {
   const {

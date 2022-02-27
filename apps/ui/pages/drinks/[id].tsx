@@ -2,10 +2,16 @@ import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { QueryClient, useMutation, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import {
+  Controller,
+  Resolver,
+  UnpackNestedValue,
+  useFieldArray,
+  useForm,
+} from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
-import { CreateDrinkDto, DrinkDto, UpdateDrinkDto } from '@mixologic/common';
+import { DrinkDto, UpdateDrinkDto } from '@mixologic/common';
 
 import {
   Button,
@@ -65,11 +71,9 @@ const useDrink = (id: number) => {
 
 // Todo, figure out why UpdateDrinkDto does not work here but
 // validates on backend, probably due to DrinkFormValues requirement.
-const resolver = classValidatorResolver<
-  CreateDrinkDto,
-  DrinkFormValues,
-  unknown
->(CreateDrinkDto);
+const resolver = classValidatorResolver(
+  UpdateDrinkDto
+) as Resolver<DrinkFormValues>;
 
 export default function Drink() {
   const router = useRouter();
@@ -105,14 +109,17 @@ function DrinkForm({ drink }: { drink: DrinkDto }) {
     useIngredients();
   const { data: units, isLoading: isUnitsLoading } = useUnits();
 
-  const mutation = useMutation<Response, Error, UpdateDrinkDto>(
-    (updateDrinkDto) =>
-      submitMutation(updateDrinkDto, `drinks/${drink.id}`, 'PATCH')
+  const mutation = useMutation<
+    Response,
+    Error,
+    UnpackNestedValue<DrinkFormValues>
+  >((drinkFormValues) =>
+    submitMutation(drinkFormValues, `drinks/${drink.id}`, 'PATCH')
   );
   const { shouldAnimateLoading } = useAnimateLoading(mutation);
 
-  const onSubmit = (updateDrinkDto: UpdateDrinkDto) =>
-    mutation.mutate(updateDrinkDto);
+  const onSubmit = (drinkFormValues: UnpackNestedValue<DrinkFormValues>) =>
+    mutation.mutate(drinkFormValues);
 
   // @ts-expect-error - react-hook-form doesn't allow both nested and array level
   const arrayLevelErrors = errors.drinkIngredients?.message;

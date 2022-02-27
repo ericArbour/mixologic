@@ -53,7 +53,7 @@ export default function Category() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver });
+  } = useForm<UpdateCategoryDto>({ resolver });
   const router = useRouter();
   const id = router.query.id as string;
 

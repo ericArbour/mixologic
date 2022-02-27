@@ -1,6 +1,12 @@
 import { QueryClient, useMutation } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import {
+  Controller,
+  Resolver,
+  UnpackNestedValue,
+  useFieldArray,
+  useForm,
+} from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { CreateDrinkDto } from '@mixologic/common';
@@ -48,11 +54,9 @@ export async function getServerSideProps() {
   };
 }
 
-const resolver = classValidatorResolver<
-  CreateDrinkDto,
-  DrinkFormValues,
-  unknown
->(CreateDrinkDto);
+const resolver = classValidatorResolver(
+  CreateDrinkDto
+) as Resolver<DrinkFormValues>;
 
 export default function CreateDrink() {
   const {
@@ -77,13 +81,15 @@ export default function CreateDrink() {
     useIngredients();
   const { data: units, isLoading: isUnitsLoading } = useUnits();
 
-  const mutation = useMutation<Response, Error, CreateDrinkDto>(
-    (createDrinkDto) => submitMutation(createDrinkDto, 'drinks')
-  );
+  const mutation = useMutation<
+    Response,
+    Error,
+    UnpackNestedValue<DrinkFormValues>
+  >((drinkFormValues) => submitMutation(drinkFormValues, 'drinks'));
   const { shouldAnimateLoading } = useAnimateLoading(mutation);
 
-  const onSubmit = (createDrinkDto: CreateDrinkDto) =>
-    mutation.mutate(createDrinkDto);
+  const onSubmit = (drinkFormValues: UnpackNestedValue<DrinkFormValues>) =>
+    mutation.mutate(drinkFormValues);
 
   // @ts-expect-error - react-hook-form doesn't allow both nested and array level
   const arrayLevelErrors = errors.drinkIngredients?.message;

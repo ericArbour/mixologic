@@ -25,7 +25,7 @@ export default function CreateUnit() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver });
+  } = useForm<CreateUnitDto>({ resolver });
 
   const mutation = useMutation<Response, Error, CreateUnitDto>(
     (createUnitDto) => submitMutation(createUnitDto, 'units')

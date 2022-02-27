@@ -51,7 +51,7 @@ export default function Unit() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver });
+  } = useForm<UpdateUnitDto>({ resolver });
   const router = useRouter();
   const id = router.query.id as string;
 

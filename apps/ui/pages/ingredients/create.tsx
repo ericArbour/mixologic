@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 import { CreateIngredientDto } from '@mixologic/common';
@@ -24,11 +24,9 @@ import { useCategories } from '../categories';
 import { useIngredients } from '.';
 import { IngredientFormValues } from './sharedTypes';
 
-const resolver = classValidatorResolver<
-  CreateIngredientDto,
-  IngredientFormValues,
-  unknown
->(CreateIngredientDto);
+const resolver = classValidatorResolver(
+  CreateIngredientDto
+) as Resolver<IngredientFormValues>;
 
 export default function CreateIngredient() {
   const {
@@ -36,7 +34,9 @@ export default function CreateIngredient() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IngredientFormValues>({ resolver });
+  } = useForm<IngredientFormValues>({
+    resolver,
+  });
 
   const { data: categoriesData, isLoading: isCategoriesLoading } =
     useCategories();

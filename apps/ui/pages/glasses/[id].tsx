@@ -51,7 +51,7 @@ export default function Glass() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver });
+  } = useForm<UpdateGlassDto>({ resolver });
   const router = useRouter();
   const id = router.query.id as string;
 

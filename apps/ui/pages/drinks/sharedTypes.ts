@@ -15,5 +15,7 @@ type DrinkIngredientFormValues = {
   upperRangeAmount:
     | DrinkDto['drinkIngredients'][number]['upperRangeAmount']
     | null;
-  unit: NestedValue<DrinkDto['drinkIngredients'][number]['unit']> | null;
+  unit: NestedValue<
+    NonNullable<DrinkDto['drinkIngredients'][number]['unit']>
+  > | null;
 };

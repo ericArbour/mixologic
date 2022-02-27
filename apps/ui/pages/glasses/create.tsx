@@ -25,7 +25,7 @@ export default function CreateGlass() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver });
+  } = useForm<CreateGlassDto>({ resolver });
 
   const mutation = useMutation<Response, Error, CreateGlassDto>(
     (createGlassDto) => submitMutation(createGlassDto, 'glasses')

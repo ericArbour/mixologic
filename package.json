@@ -13,7 +13,7 @@
   },
   "private": true,
   "dependencies": {
-    "@hookform/resolvers": "^2.8.8",
+    "@hookform/resolvers": "^2.9.3",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/mapped-types": "^1.0.1",

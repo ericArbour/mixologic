@@ -16,7 +16,7 @@
     "@hookform/resolvers": "^2.8.8",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
-    "@nestjs/mapped-types": "^1.0.1",
+    "@nestjs/mapped-types": "^1.1.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.2",
     "@nrwl/next": "13.9.3",
